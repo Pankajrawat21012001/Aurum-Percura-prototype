@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-fcdf69e9-55a8-4c9f-8c09-0ec56f0e2a4a/styles.css">
+<script src="_ds/classical-fcdf69e9-55a8-4c9f-8c09-0ec56f0e2a4a/_ds_bundle.js"></script>
+<script src="aurum-data.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#FFFFFF;color:#1A1A1A;-webkit-font-smoothing:antialiased}
+.btn{border-radius:999px;font-family:Inter,system-ui,sans-serif;font-weight:600;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;padding:10px 18px;transition:all .2s}
+.btn-primary{background:#1A1A1A;color:#fff;border:1.5px solid #1A1A1A}.btn-primary:hover{background:#333;border-color:#333}.btn-primary:active{transform:scale(.97);background:#000}
+.btn-primary:disabled{background:#E2E2E2;border-color:#E2E2E2;color:#fff;opacity:1;cursor:not-allowed}.btn-primary:disabled:hover{background:#E2E2E2;border-color:#E2E2E2}
+.btn-secondary{background:#fff;color:#1A1A1A;border:1.5px solid rgba(0,0,0,.2)}.btn-secondary:hover{border-color:#1A1A1A;background:#fff}
+.btn-ghost{color:#E85D3A;text-transform:none;letter-spacing:0;font-size:13px;padding:6px 8px}.btn-ghost:hover{background:rgba(232,93,58,.08)}
+.btn-icon{padding:0;width:36px;height:36px}
+.btn:focus-visible,.input:focus-visible{outline:2px solid #E85D3A;outline-offset:2px}
+.input{font-family:Inter,system-ui,sans-serif;font-size:13px;background:#FAFAFA;border:1px solid rgba(0,0,0,.07);border-radius:12px;color:#1A1A1A}.input:focus{border-color:rgba(232,93,58,.4);box-shadow:0 0 0 3px rgba(232,93,58,.06)}
+.table{font-family:Inter,system-ui,sans-serif;font-size:13px}.table th{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:#6B6B6B;border-bottom:1px solid rgba(0,0,0,.08)}.table td{border-bottom:1px solid rgba(0,0,0,.06)}.table tbody tr:hover{background:#FAFAFA}
+.dialog{background:#fff;border-radius:20px;border:1px solid rgba(0,0,0,.08);box-shadow:0 30px 80px -20px rgba(0,0,0,.2)}.dialog-title{font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:24px}
+.field>label{font-size:12px;font-weight:500;color:#6B6B6B}
+a{color:#E85D3A}a:hover{color:#D14E2E}
+@keyframes aurPing{0%{transform:scale(.3);opacity:1}100%{transform:scale(1.7);opacity:0}}
+@keyframes aurSpin{to{transform:rotate(360deg)}}
+@keyframes aurPulse{0%,100%{opacity:1}50%{opacity:.35}}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:rgba(0,0,0,.14);border-radius:16px}
+</style>
+</helmet>
+<div style="--color-bg:#FFFFFF;--color-text:#1A1A1A;--color-divider:rgba(0,0,0,.08);--color-surface:#FFFFFF;--color-accent:#E85D3A;--font-heading:'DM Serif Display',Georgia,serif;--font-body:'Inter',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;background:#FFFFFF;color:#1A1A1A;font-family:'Inter',system-ui,sans-serif;font-size:13px">
+<header style="position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.06)">
+<div style="max-width:1240px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:18px;box-sizing:border-box;flex-wrap:wrap">
+<div style="height:22px;width:84px;overflow:hidden;display:flex;align-items:center;flex:none"><img src="assets/percura-logo.png" alt="Percura" style="height:62px;width:auto;max-width:none;flex:none;margin-left:-6px;filter:invert(1) brightness(.12)"></div>
+<span style="width:1px;height:30px;background:rgba(0,0,0,.08)"></span>
+<div style="display:flex;flex-direction:column;gap:3px;flex:none"><span style="font-size:13.5px;font-weight:600;letter-spacing:-.01em">Aurum <span style="color:#E85D3A">Intelligence</span></span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#6B6B6B">Strategic simulation · Aurum</span></div>
+<div style="flex:1;display:flex;justify-content:center;align-items:flex-start;min-width:0;overflow:hidden">
+<sc-for list="{{ hSteps }}" as="t" hint-placeholder-count="5"><sc-if value="{{ t.line }}"><span style="flex:0 1 60px;min-width:20px;height:2px;background:{{ t.lc }};margin-top:12px"></span></sc-if><button onClick="{{ t.go }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:0;cursor:pointer;flex:0 1 72px;min-width:0;padding:0"><span style="width:24px;height:24px;flex:none;border-radius:50%;border:1.5px solid {{ t.cb }};background:{{ t.cbg }};color:{{ t.cfg }};display:grid;place-items:center;font-size:10.5px;font-weight:700">{{ t.mark }}</span><sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><span style="font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:{{ t.lfg }};font-weight:600;line-height:1.25;text-align:center">{{ t.label }}</span></sc-if></button></sc-for>
+</div>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border:1px solid rgba(0,0,0,.1);border-radius:999px;color:#1A1A1A;white-space:nowrap;flex:none">Prepared for Aurum</span>
+</div>
+</header>
+<main style="flex:1;width:100%;max-width:{{ mainW }};margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;min-width:0">
+<sc-if value="{{ showHead }}" hint-placeholder-val="{{ false }}"><div style="padding:44px 32px 0;display:flex;flex-direction:column;gap:10px">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#E85D3A">{{ crumb }}</span>
+<h1 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:44px;line-height:1.1;letter-spacing:-.02em;margin:0;color:#1A1A1A">{{ title }}</h1>
+<p style="margin:0;font-size:15px;color:#6B6B6B;max-width:720px">{{ sub }}</p>
+</div></sc-if>
+<div style="padding:28px 32px 120px;display:flex;flex-direction:column;gap:24px;min-width:0">
+<sc-if value="{{ scr.ux }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="UX Lab" style="display:flex;flex-direction:column;gap:20px">
+
+
+<sc-if value="{{ uxv.config }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:760px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:32px;padding-top:8px">
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A">Website to test</span><input class="input" value="{{ cfg.url }}" onChange="{{ setUrl }}" style="font-size:16px;min-height:52px;padding:12px 16px"></div>
+<div style="display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:baseline"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;flex:1">Who should visit it</span><button class="btn btn-ghost" onClick="{{ openCustom }}" style="font-size:12px">{{ ic.plus }}Custom persona</button></div><div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ roleChips }}" as="c" hint-placeholder-count="9"><button onClick="{{ c.go }}" style="padding:7px 14px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:999px;font:inherit;font-size:13px;cursor:pointer">{{ c.label }}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A">What should they evaluate</span><div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ objChips }}" as="c" hint-placeholder-count="8"><button onClick="{{ c.go }}" style="padding:7px 14px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:999px;font:inherit;font-size:13px;cursor:pointer">{{ c.label }}</button></sc-for></div></div>
+<div style="border-top:1px solid rgba(0,0,0,.08);padding-top:16px;display:flex;flex-direction:column;gap:20px">
+<button onClick="{{ toggleMore }}" style="align-self:flex-start;background:none;border:0;padding:0;font:inherit;font-size:13px;font-weight:600;color:#6B6B6B;cursor:pointer">{{ moreLbl }}</button>
+<sc-if value="{{ cfgMore }}">
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A">Industry</span><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ indChips }}" as="c" hint-placeholder-count="7"><button onClick="{{ c.go }}" style="padding:7px 14px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:999px;font:inherit;font-size:13px;cursor:pointer;font-size:12px;padding:5px 12px">{{ c.label }}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A">Company size</span><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ sizeChips }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.go }}" style="padding:7px 14px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:999px;font:inherit;font-size:13px;cursor:pointer;font-size:12px;padding:5px 12px">{{ c.label }}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A">Seniority</span><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ senChips }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.go }}" style="padding:7px 14px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:999px;font:inherit;font-size:13px;cursor:pointer;font-size:12px;padding:5px 12px">{{ c.label }}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px;max-width:320px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A">Number of personas · <span style="color:#E85D3A">{{ cfg.count }}</span></span><input type="range" min="2" max="24" value="{{ cfg.count }}" onChange="{{ setCount }}" style="accent-color:#E85D3A"></div>
+</sc-if>
+</div>
+</div>
+<div style="position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid rgba(0,0,0,.08)"><div style="max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:12px;box-sizing:border-box;flex-wrap:wrap"><div style="flex:1;min-width:200px;display:flex;flex-direction:column"><span style="font-size:13.5px;font-weight:600">{{ roleCount }} personas · {{ objCount }} objectives</span><span style="font-size:12px;color:#6B6B6B">{{ cfg.url }}</span></div><button class="btn btn-secondary" onClick="{{ goHome }}">{{ ic.chevL }}Back</button><button class="btn btn-primary" onClick="{{ launch }}">Launch simulation{{ ic.arrow }}</button></div></div>
+</sc-if>
+
+<sc-if value="{{ uxv.live }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+<span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;min-width:120px"><span style="width:8px;height:8px;border-radius:50%;background:#E85D3A;animation:{{ livePulse }}"></span>{{ statusLbl }}</span>
+<div style="flex:1;min-width:160px;display:flex;align-items:center;gap:10px"><div style="flex:1;height:4px;background:rgba(0,0,0,.06);border-radius:999px;overflow:hidden"><div style="height:4px;width:{{ m.prog }};background:#E85D3A;transition:width .6s"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6B6B6B">{{ m.prog }}</span></div>
+<button class="btn btn-secondary" onClick="{{ onPlay }}" disabled="{{ control }}">{{ playIcon }}{{ playLbl }}</button>
+<button class="btn btn-secondary btn-icon" onClick="{{ onRestart }}" disabled="{{ control }}" aria-label="Restart" title="Restart">{{ ic.restart }}</button>
+<button class="btn btn-secondary" onClick="{{ cycleSpeed }}" title="Simulation speed">{{ speedLbl }}</button>
+<sc-if value="{{ notControl }}" hint-placeholder-val="{{ true }}"><button class="btn btn-primary" onClick="{{ onControl }}">{{ ic.hand }}Take control</button></sc-if>
+<sc-if value="{{ control }}"><button class="btn" onClick="{{ onControl }}" style="background:#E85D3A;color:#fff;border:1.5px solid #E85D3A">{{ ic.hand }}Release control</button></sc-if>
+</div>
+<sc-if value="{{ done }}"><div style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1px solid rgba(232,93,58,.4);border-radius:16px;background:rgba(232,93,58,.03);flex-wrap:wrap"><span style="flex:1;min-width:200px;font-size:14px">Simulation complete — <b style="font-weight:600">3 of 6 personas requested a pilot.</b></span><button class="btn btn-primary" onClick="{{ goReport }}">View report{{ ic.arrow }}</button></div></sc-if>
+<div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
+<div style="flex:1 1 220px;min-width:210px;max-width:100%;display:flex;flex-direction:column;gap:6px">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;margin-bottom:4px">Personas</span>
+<sc-for list="{{ persons }}" as="p" hint-placeholder-count="6">
+<button onClick="{{ p.go }}" style="display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:center;text-align:left;padding:10px 12px;border:1px solid {{ p.bd }};background:{{ p.bg }};border-radius:12px;color:inherit;font:inherit;cursor:pointer">
+<span style="width:30px;height:30px;border-radius:50%;background:{{ p.color }};color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700">{{ p.num }}</span>
+<span style="display:flex;flex-direction:column;gap:1px;min-width:0"><span style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:600;flex:1">{{ p.role }}</span><span style="font-size:10.5px;color:{{ p.sfg }}">{{ p.status }}</span></span><span style="font-size:11.5px;color:#6B6B6B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.activity }}</span></span>
+</button>
+</sc-for>
+</div>
+<div style="flex:3 1 540px;min-width:0;display:flex;flex-direction:column;border:1px solid {{ viewOutline }};border-radius:16px;overflow:hidden;background:#fff">
+<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid rgba(0,0,0,.08);background:#FAFAFA">
+<span style="display:flex;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#E2E2E2"></span><span style="width:10px;height:10px;border-radius:50%;background:#E2E2E2"></span><span style="width:10px;height:10px;border-radius:50%;background:#E2E2E2"></span></span>
+<div style="flex:1;display:flex;align-items:center;gap:8px;padding:5px 12px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:999px;font-size:12px;color:#4A4A4A;min-width:0"><span style="color:#15803D">{{ ic.lock }}</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ urlPath }}</span></div>
+</div>
+<sc-if value="{{ control }}"><div style="padding:8px 14px;background:rgba(232,93,58,.08);color:#E85D3A;font-size:12.5px">You’re driving — personas are paused and your clicks are logged.</div></sc-if>
+<div ref="{{ bRef }}" onClick="{{ onPageClick }}" style="position:relative;height:560px;overflow-y:{{ viewOverflow }};overflow-x:hidden;background:#f6f1e8;color:#1f1b16;font-family:var(--font-body)">
+<div style="position:relative;height:3300px;transform:{{ viewY }};transition:transform 1.2s cubic-bezier(.45,0,.2,1)">
+<div style="height:60px;display:flex;align-items:center;gap:22px;padding:0 6%;border-bottom:1px solid rgba(31,27,22,.12);font-size:13px;box-sizing:border-box">
+<span style="font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-right:auto;letter-spacing:.02em">Aurum</span><a data-go="ninety" style="color:inherit;cursor:pointer">How it works</a><a data-go="research" style="color:inherit;cursor:pointer">Why it works</a><a data-go="tiers" style="color:inherit;cursor:pointer">For you</a><a data-go="cta" style="color:#8a5d1f;cursor:pointer">Talk to us</a>
+</div>
+<div style="height:480px;padding:22px 6% 0;box-sizing:border-box;overflow:hidden">
+<span style="display:inline-block;font-size:11px;letter-spacing:.06em;padding:3px 9px;border:1px solid #a7742c;color:#8a5d1f;border-radius:999px">Pre-launch · A few excellent pilot partners wanted</span>
+<h1 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:46px;line-height:1.05;margin:38px 0 18px;max-width:640px;color:#1f1b16">Most companies say they develop women. Almost none can show you who.</h1>
+<p style="font-size:15px;max-width:520px;color:#4a433a;margin:0 0 34px">Aurum builds the record. Who was advanced, by whom, and what changed. Evidenced, dated, and impossible to invent.</p>
+<div style="display:flex;gap:14px;flex-wrap:wrap"><button data-go="record" style="padding:11px 18px;border:1px solid #1f1b16;background:#1f1b16;color:#f6f1e8;font:inherit;font-size:13.5px;cursor:pointer">See what the record looks like</button><button data-go="research" style="padding:11px 18px;border:1px solid rgba(31,27,22,.3);background:none;color:#1f1b16;font:inherit;font-size:13.5px;cursor:pointer">Or read the research</button></div>
+</div>
+<div style="height:380px;padding:40px 6%;box-sizing:border-box;background:#efe8db;overflow:hidden">
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;margin:0 0 20px;color:#1f1b16">What is it costing you?</h2>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:620px;font-size:12px;color:#4a433a">
+<label style="display:flex;flex-direction:column;gap:5px">Women in mid-career roles<input aria-label="Women in mid-career roles" value="{{ calc.women }}" onChange="{{ onWomen }}" style="padding:8px;border:1px solid rgba(31,27,22,.25);background:#fff;font:inherit;font-size:15px;color:#1f1b16"></label>
+<label style="display:flex;flex-direction:column;gap:5px">Avg salary (₹ lakh)<input aria-label="Average salary" value="{{ calc.salary }}" onChange="{{ onSalary }}" style="padding:8px;border:1px solid rgba(31,27,22,.25);background:#fff;font:inherit;font-size:15px;color:#1f1b16"></label>
+<label style="display:flex;flex-direction:column;gap:5px">Annual attrition, %<input aria-label="Attrition rate" value="{{ calc.attr }}" onChange="{{ onAttr }}" style="padding:8px;border:1px solid rgba(31,27,22,.25);background:#fff;font:inherit;font-size:15px;color:#1f1b16"></label>
+</div>
+<div style="margin-top:22px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap"><span style="font-family:'DM Serif Display',Georgia,serif;font-size:40px;color:#8a5d1f;font-feature-settings:'tnum'">{{ costOut }}</span><span style="font-size:13px;color:#4a433a">a year, replacing ~{{ leaving }} women at 1.5× salary.</span></div>
+<button aria-label="Show the working" style="margin-top:14px;padding:0;border:0;background:none;font:inherit;font-size:12.5px;text-decoration:underline;color:#4a433a;cursor:pointer">Show the working</button>
+</div>
+<div style="height:360px;padding:44px 6%;box-sizing:border-box;overflow:hidden">
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;margin:0 0 6px">A record you could not fake if you wanted to.</h2>
+<span style="font-size:10px;color:#8b8274">Sample data</span>
+<div style="display:flex;flex-direction:column;margin-top:14px;font-size:14px;max-width:640px"><span style="padding:9px 0;border-top:1px solid rgba(31,27,22,.12)">Forty teams migrated, no downtime. Recorded March. Vouched for by the regional director.</span><span style="padding:9px 0;border-top:1px solid rgba(31,27,22,.12)">Put forward for the platform lead role. Sponsor committed 4 April. Followed through 19 April.</span><span style="padding:9px 0;border-top:1px solid rgba(31,27,22,.12)">Promoted, July. Nineteen months faster than the band average.</span><span style="padding:9px 0;border-top:1px solid rgba(31,27,22,.12);border-bottom:1px solid rgba(31,27,22,.12)">Sponsor follow-through across the cohort: <b style="font-weight:600">84 percent</b>.</span></div>
+</div>
+<div style="height:380px;padding:44px 6%;box-sizing:border-box;background:#efe8db;overflow:hidden">
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;margin:0 0 22px">Change the speaker. Not the woman.</h2>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;font-size:13px">
+<div style="border-top:1px solid #a7742c;padding-top:10px"><span style="font-size:11px;color:#8a5d1f">01 · The double bind</span><p style="margin:8px 0 0;color:#4a433a">Modesty reads as less competent; speaking up reads as less likeable. Both paths cost her.</p></div>
+<div style="border-top:1px solid #a7742c;padding-top:10px"><span style="font-size:11px;color:#8a5d1f">02 · The moving bar</span><p style="margin:8px 0 0;color:#4a433a">When a woman is assertive, the standard shifts to how she came across.</p></div>
+<div style="border-top:1px solid #a7742c;padding-top:10px"><span style="font-size:11px;color:#8a5d1f">03 · The speaker swap</span><p style="margin:8px 0 0;color:#4a433a">Identical words, a different speaker, no penalty.</p></div>
+</div>
+</div>
+<div style="height:360px;padding:44px 6%;box-sizing:border-box;overflow:hidden">
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;margin:0 0 6px">The Ninety.</h2>
+<p style="font-size:13.5px;color:#4a433a;margin:0 0 20px">Four stages. Ninety days. Named commitments. One number at the end.</p>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;font-size:12.5px"><div><b style="font-weight:600;font-family:'DM Serif Display',Georgia,serif;font-size:18px">01 · Seen</b><p style="margin:6px 0 0;color:#4a433a">Her work is documented as it happens.</p></div><div><b style="font-weight:600;font-family:'DM Serif Display',Georgia,serif;font-size:18px">02 · Said</b><p style="margin:6px 0 0;color:#4a433a">A sentence another person can repeat.</p></div><div><b style="font-weight:600;font-family:'DM Serif Display',Georgia,serif;font-size:18px">03 · Carried</b><p style="margin:6px 0 0;color:#4a433a">A sponsor takes dated commitments.</p></div><div><b style="font-weight:600;font-family:'DM Serif Display',Georgia,serif;font-size:18px">04 · Counted</b><p style="margin:6px 0 0;color:#4a433a">Measured against a matched control.</p></div></div>
+</div>
+<div style="height:300px;padding:44px 6%;box-sizing:border-box;background:#1f1b16;color:#f6f1e8;overflow:hidden">
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:30px;margin:0 0 12px;color:#f6f1e8">The Only Brunches and Lunches Club.</h2>
+<p style="font-size:13.5px;color:#cbbfae;max-width:560px;margin:0 0 18px">The software tracks the promise. The club creates the relationship worth making one for.</p>
+<div style="display:flex;gap:22px;flex-wrap:wrap;font-size:13px;color:#e8d6b8"><span>Pottery and ceramics</span><span>Painting, loosely supervised</span><span>Herbal oil blending</span><span>The long lunch</span></div>
+</div>
+<div style="height:420px;padding:44px 6%;box-sizing:border-box;overflow:hidden">
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;margin:0 0 20px">Promises are easy. Show the follow-through.</h2>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;font-size:12.5px">
+<div style="border:1px solid rgba(31,27,22,.18);padding:14px"><b style="font-weight:600;font-family:'DM Serif Display',Georgia,serif;font-size:19px">Signal</b><p style="margin:6px 0 0;color:#4a433a">Retention delta vs matched control. Promotion velocity. Cost avoided.</p></div>
+<div style="border:1px solid rgba(31,27,22,.18);padding:14px"><b style="font-weight:600;font-family:'DM Serif Display',Georgia,serif;font-size:19px">Diagnostic</b><p style="margin:6px 0 0;color:#4a433a">Where women stall, by function and band. Which managers advance people.</p></div>
+<div style="border:1px solid rgba(31,27,22,.18);padding:14px"><b style="font-weight:600;font-family:'DM Serif Display',Georgia,serif;font-size:19px">Benchmark</b><p style="margin:6px 0 0;color:#4a433a">Peer comparison. Not ready yet — we’ll tell you when it is.</p></div>
+</div>
+<p style="font-size:12.5px;color:#4a433a;margin:20px 0 0;max-width:560px">Aurum is an annual licence, priced against the cost of losing one mid-career manager, not per seat.</p>
+</div>
+<div style="height:300px;padding:44px 6%;box-sizing:border-box;background:#efe8db;overflow:hidden">
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:30px;margin:0 0 14px">I watched the work. Then I watched who got chosen.</h2>
+<p style="font-size:13.5px;color:#4a433a;max-width:600px;margin:0 0 14px">I worked in economic advisory and then ran a company’s numbers as a CFO — close enough to notice who did the work, who described it, and which version travelled.</p>
+<span style="font-size:12.5px;color:#8a5d1f">Arundhati Babar, Founder</span>
+</div>
+<div style="height:260px;padding:52px 6%;box-sizing:border-box;text-align:center;overflow:hidden">
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;margin:0 0 10px">Be the employer with something to show.</h2>
+<p style="font-size:13.5px;color:#4a433a;margin:0 0 22px">Pre-launch. A small number of pilot partners.</p>
+<button style="padding:12px 22px;border:1px solid #1f1b16;background:#1f1b16;color:#f6f1e8;font:inherit;font-size:14px;cursor:pointer">Let’s talk about a pilot →</button>
+</div>
+{{ cursors }}
+</div>
+</div>
+</div>
+<div style="flex:1 1 260px;min-width:240px;display:flex;flex-direction:column;gap:6px">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;margin-bottom:4px">What they’re noticing</span>
+<sc-if value="{{ feedEmpty }}" hint-placeholder-val="{{ true }}"><p style="font-size:13px;color:#9A9A9A;margin:8px 0">Observations appear here as personas browse.</p></sc-if>
+<div style="display:flex;flex-direction:column;max-height:560px;overflow:auto">
+<sc-for list="{{ feedShort }}" as="f" hint-placeholder-count="0">
+<button onClick="{{ f.go }}" style="display:flex;gap:10px;text-align:left;padding:11px 0;border:0;border-bottom:1px solid rgba(0,0,0,.06);background:none;color:inherit;font:inherit;cursor:pointer">
+<span style="width:6px;height:6px;border-radius:50%;background:{{ f.tfg }};margin-top:7px;flex:none"></span>
+<span style="font-size:13px;line-height:1.5;color:#1A1A1A">{{ f.short }}</span>
+</button>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ uxv.report }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<div style="display:flex;gap:4px;padding:4px;background:#F5F5F5;border-radius:999px"><sc-for list="{{ rTabs }}" as="t" hint-placeholder-count="4"><button onClick="{{ t.go }}" style="padding:7px 16px;border:0;border-radius:999px;background:{{ t.bg }};box-shadow:{{ t.sh }};color:{{ t.fg }};font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">{{ t.l }}</button></sc-for></div>
+<span style="flex:1"></span><button class="btn btn-secondary" onClick="{{ toggleChat }}">{{ ic.msg }}Ask about this run</button><button class="btn btn-secondary" onClick="{{ exportReport }}">{{ ic.download }}Export</button>
+</div>
+
+<sc-if value="{{ r2.summary }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+<div style="border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:20px"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:40px;line-height:1">3 of 6</span><p style="margin:6px 0 0;font-size:13px;color:#6B6B6B">personas requested a pilot</p></div>
+<div style="border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:20px"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:40px;line-height:1;color:#DC2626">2</span><p style="margin:6px 0 0;font-size:13px;color:#6B6B6B">critical barriers to fix first</p></div>
+<div style="border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:20px"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:40px;line-height:1">63s</span><p style="margin:6px 0 0;font-size:13px;color:#6B6B6B">in the cost calculator — the most engaging section</p></div>
+</div>
+<p style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:24px;line-height:1.35;max-width:760px">The argument lands. What’s missing is what Aurum <em>is</em> and what it <em>costs</em> — buyers left looking for both.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px">
+<div style="display:flex;flex-direction:column"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;color:#15803D;margin-bottom:6px">What worked</span><sc-for list="{{ worked }}" as="x" hint-placeholder-count="3"><div style="padding:12px 0;border-top:1px solid rgba(0,0,0,.06)"><span style="font-size:14px">{{ x.t }}</span><span style="display:block;font-size:12px;color:#9A9A9A;margin-top:2px">{{ x.who }}</span></div></sc-for></div>
+<div style="display:flex;flex-direction:column"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;color:#DC2626;margin-bottom:6px">What stopped them</span><sc-for list="{{ stopped }}" as="x" hint-placeholder-count="3"><div style="padding:12px 0;border-top:1px solid rgba(0,0,0,.06)"><span style="font-size:14px">{{ x.t }}</span><span style="display:block;font-size:12px;color:#9A9A9A;margin-top:2px">{{ x.who }}</span></div></sc-for></div>
+</div>
+<button class="btn btn-primary" onClick="{{ goRecs }}" style="align-self:flex-start">See recommendations{{ ic.arrow }}</button>
+</sc-if>
+
+<sc-if value="{{ r2.recs }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;max-width:860px">
+<sc-for list="{{ recs2 }}" as="r" hint-placeholder-count="7">
+<div style="border-top:1px solid rgba(0,0,0,.08)">
+<button onClick="{{ r.go }}" style="width:100%;display:flex;align-items:center;gap:14px;text-align:left;padding:16px 0;border:0;background:none;color:inherit;font:inherit;cursor:pointer">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border:1px solid {{ r.pc }};color:{{ r.pc }};border-radius:999px;flex:none;min-width:58px;box-sizing:content-box;text-align:center">{{ r.pr }}</span>
+<span style="flex:1;font-size:14.5px;line-height:1.4">{{ r.problem }}</span>
+<span style="font-size:12px;color:#9A9A9A;flex:none">{{ r.sec }}</span><span style="color:#9A9A9A;flex:none">{{ r.chev }}</span>
+</button>
+<sc-if value="{{ r.open }}"><div style="padding:0 0 18px 94px;display:flex;flex-direction:column;gap:10px;font-size:13.5px;line-height:1.55"><div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;color:#E85D3A">Change</span><p style="margin:3px 0 0">{{ r.fix }}</p></div><div style="display:flex;gap:28px;flex-wrap:wrap;color:#6B6B6B;font-size:12.5px"><span>Evidence: {{ r.ev }}</span><span>Impact: {{ r.impact }}</span></div></div></sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ r2.personas }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;max-width:860px">
+<sc-for list="{{ pRows }}" as="r" hint-placeholder-count="6">
+<div style="border-top:1px solid rgba(0,0,0,.08)">
+<button onClick="{{ r.go }}" style="width:100%;display:flex;align-items:center;gap:14px;text-align:left;padding:16px 0;border:0;background:none;color:inherit;font:inherit;cursor:pointer">
+<span style="width:30px;height:30px;border-radius:50%;background:{{ r.color }};color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;flex:none">{{ r.num }}</span>
+<span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{ r.role }}</span><span style="font-size:13px;font-style:italic;color:#6B6B6B">{{ r.final }}</span></span>
+<span style="font-size:12px;color:{{ r.ofg }};flex:none">{{ r.o }}</span><span style="color:#9A9A9A">{{ r.chev }}</span>
+</button>
+<sc-if value="{{ r.open }}"><div style="padding:0 0 18px 44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;font-size:13px"><div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;color:#15803D">Liked</span><sc-for list="{{ r.pos }}" as="x" hint-placeholder-count="2"><p style="margin:5px 0 0">{{ x }}</p></sc-for></div><div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;color:#DC2626">Got stuck on</span><sc-for list="{{ r.neg }}" as="x" hint-placeholder-count="2"><p style="margin:5px 0 0">{{ x }}</p></sc-for></div></div></sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ r2.heat }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+<div style="position:relative;width:240px;background:#f6f1e8;border-radius:12px;overflow:hidden;border:1px solid rgba(0,0,0,.08)">
+<sc-for list="{{ heat }}" as="h" hint-placeholder-count="10"><div style="position:relative;height:{{ h.h }};border-bottom:1px solid rgba(31,27,22,.08)"><div style="position:absolute;inset:0;background:#E85D3A;opacity:{{ h.a }}"></div><span style="position:absolute;left:8px;top:4px;font-size:10px;color:#1f1b16">{{ h.name }}</span></div></sc-for>
+</div>
+<div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;margin-bottom:4px">Average time per section</span>
+<sc-for list="{{ timeBars }}" as="b" hint-placeholder-count="9"><div style="display:grid;grid-template-columns:130px 1fr 40px;gap:12px;align-items:center;font-size:13px"><span style="color:#4A4A4A">{{ b.name }}</span><div style="height:6px;background:rgba(0,0,0,.05);border-radius:999px;overflow:hidden"><div style="height:6px;width:{{ b.w }};background:#E85D3A;border-radius:999px"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-align:right;color:#6B6B6B">{{ b.s }}</span></div></sc-for>
+</div>
+</div>
+</sc-if>
+</sc-if>
+</section>
+</sc-if>
+<sc-if value="{{ scr.sales }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Sales Intelligence" style="display:flex;flex-direction:column;gap:24px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+<sc-for list="{{ secTabs }}" as="t" hint-placeholder-count="2"><button onClick="{{ t.go }}" style="display:flex;gap:14px;align-items:flex-start;text-align:left;padding:18px 20px;border:1px solid {{ t.bd }};box-shadow:{{ t.sh }};border-radius:16px;background:#fff;color:inherit;font:inherit;cursor:pointer;transition:all .3s"><span style="width:40px;height:40px;border-radius:10px;border:1px solid rgba(0,0,0,.08);background:#FAFAFA;display:grid;place-items:center;color:{{ t.ic }};flex:none">{{ t.icon }}</span><span style="display:flex;flex-direction:column;gap:4px;flex:1"><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:{{ t.kc }}">{{ t.k }}</span><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:21px;line-height:1.2">{{ t.title }}</span><span style="font-size:12.5px;color:#6B6B6B;line-height:1.5">{{ t.d }}</span></span><span style="width:18px;height:18px;border-radius:50%;border:1.5px solid {{ t.rb }};background:{{ t.rbg }};box-shadow:inset 0 0 0 3px #fff;flex:none"></span></button></sc-for>
+</div>
+
+<sc-if value="{{ sec.talk }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;margin-right:6px">Talk to</span><sc-for list="{{ clChips }}" as="c" hint-placeholder-count="7"><button onClick="{{ c.go }}" style="padding:7px 14px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:999px;font:inherit;font-size:12.5px;cursor:pointer;display:flex;align-items:center;gap:6px">{{ c.label }}<sc-if value="{{ c.mem }}"><span style="width:5px;height:5px;border-radius:50%;background:#15803D" title="Has memory"></span></sc-if></button></sc-for><button class="btn btn-ghost" onClick="{{ newCluster }}" style="font-size:12px">{{ ic.plus }}New</button></div>
+<div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+<div style="flex:2 1 460px;min-width:0;border:1px solid rgba(0,0,0,.08);border-radius:16px;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:18px 20px;border-bottom:1px solid rgba(0,0,0,.06);display:flex;flex-direction:column;gap:2px"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:24px">{{ mem.label }}</span><span style="font-size:12.5px;color:#6B6B6B">{{ mem.sub }}</span></div>
+<div style="padding:20px;display:flex;flex-direction:column;gap:12px;min-height:260px;max-height:420px;overflow:auto">
+<div style="align-self:center;font-size:11.5px;color:#9A9A9A;text-align:center;max-width:440px;line-height:1.5">{{ lastTime }}</div>
+<sc-for list="{{ memMsgs }}" as="x" hint-placeholder-count="0"><sc-if value="{{ x.u }}"><div style="align-self:flex-end;max-width:78%;padding:10px 14px;background:#1A1A1A;color:#fff;border-radius:16px 16px 4px 16px;font-size:13px;line-height:1.5">{{ x.t }}</div></sc-if><sc-if value="{{ x.a }}"><div style="align-self:flex-start;max-width:82%;padding:10px 14px;background:#F5F5F5;border-radius:16px 16px 16px 4px;font-size:13.5px;line-height:1.55">{{ x.t }}</div></sc-if></sc-for>
+<sc-if value="{{ memBusy }}"><span style="font-size:12px;color:#9A9A9A;animation:aurPulse 1.2s infinite">Typing…</span></sc-if>
+</div>
+<div style="display:flex;gap:8px;padding:12px 14px;border-top:1px solid rgba(0,0,0,.06)"><input class="input" value="{{ memIn }}" onChange="{{ setMemIn }}" onKeyDown="{{ memKey }}" placeholder="Type your message…"><button class="btn btn-primary btn-icon" onClick="{{ sendMem }}" aria-label="Send" style="width:40px;height:40px;flex:none">{{ ic.send }}</button></div>
+</div>
+<div style="flex:1 1 260px;display:flex;flex-direction:column;gap:14px">
+<div style="padding:18px;border:1px solid rgba(232,93,58,.35);background:rgba(232,93,58,.03);border-radius:16px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;color:#E85D3A">Suggested next step</span><p style="margin:8px 0 0;font-size:13.5px;line-height:1.55">{{ mem.next }}</p></div>
+<div style="padding:18px;border:1px solid rgba(0,0,0,.08);border-radius:16px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A">They still want to know</span><sc-for list="{{ mem.open }}" as="x" hint-placeholder-count="3"><p style="margin:8px 0 0;font-size:13px;line-height:1.5">{{ x }}</p></sc-for></div>
+<sc-if value="{{ hasSess }}"><div style="padding:6px 18px;border:1px solid rgba(0,0,0,.08);border-radius:16px"><button onClick="{{ toggleSess }}" style="width:100%;display:flex;align-items:center;padding:10px 0;border:0;background:none;font:inherit;cursor:pointer;color:inherit"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;flex:1;text-align:left">Previous sessions · {{ sessCount }}</span><span style="color:#9A9A9A">{{ sessChev }}</span></button><sc-if value="{{ sessOpen }}"><sc-for list="{{ mem.sessions }}" as="x" hint-placeholder-count="3"><div style="padding:10px 0;border-top:1px solid rgba(0,0,0,.06)"><span style="font-size:12.5px;font-weight:600">{{ x.date }} · {{ x.title }}</span><sc-for list="{{ x.items }}" as="it" hint-placeholder-count="2"><p style="margin:3px 0 0;font-size:12px;color:#6B6B6B">{{ it }}</p></sc-for></div></sc-for></sc-if></div></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sec.li }}" hint-placeholder-val="{{ false }}">
+<div style="border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+<span style="width:40px;height:40px;border-radius:10px;border:1px solid rgba(10,102,194,.25);display:grid;place-items:center;color:#0A66C2;flex:none">{{ ic.li }}</span>
+<sc-if value="{{ li.off }}" hint-placeholder-val="{{ true }}"><div style="flex:1;min-width:240px;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">Connect LinkedIn to find real prospects</span><span style="font-size:12.5px;color:#6B6B6B">Official sign-in + your connections export. Showing illustrative prospects until then. No scraping, no auto-messaging.</span></div><button class="btn btn-primary" onClick="{{ openOauth }}">Connect LinkedIn</button></sc-if>
+<sc-if value="{{ li.connecting }}"><span style="flex:1;font-size:13px;color:#E85D3A;animation:aurPulse 1.2s infinite">Waiting for LinkedIn authorisation…</span></sc-if>
+<sc-if value="{{ li.on }}"><div style="flex:1;min-width:240px;display:flex;gap:28px;flex-wrap:wrap;align-items:center"><span style="font-size:12.5px;color:#15803D;font-weight:600">● Connected</span><span style="display:flex;flex-direction:column"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:22px">1,284</span><span style="font-size:11px;color:#6B6B6B">connections imported</span></span><span style="display:flex;flex-direction:column"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:22px">412</span><span style="font-size:11px;color:#6B6B6B">match a cluster</span></span><span style="display:flex;flex-direction:column"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:22px">17</span><span style="font-size:11px;color:#6B6B6B">high priority</span></span></div><button class="btn btn-secondary" onClick="{{ importCsv }}">{{ ic.upload }}Import export</button><button class="btn btn-secondary" onClick="{{ disconnectLi }}">Disconnect</button></sc-if>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+<div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><div style="position:relative;flex:1 1 180px"><span style="position:absolute;left:12px;top:11px;color:#9A9A9A">{{ ic.search }}</span><input class="input" value="{{ f.q }}" onChange="{{ fq }}" placeholder="Search prospects" style="padding-left:36px"></div><div style="display:flex;gap:4px;padding:4px;background:#F5F5F5;border-radius:999px"><sc-for list="{{ priTabs }}" as="t" hint-placeholder-count="3"><button onClick="{{ t.go }}" style="padding:6px 12px;border:0;border-radius:999px;background:{{ t.bg }};box-shadow:{{ t.sh }};color:{{ t.fg }};font:inherit;font-size:12px;font-weight:600;cursor:pointer">{{ t.l }}</button></sc-for></div></div>
+<sc-if value="{{ noRows }}"><p style="font-size:13px;color:#9A9A9A;padding:16px 0">No prospects match.</p></sc-if>
+<div style="display:flex;flex-direction:column;gap:6px">
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
+<button onClick="{{ r.go }}" style="display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;border:1px solid {{ r.bd2 }};background:{{ r.bg }};border-radius:12px;color:inherit;font:inherit;cursor:pointer">
+<span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:13.5px;font-weight:600">{{ r.name }}</span><span style="font-size:12px;color:#6B6B6B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }} · {{ r.co }}</span></span>
+<span style="font-size:11px;color:#15803D">{{ r.status }}</span>
+<span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:22px;color:{{ r.sc }}">{{ r.score }}</span>
+</button>
+</sc-for>
+</div>
+</div>
+<div style="flex:1.4 1 420px;min-width:0;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:18px;position:sticky;top:110px">
+<div style="display:flex;align-items:flex-start;gap:12px"><div style="flex:1"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:26px">{{ pr.name }}</span><p style="margin:2px 0 0;font-size:13px;color:#6B6B6B">{{ pr.title }}, {{ pr.co }} · {{ pr.conn }} connection</p></div><div style="text-align:right"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:34px;line-height:1;color:#E85D3A">{{ pr.score }}</span><span style="display:block;font-size:10.5px;color:#9A9A9A">fit score</span></div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px"><div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A">Why them</span><p style="margin:5px 0 0;font-size:13px;line-height:1.5">{{ pr.problem }}</p></div><div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A">How to approach</span><p style="margin:5px 0 0;font-size:13px;line-height:1.5">{{ pr.intro }}</p></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;flex:1">Draft message</span><button class="btn btn-ghost" onClick="{{ genMsg }}" disabled="{{ gen }}" style="font-size:12px">{{ ic.spark }}Rewrite</button></div><textarea class="input" value="{{ draft }}" onChange="{{ setDraft }}" style="min-height:180px;font-size:13.5px;line-height:1.6;padding:14px"></textarea><sc-if value="{{ gen }}"><span style="font-size:12px;color:#9A9A9A;animation:aurPulse 1.2s infinite">Rewriting…</span></sc-if></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><button class="btn btn-primary" onClick="{{ approve }}">{{ ic.check }}Approve &amp; copy</button><button class="btn btn-secondary" onClick="{{ saveP }}">{{ savedLbl }}</button><button class="btn btn-secondary" onClick="{{ markC }}">Mark contacted</button><span style="margin-left:auto;font-size:12px;color:{{ pr.stc }}">{{ pr.status }}</span></div>
+<p style="margin:0;font-size:11.5px;color:#9A9A9A">Nothing is sent automatically — you send it from LinkedIn.</p>
+</div>
+</div>
+</sc-if>
+</section>
+</sc-if>
+<sc-if value="{{ isMethod }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="Method" style="display:flex;flex-direction:column;gap:0;padding-top:20px">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#E85D3A">Step 02 · Research method</span>
+<h1 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:48px;line-height:1.1;letter-spacing:-.02em;margin:14px 0 12px;color:#1A1A1A">What would you like to explore?</h1>
+<p style="margin:0;font-size:15px;color:#4A4A4A">Choose the research method that best supports Aurum’s next decision.</p>
+<div style="display:flex;align-items:center;gap:14px;margin:30px 0 28px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid rgba(0,0,0,.1);border-radius:999px;background:#FAFAFA;font-size:12.5px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:#9A9A9A">Workspace</span>Aurum · aurumcareers.tech</span><button onClick="{{ changeWs }}" style="background:none;border:0;color:#E85D3A;font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:0">Change</button></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+<sc-for list="{{ methods }}" as="m" hint-placeholder-count="3">
+<button onClick="{{ m.go }}" style="display:flex;flex-direction:column;text-align:left;padding:22px;border:1px solid {{ m.bd }};border-radius:16px;background:#fff;box-shadow:{{ m.sh }};color:inherit;font:inherit;cursor:pointer;transition:all .3s;min-height:280px" style-hover="border-color:rgba(0,0,0,.18)">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;width:100%"><span style="width:42px;height:42px;border:1px solid rgba(0,0,0,.08);border-radius:10px;display:grid;place-items:center;color:#1A1A1A;background:#FAFAFA">{{ m.icon }}</span><span style="width:18px;height:18px;border-radius:50%;border:1.5px solid {{ m.rb }};background:{{ m.rbg }};box-shadow:inset 0 0 0 3px #fff"></span></div>
+<span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:25px;line-height:1.2;letter-spacing:-.01em;margin:26px 0 10px;color:#1A1A1A">{{ m.title }}</span>
+<span style="font-size:13px;line-height:1.65;color:#4A4A4A;flex:1">{{ m.body }}</span>
+<span style="display:flex;justify-content:space-between;gap:10px;width:100%;margin-top:22px;padding-top:14px;border-top:1px solid rgba(0,0,0,.08);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em"><span style="text-transform:uppercase;font-weight:600;color:{{ m.ffg }}">{{ m.foot }}</span><span style="color:#9A9A9A">{{ m.path }}</span></span>
+</button>
+</sc-for>
+</div>
+<div style="position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid rgba(0,0,0,.08)"><div style="max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:12px;box-sizing:border-box;flex-wrap:wrap"><div style="flex:1;min-width:200px;display:flex;flex-direction:column"><span style="font-size:13.5px;font-weight:600">{{ selTitle }}</span><span style="font-size:12px;color:#6B6B6B">{{ selSub }}</span></div><button class="btn btn-secondary" onClick="{{ backMethod }}">{{ ic.chevL }}Back</button><button class="btn btn-primary" onClick="{{ contMethod }}" disabled="{{ noMethod }}">Continue{{ ic.arrow }}</button></div></div>
+</section>
+</sc-if>
+<sc-if value="{{ scr.survey }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Survey" style="display:flex;flex-direction:column;gap:0">
+<div style="display:flex;justify-content:center;align-items:flex-start;padding:4px 0 24px">
+<sc-for list="{{ svSteps }}" as="t" hint-placeholder-count="4"><sc-if value="{{ t.line }}"><span style="flex:0 1 80px;min-width:32px;height:2px;background:{{ t.lc }};margin-top:16px"></span></sc-if><button onClick="{{ t.go }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;cursor:pointer;min-width:80px;padding:0"><span style="width:34px;height:34px;border-radius:50%;border:2px solid {{ t.cb }};background:{{ t.cbg }};color:{{ t.cfg }};box-shadow:{{ t.ring }};display:grid;place-items:center;font-size:12px;font-weight:700;transition:all .4s">{{ t.mark }}</span><span style="font-size:11px;font-weight:600;color:{{ t.lfg }}">{{ t.label }}</span></button></sc-for>
+</div>
+
+<sc-if value="{{ sx.a }}" hint-placeholder-val="{{ true }}">
+<div style="max-width:720px;width:100%;margin:20px auto 0;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:24px;padding:44px;box-sizing:border-box;box-shadow:0 10px 30px -10px rgba(0,0,0,.06)">
+<sc-if value="{{ sx.loading }}"><div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:40px 0"><span style="width:28px;height:28px;border-radius:50%;border:2.5px solid rgba(232,93,58,.15);border-top-color:#E85D3A;animation:aurSpin .8s linear infinite"></span><span style="font-size:13px;color:#6B6B6B">Identifying look-alike target segments…</span></div></sc-if>
+<sc-if value="{{ sx.notLoading }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ sx.sub1 }}" hint-placeholder-val="{{ true }}">
+<h1 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:28px;line-height:1.25;letter-spacing:-.02em;margin:0 0 10px;color:#1A1A1A">Tell us which customer segments you’d like us to focus on?</h1>
+<p style="margin:0 0 36px;font-size:13px;color:rgba(0,0,0,.4)">Which specific customer segments matter most to Aurum</p>
+<input class="input" value="{{ svd.seg }}" onChange="{{ segIn }}" placeholder="e.g. CHROs, L&amp;D heads and DEI leaders at Indian enterprises…" style="padding:14px 16px;min-height:50px;font-size:14px;margin-bottom:40px">
+<button class="btn btn-primary" onClick="{{ sub1Go }}" disabled="{{ seg1Dis }}" style="padding:12px 32px">Continue</button>
+</sc-if>
+<sc-if value="{{ sx.sub2 }}">
+<h1 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:28px;line-height:1.25;letter-spacing:-.02em;margin:0 0 10px;color:#1A1A1A">How should we group them?</h1>
+<p style="margin:0 0 36px;font-size:13px;color:rgba(0,0,0,.4)">Select how we should segment your audience</p>
+<input class="input" value="{{ svd.group }}" onChange="{{ groupIn }}" placeholder="Examples: By seniority, industry, company size, buying motivation…" style="padding:14px 16px;min-height:50px;font-size:14px;margin-bottom:20px">
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px"><sc-for list="{{ geChips }}" as="g" hint-placeholder-count="6"><button onClick="{{ g.go }}" style="padding:6px 14px;background:rgba(0,0,0,.02);border:1px solid rgba(0,0,0,.06);border-radius:8px;font:inherit;font-size:12px;font-weight:500;color:rgba(0,0,0,.45);cursor:pointer" style-hover="background:rgba(232,93,58,.06);color:#E85D3A;border-color:rgba(232,93,58,.15)">{{ g.g }}</button></sc-for></div>
+<div style="display:flex;align-items:center;gap:16px"><button class="btn btn-primary" onClick="{{ sub2Go }}" disabled="{{ seg2Dis }}" style="padding:12px 32px">Build my audience</button><button onClick="{{ sub2Back }}" style="background:none;border:0;font:inherit;font-size:13px;font-weight:600;color:rgba(0,0,0,.5);cursor:pointer">Back</button></div>
+</sc-if>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ sx.seg }}" hint-placeholder-val="{{ false }}">
+<div style="text-align:center;margin:20px 0 40px;display:flex;flex-direction:column;align-items:center;gap:14px">
+<span style="display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:#E85D3A;font-weight:700"><span style="width:40px;height:1px;background:rgba(232,93,58,.3)"></span>5 look-alike segments identified<span style="width:40px;height:1px;background:rgba(232,93,58,.3)"></span></span>
+<h1 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:46px;letter-spacing:-.03em;margin:0;line-height:1.05">Target <em>Audience</em> Selection</h1>
+<p style="margin:0;font-size:12.5px;color:rgba(0,0,0,.4);max-width:560px;line-height:1.6">We’ve clustered the best-fit decision-maker personas matching your intake. Choose which cohorts should answer your questionnaire.</p>
+</div>
+<div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:24px;padding:36px;box-shadow:0 10px 30px -10px rgba(0,0,0,.05)">
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px">
+<div style="border:1px dashed rgba(0,0,0,.12);border-radius:16px;background:#FAFAFA;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;min-height:340px">
+<sc-if value="{{ od.idle }}" hint-placeholder-val="{{ true }}"><span style="width:46px;height:46px;border-radius:50%;background:rgba(0,0,0,.03);display:grid;place-items:center;color:rgba(0,0,0,.4)">{{ ic.spark }}</span><span style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#E85D3A;font-weight:700">On-demand synthesis</span><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:19px">Synthesize Custom Audience</span><span style="font-size:12px;color:rgba(0,0,0,.4);max-width:230px;line-height:1.55">Generate 10 custom personas tailored specifically to your survey context.</span><button class="btn btn-secondary" onClick="{{ odGo }}" style="margin-top:6px">Create 10 personas</button></sc-if>
+<sc-if value="{{ od.run }}"><span style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#E85D3A;font-weight:700">Synthesizing audience</span><span style="font-size:12px;color:rgba(0,0,0,.4)">{{ odN }} of 10 custom personas…</span><div style="width:100%;height:6px;background:rgba(0,0,0,.06);border-radius:999px;overflow:hidden"><div style="height:6px;width:{{ odW }};background:#E85D3A;transition:width .3s"></div></div><button onClick="{{ odCancel }}" style="padding:4px 10px;border:1px solid #FECACA;color:#EF4444;background:none;border-radius:8px;font:inherit;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;cursor:pointer">Cancel</button></sc-if>
+<sc-if value="{{ od.done }}"><span style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#E85D3A;font-weight:700">Synthesized segment</span><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:19px">On-Demand Personas</span><span style="font-size:12px;color:rgba(0,0,0,.4)">10 personas ready · added to this survey</span></sc-if>
+</div>
+<sc-for list="{{ segCards }}" as="g" hint-placeholder-count="5">
+<div onClick="{{ g.toggle }}" style="border:1px solid {{ g.bd }};box-shadow:{{ g.sh }};border-radius:16px;padding:28px;display:flex;flex-direction:column;cursor:pointer;background:#fff;transition:all .4s">
+<div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:20px"><div><span style="display:block;font-size:10.5px;letter-spacing:.25em;text-transform:uppercase;color:#E85D3A;font-weight:700;margin-bottom:8px">Segment cluster {{ g.idx }}</span><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:21px;line-height:1.2">{{ g.name }}</span></div><span style="width:24px;height:24px;flex:none;border-radius:50%;border:1px solid {{ g.cbd }};background:{{ g.cbg }};display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700">✓</span></div>
+<div style="padding:14px;border-radius:16px;background:#FAFAFA;border:1px solid rgba(0,0,0,.06);margin-bottom:20px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(0,0,0,.3);font-weight:600">Resonance fit</span><span style="font-size:12px;font-weight:700;font-style:italic;color:#E85D3A">{{ g.fit }}%</span></div><div style="height:6px;background:rgba(0,0,0,.06);border-radius:999px;overflow:hidden"><div style="height:6px;width:{{ g.w }};background:#E85D3A;border-radius:999px"></div></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;font-size:11px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px dashed rgba(0,0,0,.08)"><div><span style="display:block;color:rgba(0,0,0,.3)">Function:</span><span style="font-weight:600;color:rgba(0,0,0,.7)">{{ g.fn }}</span></div><div><span style="display:block;color:rgba(0,0,0,.3)">Seniority:</span><span style="font-weight:600;color:rgba(0,0,0,.7)">{{ g.sen }}</span></div><div><span style="display:block;color:rgba(0,0,0,.3)">Company size:</span><span style="font-weight:600;color:rgba(0,0,0,.7)">{{ g.size }}</span></div><div><span style="display:block;color:rgba(0,0,0,.3)">Region:</span><span style="font-weight:600;color:rgba(0,0,0,.7)">{{ g.region }}</span></div></div>
+<p style="margin:0 0 18px;font-size:12px;font-style:italic;color:rgba(0,0,0,.45);line-height:1.6">“{{ g.desc }}”</p>
+<button class="btn btn-ghost" onClick="{{ g.expand }}" style="margin-top:auto;justify-content:center;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700">{{ g.vl }}</button>
+<sc-if value="{{ g.open }}"><div style="display:flex;flex-direction:column;gap:8px;margin-top:12px"><sc-for list="{{ g.ps }}" as="p" hint-placeholder-count="2"><div style="padding:10px 12px;border-radius:12px;background:#FAFAFA;border:1px solid rgba(0,0,0,.06)"><span style="display:block;font-size:11px;font-weight:700;color:rgba(0,0,0,.8)">{{ p.n }}</span><span style="display:block;font-size:10.5px;color:rgba(0,0,0,.45);margin-top:2px">{{ p.m }}</span><span style="display:inline-block;margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;background:rgba(0,0,0,.04);color:rgba(0,0,0,.5);padding:2px 6px;border-radius:4px">{{ p.tag }}</span></div></sc-for></div></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid rgba(0,0,0,.08)"><div style="max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:12px;box-sizing:border-box;flex-wrap:wrap"><div style="flex:1;min-width:200px;display:flex;flex-direction:column"><span style="font-size:13.5px;font-weight:600">{{ selCount }} segments selected</span><span style="font-size:12px;color:#6B6B6B">{{ selPeople }} personas will answer this survey</span></div><button class="btn btn-secondary" onClick="{{ segBack }}">{{ ic.chevL }}Back</button><button class="btn btn-primary" onClick="{{ segGo }}">Continue{{ ic.arrow }}</button></div></div>
+</sc-if>
+
+<sc-if value="{{ sx.b }}" hint-placeholder-val="{{ false }}">
+<div style="text-align:center;margin:12px 0 36px"><h1 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:30px;letter-spacing:-.02em;margin:0 0 8px">Build Your Survey</h1><p style="margin:0;font-size:14px;color:rgba(0,0,0,.4)">Define your research goal, write questions and tune how personas respond.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+<div style="flex:2 1 520px;min-width:0;display:flex;flex-direction:column;gap:22px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px"><div class="field"><label>Simulation Name</label><input class="input" value="{{ svd.name }}" onChange="{{ nameIn }}" placeholder="Startup Validation Survey" style="padding:12px 14px"></div><div class="field"><label>Research Goal</label><input class="input" value="{{ svd.goal }}" onChange="{{ goalIn }}" placeholder="What are you trying to learn?" style="padding:12px 14px"></div></div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center"><span style="font-size:12px;font-weight:500;color:#6B6B6B;flex:1">Questions ({{ qCount }})</span><button class="btn btn-ghost" onClick="{{ addQ }}">{{ ic.plus }}Add question</button></div>
+<sc-if value="{{ noQs }}"><div style="padding:36px;border:1px dashed rgba(0,0,0,.12);border-radius:16px;text-align:center;font-size:13px;color:#9A9A9A">No questions yet — add one or ask the AI Research Assistant.</div></sc-if>
+<sc-for list="{{ qCards }}" as="q" hint-placeholder-count="4">
+<div style="border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;background:#fff">
+<div style="display:flex;align-items:center;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#E85D3A;background:rgba(232,93,58,.06);padding:4px 10px;border-radius:6px">Q{{ q.n }}</span><select class="input" value="{{ q.t }}" onChange="{{ q.setT }}" style="width:auto;min-height:32px;padding:4px 10px;font-size:12px"><sc-for list="{{ q.types }}" as="o" hint-placeholder-count="8"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select><span style="flex:1"></span><button class="btn btn-icon" onClick="{{ q.dup }}" aria-label="Duplicate" style="width:30px;height:30px;color:#9A9A9A">{{ ic.copy }}</button><button class="btn btn-icon" onClick="{{ q.rm }}" aria-label="Delete" style="width:30px;height:30px;color:#9A9A9A">{{ ic.x }}</button></div>
+<input class="input" value="{{ q.p }}" onChange="{{ q.setP }}" placeholder="Type your question here..." style="padding:11px 14px;font-size:13.5px;background:#fff">
+<sc-if value="{{ q.hasOpts }}"><div style="display:flex;flex-direction:column;gap:6px;padding-left:4px"><sc-for list="{{ q.opts }}" as="o" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:8px"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(0,0,0,.15);flex:none"></span><input class="input" value="{{ o.o }}" onChange="{{ o.ch }}" placeholder="{{ o.ph }}" style="min-height:32px;padding:5px 10px;font-size:12.5px"><button onClick="{{ o.rm }}" style="background:none;border:0;color:#9A9A9A;cursor:pointer;padding:4px">{{ ic.x }}</button></div></sc-for><button onClick="{{ q.addOpt }}" style="align-self:flex-start;background:none;border:0;color:#E85D3A;font:inherit;font-size:12px;font-weight:600;cursor:pointer;padding:4px 0">+ Add option</button></div></sc-if>
+</div>
+</sc-for>
+</div>
+<div class="field"><label>Context (Optional)</label><textarea class="input" value="{{ svd.ctx }}" onChange="{{ ctxIn }}" placeholder="Provide additional context that will help personas answer more realistically..." style="padding:12px 14px;min-height:90px"></textarea></div>
+<div class="field"><label>Upload Assets (Optional)</label><div style="padding:22px;border:1px dashed rgba(0,0,0,.12);border-radius:12px;text-align:center;font-size:12.5px;color:#9A9A9A;display:flex;align-items:center;justify-content:center;gap:8px">{{ ic.upload }}Drop a deck, one-pager or screenshot</div></div>
+</div>
+<div style="flex:1 1 300px;display:flex;flex-direction:column;gap:16px;position:sticky;top:110px">
+<div style="border:1px solid rgba(232,93,58,.15);border-radius:16px;padding:18px;background:rgba(232,93,58,.02);display:flex;flex-direction:column;gap:10px"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600"><span style="color:#E85D3A">{{ ic.spark }}</span>AI Research Assistant</span><textarea class="input" value="{{ svd.ai }}" onChange="{{ aiIn }}" placeholder="Generate questions about sponsor commitment for enterprise HR leaders…" style="min-height:70px;background:#fff;padding:10px 12px"></textarea><button class="btn btn-primary" onClick="{{ aiGen }}" style="align-self:flex-start">Generate questions</button></div>
+<div style="border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:16px">
+<span style="font-size:13px;font-weight:600">Simulation Settings</span>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:12.5px"><span>Persona Temperature</span><span style="font-family:'IBM Plex Mono',monospace;color:#E85D3A">{{ svd.temp }}</span></div><span style="font-size:11px;color:#9A9A9A">Higher values produce more varied responses</span><input type="range" min="0" max="100" value="{{ svd.temp }}" onChange="{{ tempIn }}" style="accent-color:#E85D3A"></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px">Response Length</span><div style="display:flex;gap:6px"><sc-for list="{{ lens }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.go }}" style="flex:1;padding:6px 10px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:999px;font:inherit;font-size:12px;font-weight:600;cursor:pointer">{{ c.l }}</button></sc-for></div></div>
+<sc-for list="{{ tgs }}" as="t" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12.5px">{{ t.l }}</span><span style="font-size:11px;color:#9A9A9A">{{ t.d }}</span></div><button onClick="{{ t.go }}" aria-label="{{ t.l }}" style="width:38px;height:22px;border-radius:999px;border:0;background:{{ t.bg }};position:relative;cursor:pointer;flex:none;transition:background .2s"><span style="position:absolute;top:2px;left:{{ t.x }};width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s"></span></button></div></sc-for>
+</div>
+</div>
+</div>
+<div style="position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid rgba(0,0,0,.08)"><div style="max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:12px;box-sizing:border-box;flex-wrap:wrap"><div style="flex:1;min-width:200px;display:flex;flex-direction:column"><span style="font-size:13.5px;font-weight:600">{{ qCount }} questions · {{ selPeople }} personas</span><span style="font-size:12px;color:#6B6B6B">{{ svd.name }}</span></div><button class="btn btn-secondary" onClick="{{ buildBack }}">{{ ic.chevL }}Back</button><button class="btn btn-primary" onClick="{{ runSim }}" disabled="{{ runDis }}">Run simulation{{ ic.arrow }}</button></div></div>
+</sc-if>
+
+<sc-if value="{{ sx.run }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:560px;width:100%;margin:40px auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px">
+<span style="width:34px;height:34px;border-radius:50%;border:3px solid rgba(232,93,58,.15);border-top-color:#E85D3A;animation:aurSpin .8s linear infinite"></span>
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:30px;margin:0">Running simulation</h2>
+<p style="margin:0;font-size:13px;color:#6B6B6B">{{ svPeople }} personas are answering “{{ svd.name }}”</p>
+<div style="width:100%;height:6px;background:rgba(0,0,0,.06);border-radius:999px;overflow:hidden"><div style="height:6px;width:{{ svProg }};background:#E85D3A;transition:width .2s"></div></div>
+<div style="display:flex;gap:40px;margin-top:8px"><div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:30px">{{ svDone }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;color:#9A9A9A">SIMULATED INTERVIEWS</span></div><div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:30px">{{ svTotal }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;color:#9A9A9A">TOTAL RESPONSES</span></div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sx.res }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:0;border:1px solid rgba(0,0,0,.08);border-radius:20px;overflow:hidden;min-height:640px">
+<aside style="flex:0 1 270px;min-width:220px;border-right:1px solid rgba(0,0,0,.08);background:#FAFAFA;display:flex;flex-direction:column">
+<div style="padding:16px;border-bottom:1px solid rgba(0,0,0,.06);display:flex;flex-direction:column;gap:10px"><span style="font-size:13px;font-weight:600">Respondents</span><div style="position:relative"><span style="position:absolute;left:12px;top:11px;color:rgba(0,0,0,.25)">{{ ic.search }}</span><input class="input" value="{{ svd.search }}" onChange="{{ searchIn }}" placeholder="Search respondent..." style="padding-left:36px;background:#fff"></div></div>
+<div style="flex:1;overflow:auto;max-height:560px"><sc-for list="{{ respList }}" as="p" hint-placeholder-count="8"><div style="display:flex;gap:10px;padding:11px 16px;border-bottom:1px solid rgba(0,0,0,.04)"><span style="width:30px;height:30px;border-radius:50%;background:rgba(232,93,58,.08);color:#E85D3A;display:grid;place-items:center;font-size:10.5px;font-weight:700;flex:none">{{ p.init }}</span><div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:12.5px;font-weight:600">{{ p.n }}</span><span style="font-size:11px;color:#9A9A9A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.m }}</span></div></div></sc-for></div>
+</aside>
+<div style="flex:1 1 480px;min-width:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:8px;padding:12px 20px;border-bottom:1px solid rgba(0,0,0,.06);flex-wrap:wrap"><sc-for list="{{ svTabs }}" as="t" hint-placeholder-count="2"><button onClick="{{ t.go }}" style="background:none;border:0;border-bottom:2px solid {{ t.bd }};color:{{ t.fg }};font:inherit;font-size:13px;font-weight:600;padding:6px 4px;margin-right:12px;cursor:pointer">{{ t.l }}</button></sc-for><span style="flex:1"></span><button class="btn btn-secondary" onClick="{{ dupSurvey }}" style="padding:7px 14px;text-transform:none;letter-spacing:0">Duplicate</button><button class="btn btn-secondary" onClick="{{ exportSv }}" style="padding:7px 14px;text-transform:none;letter-spacing:0">{{ ic.download }}Export</button><button class="btn btn-primary" onClick="{{ newSurvey }}" style="padding:7px 14px;text-transform:none;letter-spacing:0">New Survey</button></div>
+<div style="padding:28px 32px;display:flex;flex-direction:column;gap:28px;overflow:auto">
+<div><h2 style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:26px;margin:0">Survey Analysis Dashboard</h2><p style="margin:4px 0 0;font-size:13px;color:rgba(0,0,0,.4)">{{ svd.name }} · {{ svTotal }} responses · {{ margin }} margin</p></div>
+<sc-if value="{{ svt.analysis }}" hint-placeholder-val="{{ true }}">
+<sc-for list="{{ qr }}" as="r" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:14px;padding-bottom:24px;border-bottom:1px solid rgba(0,0,0,.06)">
+<div style="display:flex;gap:10px;align-items:flex-start"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#E85D3A;background:rgba(232,93,58,.06);padding:4px 10px;border-radius:6px;flex:none">{{ r.n }}</span><span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:18px;line-height:1.35">{{ r.p }}</span></div>
+<sc-if value="{{ r.hasBars }}"><div style="display:grid;grid-template-columns:minmax(120px,240px) 1fr 44px;gap:8px 14px;align-items:center;font-size:12.5px"><sc-for list="{{ r.bars }}" as="b" hint-placeholder-count="4"><span style="color:#4A4A4A">{{ b.o }}</span><div style="height:8px;background:rgba(0,0,0,.05);border-radius:999px;overflow:hidden"><div style="height:8px;width:{{ b.w }};background:#E85D3A;border-radius:999px"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-align:right;color:#6B6B6B">{{ b.v }}</span></sc-for></div></sc-if>
+<div style="padding:12px 16px;background:rgba(232,93,58,.03);border:1px solid rgba(232,93,58,.08);border-radius:10px"><span style="display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#E85D3A;margin-bottom:4px">AI Summary</span><p style="margin:0;font-size:13px;line-height:1.6;color:rgba(0,0,0,.6)">{{ r.sum }}</p></div>
+</div>
+</sc-for>
+<div style="display:flex;flex-direction:column;gap:12px"><span style="font-size:13px;font-weight:600">Summary</span><div style="padding:20px;background:#FAFAFA;border:1px solid rgba(0,0,0,.06);border-radius:14px"><p style="margin:0 0 16px;font-size:13.5px;line-height:1.7;color:#3A3A3A">{{ exec }}</p><span style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#E85D3A;margin-bottom:10px">Key Takeaways &amp; Next Steps</span><sc-for list="{{ svRecs }}" as="x" hint-placeholder-count="4"><p style="margin:0 0 6px;font-size:13px;line-height:1.7;color:rgba(0,0,0,.6)">{{ x.n }}. {{ x.r }}</p></sc-for></div></div>
+</sc-if>
+<sc-if value="{{ svt.responses }}">
+<div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ qPills }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.go }}" style="padding:5px 12px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:999px;font:inherit;font-size:11px;font-weight:600;cursor:pointer">{{ c.l }}</button></sc-for></div>
+<span style="font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:18px">{{ qCur.p }}</span>
+<table class="table"><thead><tr><th>#</th><th>Respondent / Segment</th><th>Response</th></tr></thead><tbody><sc-for list="{{ qCur.rows }}" as="w" hint-placeholder-count="8"><tr><td style="color:#9A9A9A">{{ w.k }}</td><td><span style="display:block;font-weight:600">{{ w.n }}</span><span style="font-size:11px;color:#9A9A9A">{{ w.type }}</span></td><td>{{ w.a }}</td></tr></sc-for></tbody></table>
+</sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ scr.reports }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Reports" style="display:flex;flex-direction:column;gap:14px">
+<table class="table"><thead><tr><th>Run</th><th>Module</th><th>Name</th><th>Personas</th><th>Date</th><th>Status</th></tr></thead><tbody>
+<sc-for list="{{ runs }}" as="r" hint-placeholder-count="5"><tr onClick="{{ r.go }}" style="cursor:pointer"><td style="font-feature-settings:'tnum';color:#6B6B6B">{{ r.id }}</td><td>{{ r.type }}</td><td>{{ r.name }}</td><td style="font-feature-settings:'tnum'">{{ r.n }}</td><td style="color:#6B6B6B">{{ r.date }}</td><td style="color:{{ r.sfg }}">{{ r.status }}</td></tr></sc-for>
+</tbody></table>
+</section>
+</sc-if>
+
+<sc-if value="{{ scr.integrations }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Integrations" style="display:flex;flex-direction:column;gap:20px;max-width:900px">
+<div style="border:1px solid rgba(0,0,0,.14);border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><span style="width:44px;height:44px;border:1px solid rgba(10,102,194,.5);border-radius:16px;display:grid;place-items:center;color:#0A66C2">{{ ic.li }}</span><div style="flex:1;min-width:200px"><span style="font-family:'DM Serif Display',Georgia,serif;font-size:24px">LinkedIn</span><br><span style="font-size:12.5px;color:#6B6B6B">Sign in with LinkedIn + your connections data export</span></div>
+<sc-if value="{{ li.off }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#6B6B6B">Not connected</span><button class="btn btn-primary" onClick="{{ openOauth }}">Connect LinkedIn</button></sc-if>
+<sc-if value="{{ li.connecting }}"><span style="font-size:12.5px;color:#E85D3A;animation:aurPulse 1.2s infinite">Waiting for LinkedIn authorisation…</span></sc-if>
+<sc-if value="{{ li.on }}"><span style="font-size:12px;color:#15803D">● Connected · Aurum workspace account</span><button class="btn btn-secondary" onClick="{{ disconnectLi }}">Disconnect</button></sc-if>
+</div>
+<sc-if value="{{ li.on }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.1)">
+<div style="padding:14px 0"><span style="font-family:'DM Serif Display',Georgia,serif;font-size:30px">1,284</span><br><span style="font-size:12px;color:#6B6B6B">Connections imported</span></div>
+<div style="padding:14px 0"><span style="font-family:'DM Serif Display',Georgia,serif;font-size:30px">412</span><br><span style="font-size:12px;color:#6B6B6B">Match a decision-maker cluster</span></div>
+<div style="padding:14px 0"><span style="font-family:'DM Serif Display',Georgia,serif;font-size:30px">Today</span><br><span style="font-size:12px;color:#6B6B6B">Last import</span></div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-secondary" onClick="{{ importCsv }}">{{ ic.upload }}Import new export</button><button class="btn btn-secondary" onClick="{{ resync }}">{{ ic.refresh }}Re-match against ICP</button></div>
+</sc-if>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;font-size:13px;line-height:1.55">
+<div><span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;color:#15803D">Percura can</span><p style="margin:6px 0 0">Read your basic profile and email via official sign-in. Analyse the Connections.csv you export and upload.</p></div>
+<div><span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;color:#DC2626">Percura never</span><p style="margin:6px 0 0">Scrapes profiles, sends messages, automates invitations or posts on your behalf. Every outbound message is approved and sent by you.</p></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid rgba(0,0,0,.09)"><span style="flex:1"><span style="font-size:14px">CSV import</span><br><span style="font-size:12px;color:#6B6B6B">Prospect lists from any CRM</span></span><button class="btn btn-secondary" onClick="{{ importCsv }}">Upload</button></div>
+<div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid rgba(0,0,0,.09);border-bottom:1px solid rgba(0,0,0,.09)"><span style="flex:1"><span style="font-size:14px">Website access for UX Lab</span><br><span style="font-size:12px;color:#6B6B6B">Public pages work out of the box; staging sites need a basic-auth credential</span></span><span style="font-size:12px;color:#15803D">Ready</span></div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{ scr.settings }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Settings" style="display:flex;flex-direction:column;gap:20px;max-width:720px">
+<div class="field"><label>Workspace name</label><input class="input" defaultValue="Aurum"></div>
+<div class="field"><label>Website under test</label><input class="input" defaultValue="https://aurumcareers.tech"></div>
+<div style="display:flex;flex-direction:column"><span style="font-size:12px;color:#6B6B6B;margin-bottom:6px">Members</span>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid rgba(0,0,0,.09);font-size:13.5px"><span>Aurum team</span><span style="color:#6B6B6B">Admin</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid rgba(0,0,0,.09);border-bottom:1px solid rgba(0,0,0,.09);font-size:13.5px"><span>Invite a teammate…</span><span style="color:#E85D3A">Invite</span></div>
+</div>
+<div style="display:flex;align-items:center;gap:12px;padding:14px;border:1px solid rgba(0,0,0,.12);border-radius:16px"><span style="color:#E85D3A">{{ ic.lock }}</span><span style="flex:1;font-size:13.5px">Require approval for every outbound message</span><span style="font-size:12px;color:#6B6B6B">Always on</span></div>
+</section>
+</sc-if>
+</div>
+</main>
+<sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
+<aside style="position:fixed;top:0;right:0;bottom:0;width:min(400px,100vw);background:#FFFFFF;border-left:1px solid rgba(0,0,0,.12);box-shadow:-20px 0 60px rgba(0,0,0,.08);z-index:60;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid rgba(0,0,0,.09)">
+<span style="color:#E85D3A">{{ ic.spark }}</span><div style="flex:1;display:flex;flex-direction:column"><span style="font-family:'DM Serif Display',Georgia,serif;font-size:20px">Ask Percura</span><span style="font-size:11px;color:#6B6B6B">Grounded in run UX-014 + Sales workspace data</span></div>
+<button class="btn btn-icon" onClick="{{ closeChat }}" aria-label="Close">{{ ic.x }}</button>
+</div>
+<div ref="{{ chatRef }}" style="flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:12px">
+<sc-if value="{{ chatEmpty }}" hint-placeholder-val="{{ true }}">
+<p style="margin:0;font-size:13px;color:#6B6B6B;line-height:1.55">Ask about persona behaviour, sections or priorities. Answers cite persona IDs and page sections.</p>
+<div style="display:flex;flex-direction:column;gap:6px"><sc-for list="{{ sugs }}" as="s" hint-placeholder-count="6"><button onClick="{{ s.go }}" style="text-align:left;padding:9px 14px;border:1px solid rgba(0,0,0,.08);border-radius:12px;background:none;color:#1A1A1A;font:inherit;font-size:13px;cursor:pointer" style-hover="border-color:#E85D3A">{{ s.q }}</button></sc-for></div>
+</sc-if>
+<sc-for list="{{ msgs }}" as="m" hint-placeholder-count="0">
+<sc-if value="{{ m.u }}"><div style="align-self:flex-end;max-width:85%;padding:9px 12px;border:1px solid rgba(232,93,58,.4);border-radius:16px;font-size:13px;line-height:1.5">{{ m.t }}</div></sc-if>
+<sc-if value="{{ m.a }}"><div style="align-self:flex-start;max-width:92%;font-size:13.5px;line-height:1.6;color:#1A1A1A;padding-left:12px;border-left:1px solid #E85D3A">{{ m.t }}</div></sc-if>
+</sc-for>
+<sc-if value="{{ busy }}"><span style="font-size:12px;color:#6B6B6B;animation:aurPulse 1.2s infinite">Reading simulation data…</span></sc-if>
+</div>
+<div style="padding:14px 18px;border-top:1px solid rgba(0,0,0,.09);display:flex;gap:8px">
+<textarea class="input" rows="2" value="{{ chatIn }}" onChange="{{ setChatIn }}" onKeyDown="{{ chatKey }}" placeholder="Ask about this simulation…" style="min-height:44px;resize:none;background:#FFFFFF"></textarea>
+<button class="btn btn-primary btn-icon" onClick="{{ sendChat }}" aria-label="Send" style="height:44px;width:44px">{{ ic.send }}</button>
+</div>
+</aside>
+</sc-if>
+
+<sc-if value="{{ dlg.any }}" hint-placeholder-val="{{ false }}">
+<div class="dialog-backdrop" style="z-index:80;background:rgba(0,0,0,.35)">
+<sc-if value="{{ dlg.cp }}"><div class="dialog" style="background:#FFFFFF">
+<span class="dialog-title">Custom persona</span>
+<div class="field"><label>Role / designation</label><input class="input" value="{{ cp.role }}" onChange="{{ cpRole }}" placeholder="e.g. Chief Diversity Officer"></div>
+<div class="field"><label>Industry & company context</label><input class="input" value="{{ cp.ind }}" onChange="{{ cpInd }}" placeholder="e.g. Global bank, India GCC"></div>
+<div class="field"><label>Behavioural notes</label><textarea class="input" value="{{ cp.note }}" onChange="{{ cpNote }}" placeholder="Sceptical of DEI vendors; reads pricing first"></textarea></div>
+<div class="dialog-actions"><button class="btn btn-secondary" onClick="{{ closeDlg }}">Cancel</button><button class="btn btn-primary" onClick="{{ saveCp }}">Add persona</button></div>
+</div></sc-if>
+<sc-if value="{{ dlg.cc }}"><div class="dialog" style="background:#FFFFFF">
+<span class="dialog-title">New decision-maker cluster</span>
+<div class="field"><label>Cluster name</label><input class="input" value="{{ ccName }}" onChange="{{ setCc }}" placeholder="e.g. GCC Site Heads"></div>
+<p style="margin:0;font-size:12.5px;color:#6B6B6B">Percura will match imported connections by title, industry and company size once saved.</p>
+<div class="dialog-actions"><button class="btn btn-secondary" onClick="{{ closeDlg }}">Cancel</button><button class="btn btn-primary" onClick="{{ saveCc }}">Create cluster</button></div>
+</div></sc-if>
+<sc-if value="{{ dlg.oauth }}"><div class="dialog" style="background:#FFFFFF;width:min(480px,100%)">
+<div style="display:flex;align-items:center;gap:10px"><span style="color:#0A66C2">{{ ic.li }}</span><span class="dialog-title">Connect LinkedIn</span></div>
+<p style="margin:0;font-size:13px;line-height:1.55;color:#4A4A4A">Percura uses LinkedIn’s official sign-in. You’ll be redirected to LinkedIn to approve:</p>
+<div style="display:flex;flex-direction:column;font-size:13px"><span style="padding:8px 0;border-top:1px solid rgba(0,0,0,.09)">✓ Basic profile — name, headline, photo</span><span style="padding:8px 0;border-top:1px solid rgba(0,0,0,.09)">✓ Email address</span><span style="padding:8px 0;border-top:1px solid rgba(0,0,0,.09);border-bottom:1px solid rgba(0,0,0,.09);color:#6B6B6B">✕ No messaging, posting or connection access</span></div>
+<p style="margin:0;font-size:12px;line-height:1.55;color:#6B6B6B">Connections are imported from the data export you download from LinkedIn (Settings → Data privacy → Get a copy of your data). Percura never scrapes or automates LinkedIn.</p>
+<div class="dialog-actions"><button class="btn btn-secondary" onClick="{{ closeDlg }}">Cancel</button><button class="btn btn-primary" onClick="{{ connectLi }}">Continue to LinkedIn</button></div>
+</div></sc-if>
+<sc-if value="{{ dlg.approve }}"><div class="dialog" style="background:#FFFFFF;width:min(520px,100%)">
+<span class="dialog-title">Approve message to {{ approveName }}</span>
+<div style="white-space:pre-wrap;font-size:13px;line-height:1.6;padding:14px;border:1px solid rgba(0,0,0,.12);border-radius:12px;max-height:260px;overflow:auto">{{ approveMsg }}</div>
+<p style="margin:0;font-size:12px;color:#6B6B6B;line-height:1.5">Percura never sends on your behalf. Approving copies the message and marks the prospect contacted — you send it from LinkedIn yourself.</p>
+<div class="dialog-actions"><button class="btn btn-secondary" onClick="{{ closeDlg }}">Keep editing</button><button class="btn btn-primary" onClick="{{ doApprove }}">{{ ic.check }}Approve & copy</button></div>
+</div></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ hasToast }}"><div style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 16px;background:#1A1A1A;color:#FFFFFF;border-radius:999px;font-size:13px;z-index:90;box-shadow:0 8px 24px rgba(0,0,0,.4)">{{ toastMsg }}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { sessOpen: false, cfgMore: false, recOpen: 0, pOpen: null,
+    screen: 'method', method: null, uxView: 'config',
+    sv: { step: 1, sub: 1, seg: '', group: '', loading: false, sel: ['s1', 's2', 's3', 's4'], open: null, name: 'Sponsorship readiness — HR leaders', goal: 'Understand how enterprise HR leaders evidence sponsorship today and what would make them pilot Aurum.', qs: null, ctx: 'Aurum is a 90-day sponsorship programme and evidence ledger sold to employers, measured against a matched control group.', temp: 50, len: 'Medium', tg: { reasoning: false, conf: true, quotes: true, insights: true }, prog: 0, tab: 'analysis', q: 0, search: '', ai: '', od: 'idle', odN: 0 }, w: window.innerWidth,
+    cfg: { url: 'https://aurumcareers.tech', roles: ['CHRO', 'HR Director', 'Founder', 'Talent Head', 'CEO', 'DEI Lead'], industry: 'Mixed enterprise', size: '1,000–10,000', seniority: 'Senior leadership', count: 6, objs: ['First impressions', 'Trust and credibility', 'Conversion optimisation'], custom: [] },
+    sim: { running: false, tick: 0, idx: [-1, -1, -1, -1, -1, -1], feed: [], control: false, speed: 1, follow: 'all', done: false, lastPid: null, started: false },
+    selP: null, calc: { women: 120, salary: 24, attr: 14 },
+    reportTab: 'summary', repP: 'P01', recF: 'All',
+    chatOpen: false, msgs: [], chatIn: '', busy: false,
+    salesTab: 'dashboard', li: 'off', clOpen: 0, mem: 'm1', memMsgs: {}, memIn: '', memBusy: false,
+    pSel: 'p1', f: { q: '', ind: 'All', conn: 'All', pri: 'All', min: 0 }, drafts: {}, pst: {}, gen: false,
+    dialog: null, toast: null, cp: { role: '', ind: '', note: '' }, ccName: '',
+    survView: 'list', survStep: 0, survProg: 0, libSel: 'P01'
+  };
+  static IC = {
+    dash: 'M3 3h7v9H3z M14 3h7v5h-7z M14 12h7v9h-7z M3 16h7v5H3z', survey: 'M9 2h6v4H9z M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2 M12 11h4 M12 16h4 M8 11h.01 M8 16h.01',
+    ux: 'M2 3h20v14H2z M8 21h8 M12 17v4 M10 7.5v5l4-2.5z', sales: 'M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16 M2 6h20v14H2z',
+    users: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8 M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75',
+    file: 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z M14 2v5h5 M16 13H8 M16 17H8 M10 9H8', plug: 'M12 22v-5 M9 8V2 M15 8V2 M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z',
+    set: 'M4 21v-7 M4 10V3 M12 21v-9 M12 8V3 M20 21v-5 M20 12V3 M1 14h6 M9 8h6 M17 16h6', play: 'M6 3l14 9-14 9z', pause: 'M6 4h4v16H6z M14 4h4v16h-4z', restart: 'M3 12a9 9 0 1 0 3-6.7L3 8 M3 3v5h5',
+    hand: 'M18 11V6a2 2 0 0 0-4 0v5 M14 10V4a2 2 0 0 0-4 0v6 M10 10.5V6a2 2 0 0 0-4 0v8 M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15',
+    msg: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', send: 'M22 2L11 13 M22 2l-7 20-4-9-9-4z', copy: 'M8 8h14v14H8z M4 16H2V2h14v2', check: 'M20 6L9 17l-5-5', x: 'M18 6L6 18 M6 6l12 12',
+    search: 'M11 3a8 8 0 1 0 0 16a8 8 0 1 0 0-16 M21 21l-4.3-4.3', li: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 2a2 2 0 1 0 0 4a2 2 0 1 0 0-4',
+    arrow: 'M5 12h14 M12 5l7 7-7 7', chevL: 'M15 18l-6-6 6-6', chevR: 'M9 18l6-6-6-6', refresh: 'M21 12a9 9 0 0 1-15 6.7L3 16 M3 12a9 9 0 0 1 15-6.7L21 8 M21 3v5h-5 M3 21v-5h5', plus: 'M12 5v14 M5 12h14',
+    lock: 'M5 11h14v10H5z M7 11V7a5 5 0 0 1 10 0v4', eye: 'M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6', download: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3',
+    bookmark: 'M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z', cal: 'M3 4h18v18H3z M16 2v4 M8 2v4 M3 10h18', upload: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M17 8l-5-5-5 5 M12 3v12', spark: 'M12 3v4 M12 17v4 M3 12h4 M17 12h4 M6 6l2.5 2.5 M15.5 15.5L18 18 M6 18l2.5-2.5 M15.5 8.5L18 6'
+  };
+  ic(n, s) { s = s || 16; return React.createElement('svg', { width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' } }, React.createElement('path', { d: Component.IC[n] })); }
+  D() { return window.AURUM; }
+  col(p, a) { return a ? `oklch(0.58 0.15 ${p.hue} / ${a})` : `oklch(0.58 0.15 ${p.hue})`; }
+  fmt(s) { const m = Math.floor(s / 60), r = s % 60; return String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0'); }
+  set(k, v) { this.setState({ [k]: v }); }
+  setSim(o) { this.setState(s => ({ sim: { ...s.sim, ...o } })); }
+  toast(t) { this.setState({ toast: t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 2400); }
+  componentDidMount() {
+    this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener('resize', this.onR);
+    this.iv = setInterval(() => { const s = this.state.sim; if (!s.running || s.control) return; this.acc = (this.acc || 0) + 250 * s.speed; if (this.acc >= 2000) { this.acc = 0; this.step(); } }, 250);
+    this.wait = setInterval(() => { if (window.AURUM) { clearInterval(this.wait); this.forceUpdate(); } }, 100);
+  }
+  componentWillUnmount() { clearInterval(this.iv); clearInterval(this.wait); clearInterval(this.sv); window.removeEventListener('resize', this.onR); }
+  componentDidUpdate() {}
+  bRefFn = el => { if (el !== this.bref) { this.bref = el; this.lastTop = null; } };
+  follow() { return;
+    const el = this.bref, s = this.state.sim, D = this.D(); if (!el || !D || s.control) return;
+    const pid = s.follow !== 'all' ? s.follow : s.lastPid; const i = D.P.findIndex(p => p.id === pid); if (i < 0 || s.idx[i] < 0) return;
+    const top = Math.max(0, D.P[i].steps[s.idx[i]][1] - 230);
+    if (this.lastTop !== top) { this.lastTop = top; el.scrollTo({ top, behavior: 'smooth' }); }
+  }
+  step() {
+    const D = this.D();
+    this.setState(st => {
+      const sim = { ...st.sim }, idx = [...sim.idx], feed = [...sim.feed], moved = [];
+      D.P.forEach((p, i) => { if (sim.tick >= p.delay && idx[i] < p.steps.length - 1) { idx[i]++; moved.push(p.id); const s = p.steps[idx[i]]; if (s[4]) feed.unshift({ k: 'f' + sim.tick + p.id, pid: p.id, text: s[4], type: s[5], t: this.fmt(sim.tick * 7 + i * 2) }); } });
+      if (moved.length) sim.lastPid = moved[Math.floor(sim.tick / 2) % moved.length];
+      sim.tick++; sim.idx = idx; sim.feed = feed; sim.started = true;
+      if (D.P.every((p, i) => idx[i] === p.steps.length - 1)) { sim.running = false; sim.done = true; }
+      return { sim };
+    }, () => this.follow());
+  }
+  restart() { this.acc = 0; this.lastTop = null; this.setSim({ running: true, tick: 0, idx: [-1, -1, -1, -1, -1, -1], feed: [], done: false, control: false, lastPid: null, started: true }); }
+  launch() { this.setState({ uxView: 'live' }); this.restart(); setTimeout(() => this.step(), 300); }
+  takeControl() { if (this.bref) this.bref.scrollTop = 0; this.wasRunning = this.state.sim.running; this.setSim({ control: true, running: false }); this.pushFeed({ pid: 'YOU', text: 'You took control of the browser. Personas paused.', type: 'observer' }); }
+  release() { this.lastTop = null; this.setSim({ control: false, running: !this.state.sim.done && this.wasRunning !== false }); setTimeout(() => this.follow(), 0); this.pushFeed({ pid: 'YOU', text: 'Control released. Personas resumed.', type: 'observer' }); }
+  pushFeed(f) { this.setState(s => ({ sim: { ...s.sim, feed: [{ k: 'u' + Date.now(), t: this.fmt(s.sim.tick * 7), ...f }, ...s.sim.feed] } })); }
+  onPageClick(e) {
+    if (!this.state.sim.control) return; const t = e.target.closest('button,a,input,h1,h2,h3,p'); if (!t) return;
+    const label = (t.getAttribute('aria-label') || t.innerText || t.value || '').trim().slice(0, 60);
+    const go = t.getAttribute('data-go'); if (go && this.bref) { const sec = this.D().SEC.find(x => x.id === go); if (sec) this.bref.scrollTop = sec.y; }
+    if (label) this.pushFeed({ pid: 'YOU', text: 'You clicked “' + label + '”', type: 'observer' });
+  }
+  cursors() {
+    const s = this.state.sim, D = this.D(); if (s.control || !D) return null; const E = React.createElement;
+    return E('div', { style: { position: 'absolute', left: 0, top: 0, width: '100%', height: 3300, pointerEvents: 'none', zIndex: 5 } }, D.P.map((p, i) => {
+      if (s.idx[i] < 0) return null; const st = p.steps[s.idx[i]], c = this.col(p), dim = s.follow !== 'all' && s.follow !== p.id, done = st[2] === 'done';
+      return E('div', { key: p.id, style: { position: 'absolute', left: st[0] + '%', top: st[1], transition: 'left 1.7s cubic-bezier(.45,0,.2,1), top 1.7s cubic-bezier(.45,0,.2,1), opacity .4s', opacity: dim ? 0.25 : done ? 0.5 : 1 } }, [
+        st[2] === 'click' ? E('span', { key: 'r' + s.idx[i], style: { position: 'absolute', left: -13, top: -13, width: 26, height: 26, borderRadius: '50%', border: '2px solid ' + c, animation: 'aurPing .9s ease-out 1.6s both' } }) : null,
+        st[2] === 'read' || st[2] === 'evaluate' ? E('span', { key: 'b' + s.idx[i], style: { position: 'absolute', left: -60, top: 22, width: 150, height: 2, background: c, opacity: .55, borderRadius: 2 } }) : null,
+        E('svg', { key: 's', width: 18, height: 18, viewBox: '0 0 24 24', style: { display: 'block', filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.5))' } }, E('path', { d: 'M4 2l16 9-7 2-3 7z', fill: c, stroke: '#fff', strokeWidth: 1.4, strokeLinejoin: 'round' })),
+        E('span', { key: 'l', style: { position: 'absolute', left: 15, top: 13, whiteSpace: 'nowrap', background: c, color: '#FFFFFF', font: '600 10.5px/1 Lora, serif', padding: '4px 7px', borderRadius: 3 } }, p.id + ' · ' + p.role + (st[2] === 'click' ? ' · click' : st[2] === 'evaluate' ? ' · evaluating' : ''))
+      ]);
+    }));
+  }
+  ctx() {
+    const D = this.D(); if (!D) return '';
+    return 'You are Percura, an analyst assistant inside Aurum\'s workspace. Use ONLY this data from UX simulation run UX-014 on aurumcareers.tech (6 synthetic personas, scripted prototype data):\n' +
+      D.P.map(p => `${p.id} ${p.role} (${p.co}) outcome: ${p.outcome}. Notes: ${p.steps.filter(s => s[4]).map(s => s[4]).join(' ')} Final: ${D.PR[p.id].final}`).join('\n') +
+      '\nRecommendations: ' + D.RECS.map(r => `[${r.pr}] ${r.sec}: ${r.problem} Fix: ${r.fix}`).join(' ') +
+      '\nSales prospects (illustrative): ' + D.PROS.map(p => `${p.name}, ${p.title} at ${p.co}, score ${p.score}`).join('; ');
+  }
+  canned(q) {
+    q = q.toLowerCase();
+    if (q.includes('chro')) return 'P01 (CHRO) didn’t leave — they requested a pilot — but only after hitting three unresolved questions: whether the 84% follow-through in The record is real, what outcomes The Ninety produces, and price. All three sit below 900px.';
+    if (q.includes('confus')) return 'Pricing tiers generated the most confusion: P01 and P02 both searched it for 40s+ for a number, and P02 couldn’t tell whether the OBL Club is included. The hero is second — P03 and P04 read it as a women’s network.';
+    if (q.includes('ceo')) return 'P05 (CEO) liked the ₹60L replacement receipt and the founder’s CFO background, but the “Pre-launch” badge with no proof points left them hesitant at the pilot CTA.';
+    if (q.includes('barrier')) return 'The biggest barrier is the missing price signal (Critical, Pricing tiers): it was the exit reason for P02 and a condition for P01. Close second: the hero not naming the product category.';
+    if (q.includes('compare') || q.includes('founder')) return 'HR Director (P02) engaged with numbers — 48s in the calculator — then left over pricing. Founder (P03) engaged with mechanism — research and The Ninety — and converted after the founder note. HR needs a budget line; founders need the “how”.';
+    if (q.includes('priorit')) return 'In order: 1) Hero sub-line naming the product, 2) an indicative pilot price, 3) inline “Illustrative” labels on the record, 4) proof points near the CTA. The first two are Critical and affect 4 of 6 personas.';
+    return 'Across 6 personas, 3 requested a pilot, 1 was hesitant and 2 left. Pricing tiers and the hero are the two critical friction points; the cost calculator and research section built the most trust.';
+  }
+  async ask(q) {
+    q = (q || this.state.chatIn).trim(); if (!q || this.state.busy) return;
+    this.setState(s => ({ msgs: [...s.msgs, { r: 'u', t: q }], chatIn: '', busy: true, chatOpen: true }));
+    let a; try { if (!window.claude || !window.claude.complete) throw 0; a = await window.claude.complete(this.ctx() + '\n\nQuestion: ' + q + '\nAnswer in 2–4 sentences, cite persona IDs and page sections. No markdown.'); } catch (e) { a = this.canned(q); }
+    this.setState(s => ({ msgs: [...s.msgs, { r: 'a', t: a }], busy: false }));
+  }
+  curMem(D) {
+    const i = this.state.clOpen, c = D.CL[i] || D.CL[0], map = { 0: 'm1', 3: 'm2', 5: 'm3' };
+    const ex = D.MEM.find(x => x.id === map[i]);
+    if (ex) return { ...ex, cl: c.name };
+    return { id: 'c' + i, cl: c.name, label: c.name.split(' /')[0].replace(/s$/, '') + ' · synthetic persona', sub: c.ind.map(x => x[0]).slice(0, 2).join(', ') + ' · ' + c.size[0][0] + ' staff', interest: [c.interest], sessions: [{ date: 'Today', title: 'First conversation', items: ['No previous sessions — start below. This persona will remember what you discuss.'] }], mot: c.mot, obj: c.obj, open: c.ch, next: 'Open with their main challenge — ' + c.ch[0].toLowerCase() + ' — and test how they react to a 90-day pilot.' };
+  }
+  async askMem() {
+    const q = this.state.memIn.trim(); if (!q || this.state.memBusy) return; const D = this.D(), m = this.curMem(D);
+    const add = (o) => this.setState(s => ({ memMsgs: { ...s.memMsgs, [m.id]: [...(s.memMsgs[m.id] || []), o] } }));
+    add({ r: 'u', t: q }); this.setState({ memIn: '', memBusy: true });
+    let a; try { if (!window.claude || !window.claude.complete) throw 0; a = await window.claude.complete(`Role-play a synthetic buyer persona: ${m.label} (${m.sub}). Memory of past sessions: ${m.sessions.map(s => s.date + ': ' + s.items.join('; ')).join(' | ')}. Open questions: ${m.open.join('; ')}. Objections: ${m.obj.join('; ')}. Aurum is a 90-day sponsorship programme and evidence ledger for employers. Reply in character in 2–3 sentences, referencing earlier sessions where relevant. The seller says: "${q}"`); } catch (e) { a = 'Last time I said adoption by senior sponsors was my worry, and I still haven’t seen a number. If you can show me the sponsor time per week and a pilot price for one region, I can take it to our CEO.'; }
+    add({ r: 'a', t: a }); this.setState({ memBusy: false });
+  }
+  defMsg(p) { return `Hi ${p.name.split(' ')[0]} — I came across your work at ${p.co}: ${p.ctx.split(';')[0].replace(/\.$/, '').replace(/^\w/, c => c.toLowerCase())}. At Aurum we help employers build an evidenced record of who they advance: named sponsors, dated commitments, and retention measured against a matched control. Given ${p.co}'s focus on ${p.problem.toLowerCase().replace(/\.$/, '')}, I think ${p.use.toLowerCase()} could be relevant. Open to a 20-minute conversation in the next couple of weeks?\n\nThe Aurum team`; }
+  async genMsg(p) {
+    this.setState({ gen: true }); let a;
+    try { if (!window.claude || !window.claude.complete) throw 0; a = await window.claude.complete(`Write a LinkedIn message (max 90 words, warm, specific, no hype, no emojis) from the Aurum team (90-day sponsorship programme + evidence ledger for employers, retention measured vs matched control) to ${p.name}, ${p.title} at ${p.co}. Context: ${p.ctx} Problem: ${p.problem} Suggested use: ${p.use}. Sign off "The Aurum team". Output only the message.`); } catch (e) { a = this.defMsg(p).replace('caught my attention', 'stood out to me'); }
+    this.setState(s => ({ gen: false, drafts: { ...s.drafts, [p.id]: a } }));
+  }
+  runSurvey() { this.setState({ survView: 'running', survProg: 0 }); clearInterval(this.sv); this.sv = setInterval(() => { const n = this.state.survProg + 7; if (n >= 100) { clearInterval(this.sv); this.setState({ survProg: 100, survView: 'results' }); } else this.setState({ survProg: n }); }, 180); }
+  tabs(list, cur, fn) { return list.map(([id, label, extra]) => ({ id, label, extra, go: () => fn(id), fg: id === cur ? '#1A1A1A' : '#6B6B6B', bd: id === cur ? '#E85D3A' : 'transparent' })); }
+  chip(on) { return { bd: on ? '#E85D3A' : 'rgba(0,0,0,.14)', fg: on ? '#E85D3A' : '#4A4A4A', bg: on ? 'rgba(232,93,58,.08)' : 'transparent' }; }
+  renderVals() {
+    const D = this.D(), st = this.state, s = st.sim, I = {}; Object.keys(Component.IC).forEach(k => I[k] = this.ic(k));
+    const wide = st.w >= 1100;
+    const base = { ic: I, wide, narrow: !wide, sideW: wide ? '236px' : '64px', logoW: wide ? '150px' : '30px', logoPos: wide ? 'center' : '11% center', toggleChat: () => this.set('chatOpen', !st.chatOpen) };
+    const NAV = [['overview', 'Overview', 'dash'], ['survey', 'Survey Intelligence', 'survey'], ['ux', 'UX Intelligence Lab', 'ux', s.running ? 'LIVE' : ''], ['sales', 'Sales Intelligence', 'sales'], ['reports', 'Reports & History', 'file'], ['integrations', 'Integrations', 'plug', '', true], ['settings', 'Settings', 'set']];
+    base.nav = NAV.map(([id, label, icn, badge, gap]) => { const on = st.screen === id; return { id, label, badge, gap, icon: this.ic(icn, 15), go: () => this.setState({ screen: id }), bg: on ? 'rgba(232,93,58,.08)' : 'transparent', fg: on ? '#E85D3A' : '#6B6B6B', fw: on ? 600 : 500 }; });
+    const T = { method: ['Step 02 · Research method', 'What would you like to explore?', ''], overview: ['Aurum workspace', 'What would you like to explore?', 'Choose a module — every one runs on the same persona layer, so insights carry across surveys, website tests and buyer conversations.'], survey: ['Module 01 · Survey intelligence', 'Simulated Surveys', 'Test questions and evaluate how decision-maker personas respond across segments.'], ux: ['Module 02 · UX intelligence lab', 'How do buyers experience aurumcareers.tech?', 'Synthetic personas browse the site, react section by section, and surface what stops them converting.'], sales: ['Module 03 · Sales intelligence', 'Who should Aurum talk to next?', 'Decision-maker clusters, persistent persona memory and prospect matching against Aurum’s ideal customer profile.'], personas: ['Unified persona layer', 'Persona Library', 'One identity, behaviour and memory profile — reused across every module in separate contexts.'], reports: ['Workspace', 'Reports & History', 'Every simulation, survey and memory session run in this workspace.'], integrations: ['Workspace', 'Integrations', 'Connect data sources through authorised methods only.'], settings: ['Workspace', 'Settings', 'Workspace details, members and outreach safeguards.'] }[st.screen];
+    base.crumb = T[0]; base.title = T[1]; base.sub = T[2];
+    const scr = {}; NAV.forEach(n => scr[n[0]] = st.screen === n[0]); base.scr = scr;
+    if (!D) return base;
+    return { ...base, ...this.vShell(D), ...this.vSimple(D), ...this.vSurvey(D), ...this.vOverview(D), ...this.vUx(D), ...this.vReport(D), ...this.vSales(D), ...this.vMisc(D), ...this.vChat(D) };
+  }
+  vOverview(D) {
+    const go = (screen, o) => () => this.setState({ screen, ...(o || {}) });
+    return {
+      goUxConfig: go('ux', { uxView: 'config' }), goUxReport: go('ux', { uxView: 'report' }), goSurvey: go('survey', { survView: 'results' }), goSales: go('sales', { salesTab: 'prospects' }), goLib: go('personas'), goRuns: go('reports'),
+      runs: D.RUNS.map(r => ({ ...r, sfg: r.status === 'Live' ? '#E85D3A' : '#6B6B6B', go: r.type === 'UX Lab' ? go('ux', { uxView: r.status === 'Live' ? 'live' : 'report' }) : r.type === 'Survey' ? go('survey', { survView: 'results' }) : go('sales', { salesTab: 'memory' }) }))
+    };
+  }
+  vUx(D) {
+    const st = this.state, s = st.sim, c = st.cfg, setC = (o) => this.setState(x => ({ cfg: { ...x.cfg, ...o } }));
+    const tog = (arr, v) => arr.includes(v) ? arr.filter(a => a !== v) : [...arr, v];
+    const ROLES = ['CHRO', 'HR Director', 'Founder', 'Talent Head', 'CEO', 'DEI Lead', 'L&D Head', 'Chief People Officer', 'TA Leader', ...c.custom];
+    const OBJ = ['First impressions', 'Website navigation', 'Messaging clarity', 'Trust and credibility', 'Conversion optimisation', 'User experience', 'Pricing and product positioning', 'Overall website evaluation'];
+    const single = (list, cur, key) => list.map(v => ({ label: v, ...this.chip(cur === v), go: () => setC({ [key]: v }) }));
+    const secAt = y => D.SEC.slice().reverse().find(x => y >= x.y) || D.SEC[0];
+    const STAT = { read: 'Reading', hover: 'Exploring', click: 'Clicking', evaluate: 'Evaluating', done: 'Completed' };
+    const visited = new Set(); let inter = 0, stepsDone = 0, total = 0, active = 0;
+    const persons = D.P.map((p, i) => {
+      const k = s.idx[i], stp = k >= 0 ? p.steps[k] : null; total += p.steps.length; stepsDone += k + 1;
+      p.steps.slice(0, k + 1).forEach(x => { visited.add(secAt(x[1]).id); if (x[2] === 'click' || x[2] === 'hover') inter++; });
+      const status = stp ? STAT[stp[2]] : (s.started ? 'Queued' : 'Ready'); if (stp && stp[2] !== 'done') active++;
+      const sel = st.selP === p.id;
+      return { id: p.id, num: p.id.slice(1), role: p.role, co: p.co, color: this.col(p), tint: this.col(p, .14), activity: stp ? stp[3] : (s.started ? 'Waiting to start' : 'Ready to launch'), where: stp ? secAt(stp[1]).name : '—', status,
+        sfg: status === 'Completed' ? '#15803D' : status === 'Evaluating' ? '#E85D3A' : '#4A4A4A', pulse: stp && stp[2] !== 'done' ? 'aurPulse 1.6s infinite' : 'none',
+        bd: sel ? this.col(p) : 'rgba(0,0,0,.09)', bg: sel ? 'rgba(0,0,0,.04)' : 'transparent',
+        go: () => this.setState(x => ({ selP: x.selP === p.id ? null : p.id, sim: { ...x.sim, follow: x.selP === p.id ? 'all' : p.id } }), () => { this.lastTop = null; this.follow(); }) };
+    });
+    let selPanel = null; const si = D.P.findIndex(p => p.id === st.selP);
+    if (si >= 0) { const p = D.P[si]; selPanel = { id: p.id, role: p.role, co: p.co, color: this.col(p), journey: p.steps.slice(0, s.idx[si] + 1).filter(x => x[2] !== 'done').map((x, j) => ({ n: j + 1, a: x[3], sec: secAt(x[1]).name, note: x[4] || '', nfg: x[5] === 'issue' ? '#DC2626' : '#15803D' })), empty: s.idx[si] < 0, close: () => this.setState(x => ({ selP: null, sim: { ...x.sim, follow: 'all' } })) }; }
+    const issues = s.feed.filter(f => f.type === 'issue').length, prog = total ? Math.round(stepsDone / total * 100) : 0;
+    const TY = { issue: ['Issue', '#DC2626'], positive: ['Positive', '#15803D'], neutral: ['Observation', '#4A4A4A'], observer: ['You', '#E85D3A'] };
+    const feed = s.feed.map(f => { const p = D.P.find(x => x.id === f.pid); return { k: f.k, t: f.t, text: f.text, who: p ? p.id + ' · ' + p.role : 'Observer', color: p ? this.col(p) : '#E85D3A', tl: TY[f.type][0], tfg: TY[f.type][1], go: () => p && this.setState(x => ({ selP: p.id, sim: { ...x.sim, follow: p.id } }), () => { this.lastTop = null; this.follow(); }) }; });
+    const fp = D.P.find(p => p.id === (s.follow !== 'all' ? s.follow : s.lastPid)), fi = fp ? D.P.indexOf(fp) : -1;
+    const viewTop = s.control || fi < 0 || s.idx[fi] < 0 ? 0 : Math.min(2700, Math.max(0, fp.steps[s.idx[fi]][1] - 230));
+    const curSec = fi >= 0 && s.idx[fi] >= 0 ? secAt(fp.steps[s.idx[fi]][1]) : null;
+    const cl = st.calc, cost = cl.women * cl.attr / 100 * cl.salary * 1.5; const setCalc = k => e => { const v = parseFloat(e.target.value) || 0; this.setState(x => ({ calc: { ...x.calc, [k]: v } })); };
+    return {
+      uxSteps: [['config', 'Configure'], ['live', 'Live simulation'], ['report', 'Report']].map(([id, label], i, arr) => { const cur = arr.findIndex(a => a[0] === st.uxView), on = i === cur, done = i < cur; return { id, label, line: i > 0, lc: i <= cur ? '#E85D3A' : 'rgba(0,0,0,.08)', mark: done ? '✓' : String(i + 1), cb: on || done ? '#E85D3A' : 'rgba(0,0,0,.1)', cbg: done ? '#E85D3A' : '#fff', cfg: done ? '#fff' : on ? '#E85D3A' : 'rgba(0,0,0,.3)', lfg: on || done ? '#E85D3A' : '#9A9A9A', go: () => this.set('uxView', id) }; }),
+      uxTabs: this.tabs([['config', 'Configure'], ['live', 'Live simulation'], ['report', 'Report']], st.uxView, id => this.set('uxView', id)),
+      uxv: { config: st.uxView === 'config', live: st.uxView === 'live', report: st.uxView === 'report' }, liveDot: s.running,
+      cfg: c, setUrl: e => setC({ url: e.target.value }),
+      roleChips: ROLES.map(r => ({ label: r, ...this.chip(c.roles.includes(r)), go: () => setC({ roles: tog(c.roles, r) }) })),
+      objChips: OBJ.map(r => ({ label: r, ...this.chip(c.objs.includes(r)), go: () => setC({ objs: tog(c.objs, r) }) })),
+      indChips: single(['Mixed enterprise', 'IT services', 'BFSI', 'Pharma', 'Manufacturing', 'SaaS', 'Consulting'], c.industry, 'industry'),
+      sizeChips: single(['< 200', '200–1,000', '1,000–10,000', '10,000+'], c.size, 'size'),
+      senChips: single(['Manager', 'Director', 'Senior leadership', 'C-suite'], c.seniority, 'seniority'),
+      setCount: e => setC({ count: +e.target.value }), roleCount: c.roles.length, objCount: c.objs.length,
+      launch: () => this.launch(), goHome: () => this.set('screen', 'method'), openCustom: () => this.setState({ dialog: 'cp', cp: { role: '', ind: '', note: '' } }),
+      persons, selPanel, hasSel: !!selPanel, noSel: !selPanel, feed, feedEmpty: !feed.length,
+      m: { active: s.started ? active : 0, pages: visited.size, inter, issues, prog: prog + '%', time: this.fmt(s.tick * 7) },
+      running: s.running, notRunning: !s.running, done: s.done, control: s.control, notControl: !s.control,
+      statusLbl: s.control ? 'You have control' : s.done ? 'Completed' : s.running ? 'Running' : s.started ? 'Paused' : 'Ready',
+      playLbl: s.running ? 'Pause' : (s.done ? 'Run again' : s.started ? 'Resume' : 'Start'), playIcon: s.running ? this.ic('pause', 14) : this.ic('play', 14),
+      onPlay: () => { if (s.control) return; if (s.done || !s.started) this.restart(); else this.setSim({ running: !s.running }); },
+      onRestart: () => this.restart(), onControl: () => s.control ? this.release() : this.takeControl(),
+      speeds: [0.5, 1, 2, 4].map(v => ({ label: v + '×', ...this.chip(s.speed === v), go: () => this.setSim({ speed: v }) })),
+      followOpts: [{ v: 'all', l: 'All personas (overlay)' }, ...D.P.map(p => ({ v: p.id, l: 'Follow ' + p.id + ' · ' + p.role }))], follow: s.follow,
+      setFollow: e => { const v = e.target.value; this.lastTop = null; this.setState(x => ({ selP: v === 'all' ? null : v, sim: { ...x.sim, follow: v } }), () => this.follow()); },
+      bRef: this.bRefFn, cursors: this.cursors(), onPageClick: e => this.onPageClick(e),
+      urlPath: 'aurumcareers.tech/' + (curSec && curSec.id !== 'hero' && curSec.id !== 'nav' ? '#' + curSec.id : ''), secName: curSec ? curSec.name : 'Hero',
+      viewOverflow: s.control ? 'auto' : 'hidden', viewY: 'translateY(-' + viewTop + 'px)', viewOutline: s.control ? '#E85D3A' : 'rgba(0,0,0,.12)',
+      calc: cl, onWomen: setCalc('women'), onSalary: setCalc('salary'), onAttr: setCalc('attr'), costOut: '₹' + (cost / 100).toFixed(2) + ' Cr', leaving: Math.round(cl.women * cl.attr / 100),
+      goReport: () => this.setState({ uxView: 'report', reportTab: 'summary' })
+    };
+  }
+  vReport(D) {
+    const st = this.state, secAt = y => D.SEC.slice().reverse().find(x => y >= x.y) || D.SEC[0];
+    const PC = { Critical: '#DC2626', High: '#E85D3A', Medium: '#4A4A4A', Low: '#6B6B6B' };
+    const OC = { 'Requested pilot': '#15803D', Hesitant: '#E85D3A', Left: '#DC2626' };
+    const time = { hero: 41, cost: 63, record: 38, research: 34, ninety: 52, club: 21, tiers: 71, founder: 29, cta: 18 }, mx = 71;
+    const clicks = []; D.P.forEach(p => p.steps.forEach(s => { if (s[2] === 'click') clicks.push({ x: s[0] + '%', y: Math.round(s[1] * 0.16) + 'px', c: this.col(p) }); }));
+    const rp = D.P.find(p => p.id === st.repP), rr = D.PR[st.repP];
+    return {
+      reportTabs: this.tabs([['summary', 'A · Summary'], ['first', 'B · First impression'], ['nav', 'C · Navigation'], ['msg', 'D · Messaging'], ['trust', 'E · Trust'], ['barriers', 'F · Barriers'], ['sections', 'G · Sections'], ['personas', 'H · Personas'], ['recs', 'I · Recommendations']], st.reportTab, id => this.set('reportTab', id)),
+      rt: Object.fromEntries(['summary', 'first', 'nav', 'msg', 'trust', 'barriers', 'sections', 'personas', 'recs'].map(k => [k, st.reportTab === k])),
+      outcomes: D.P.map(p => ({ id: p.id, role: p.role, color: this.col(p), o: p.outcome, ofg: OC[p.outcome], final: D.PR[p.id].final })),
+      heat: D.SEC.map(s => ({ name: s.name, h: Math.round(s.h * 0.16) + 'px', a: (s.att * 0.85).toFixed(2), pct: Math.round(s.att * 100) })), clicks,
+      journeys: D.P.map(p => { const seq = []; p.steps.forEach(s => { const n = secAt(s[1]).name; if (s[2] !== 'done' && seq[seq.length - 1] !== n) seq.push(n); }); return { id: p.id, role: p.role, color: this.col(p), seq: seq.map((n, i) => ({ n, sep: i > 0 })) }; }),
+      timeBars: D.SEC.filter(s => time[s.id]).map(s => ({ name: s.name, s: time[s.id] + 's', w: Math.round(time[s.id] / mx * 100) + '%' })),
+      secCards: D.SEC.filter(s => s.id !== 'nav').map(s => { const notes = []; D.P.forEach(p => p.steps.forEach(x => { if (x[4] && secAt(x[1]).id === s.id) notes.push({ t: x[4], fg: x[5] === 'issue' ? '#DC2626' : x[5] === 'positive' ? '#15803D' : '#4A4A4A' }); })); return { name: s.name, pct: Math.round(s.att * 100) + '%', w: Math.round(s.att * 100) + '%', notes, none: !notes.length, t: (time[s.id] || 8) + 's avg' }; }),
+      repList: D.P.map(p => ({ id: p.id, role: p.role, color: this.col(p), o: p.outcome, ofg: OC[p.outcome], bd: p.id === st.repP ? this.col(p) : 'rgba(0,0,0,.1)', go: () => this.set('repP', p.id) })),
+      rep: { id: rp.id, role: rp.role, co: rp.co, color: this.col(rp), o: rp.outcome, ofg: OC[rp.outcome], ...rr, journey: rp.steps.filter(s => s[2] !== 'done').map((s, i) => ({ n: i + 1, a: s[3], sec: secAt(s[1]).name, k: s[2] })), clicksList: rp.steps.filter(s => s[2] === 'click').map(s => ({ a: s[3].replace('Clicked ', '').replace('Editing ', '').replace('Entering ', '') })) },
+      recFilters: ['All', 'Critical', 'High', 'Medium', 'Low'].map(f => ({ label: f, ...this.chip(st.recF === f), go: () => this.set('recF', f) })),
+      recs: D.RECS.filter(r => st.recF === 'All' || r.pr === st.recF).map((r, i) => ({ ...r, n: String(i + 1).padStart(2, '0'), pc: PC[r.pr] })),
+      exportReport: () => this.toast('Prototype: PDF export would generate here'), askAbout: q => () => this.ask(q)
+    };
+  }
+  vSales(D) {
+    const st = this.state, f = st.f, li = st.li === 'on', setF = k => e => this.setState({ f: { ...f, [k]: e.target.value } });
+    const PRI = { High: '#E85D3A', Medium: '#4A4A4A', Low: '#6B6B6B' };
+    const rows = D.PROS.filter(p => (!f.q || (p.name + p.title + p.co).toLowerCase().includes(f.q.toLowerCase())) && (f.ind === 'All' || p.ind === f.ind) && (f.conn === 'All' || p.conn === f.conn) && (f.pri === 'All' || p.pri === f.pri) && p.score >= +f.min)
+      .map(p => ({ ...p, pc: PRI[p.pri], sel: p.id === st.pSel, bg: p.id === st.pSel ? 'rgba(232,93,58,.07)' : 'transparent', bl: p.id === st.pSel ? '#E85D3A' : 'transparent', bd2: p.id === st.pSel ? 'rgba(232,93,58,.45)' : 'rgba(0,0,0,.08)', sc: p.score >= 80 ? '#E85D3A' : '#9A9A9A', status: (st.pst[p.id] || {}).status || '', saved: (st.pst[p.id] || {}).saved, go: () => this.set('pSel', p.id), w: p.score + '%' }));
+    const p = D.PROS.find(x => x.id === st.pSel), ps = st.pst[p.id] || {}, setPs = o => this.setState(x => ({ pst: { ...x.pst, [p.id]: { ...(x.pst[p.id] || {}), ...o } } }));
+    const m = this.curMem(D), mx = Math.max(...m.interest);
+    return {
+      salesTabs: this.tabs([['dashboard', 'Dashboard'], ['clusters', 'Persona clusters'], ['memory', 'Persona memory'], ['prospects', 'Prospect discovery']], st.salesTab, id => this.set('salesTab', id)),
+      sv: Object.fromEntries(['dashboard', 'clusters', 'memory', 'prospects'].map(k => [k, st.salesTab === k])),
+      kpis: [['148', 'Identified prospects', 0], ['63', 'Relevant decision-makers', 0], ['17', 'High-priority opportunities', 0], [li ? '412' : '—', 'Connected LinkedIn relationships', 1], ['9', 'Recommended outreach', 0], ['4', 'Active conversations', 0], ['38', 'Potential enterprise accounts', 0]].map(([v, l, c]) => ({ v, l, tag: c ? (li ? 'Connected · export' : 'Not connected') : 'Illustrative', tfg: c && li ? '#15803D' : '#6B6B6B' })),
+      liOff: !li, goLi: () => this.setState({ screen: 'integrations' }), goProspects: () => this.set('salesTab', 'prospects'),
+      topPros: D.PROS.slice(0, 4).map(x => ({ ...x, go: () => this.setState({ salesTab: 'prospects', pSel: x.id }) })),
+      secTabs: [['talk', '01 · Persona conversations', 'Talk to decision-makers', 'Chat with synthetic buyers by cluster. They remember every session, objection and open question.', 'users'], ['li', '02 · LinkedIn outreach', 'Who to reach, and how', 'Connect LinkedIn, see matched prospects, and draft personalised messages you approve.', 'li']].map(([id, k, title, d, icn]) => { const on = (st.salesSec || 'talk') === id; return { k, title, d, icon: this.ic(icn, 18), bd: on ? 'rgba(232,93,58,.5)' : 'rgba(0,0,0,.08)', sh: on ? '0 16px 40px -18px rgba(232,93,58,.3)' : 'none', rb: on ? '#E85D3A' : 'rgba(0,0,0,.18)', rbg: on ? '#E85D3A' : '#fff', kc: on ? '#E85D3A' : '#9A9A9A', ic: id === 'li' ? '#0A66C2' : '#1A1A1A', go: () => this.set('salesSec', id) }; }),
+      sec: { talk: (st.salesSec || 'talk') === 'talk', li: st.salesSec === 'li' },
+      clusters: D.CL.map((c, i) => ({ ...c, i, open: st.clOpen === i, hasMem: [0, 3, 5].includes(i), sessions: ({ 0: 3, 3: 2, 5: 2 })[i], bg: st.clOpen === i ? 'rgba(232,93,58,.04)' : '#fff', bd: st.clOpen === i ? 'rgba(232,93,58,.5)' : 'rgba(0,0,0,.08)', iw: c.interest + '%', indBars: c.ind.map(([n, v]) => ({ n, w: v + '%', v: v + '%' })), sizeBars: c.size.map(([n, v]) => ({ n, w: v + '%', v: v + '%' })), go: () => this.set('clOpen', i) })),
+      newCluster: () => this.setState({ dialog: 'cc' }),
+      memList: D.MEM.map(x => ({ ...x, bd: x.id === st.mem ? '#E85D3A' : 'rgba(0,0,0,.1)', go: () => this.set('mem', x.id), last: x.interest[x.interest.length - 1] })),
+      mem: { ...m, sessions: m.sessions.map((s, i) => ({ ...s, cur: i === m.sessions.length - 1, dot: i === m.sessions.length - 1 ? '#E85D3A' : '#9A9A9A', score: m.interest[i], h: Math.round(m.interest[i] / mx * 48) + 'px' })), delta: '+' + (m.interest[m.interest.length - 1] - m.interest[0]), deltaTxt: m.interest.length > 1 ? 'Interest +' + (m.interest[m.interest.length - 1] - m.interest[0]) + ' across sessions' : 'Interest ' + m.interest[0] }, memIdK: m.id,
+      memMsgs: (st.memMsgs[m.id] || []).map((x, i) => ({ k: i, t: x.t, u: x.r === 'u', a: x.r === 'a' })), memIn: st.memIn, memBusy: st.memBusy, setMemIn: e => this.set('memIn', e.target.value), sendMem: () => this.askMem(), memKey: e => { if (e.key === 'Enter') { e.preventDefault(); this.askMem(); } },
+      f, fq: setF('q'), find: setF('ind'), fconn: setF('conn'), fpri: setF('pri'), fmin: setF('min'),
+      indOpts: ['All', ...new Set(D.PROS.map(x => x.ind))], rows, rowCount: rows.length, noRows: !rows.length,
+      pr: { ...p, pc: PRI[p.pri], status: ps.status || 'Not contacted', stc: ps.status ? '#15803D' : '#9A9A9A', saved: !!ps.saved, follow: ps.follow || '', hasHist: p.hist.length > 0, noHist: !p.hist.length },
+      draft: st.drafts[p.id] ?? this.defMsg(p), gen: st.gen,
+      setDraft: e => { const v = e.target.value; this.setState(x => ({ drafts: { ...x.drafts, [p.id]: v } })); },
+      genMsg: () => this.genMsg(p), copyMsg: () => { navigator.clipboard && navigator.clipboard.writeText(st.drafts[p.id] ?? this.defMsg(p)).catch(() => {}); this.toast('Message copied'); },
+      saveP: () => { setPs({ saved: !ps.saved }); this.toast(ps.saved ? 'Removed from saved' : 'Prospect saved'); },
+      markC: () => { setPs({ status: 'Contacted' }); this.toast('Marked as contacted'); }, setFollowUp: e => setPs({ follow: e.target.value }),
+      approve: () => this.set('dialog', 'approve'), savedLbl: ps.saved ? 'Saved' : 'Save prospect'
+    };
+  }
+  vMisc(D) {
+    const st = this.state, SS = ['Questions', 'Personas', 'Audience', 'Run'];
+    const lib = [...D.P.map(p => ({ id: p.id, name: p.id + ' · ' + p.role, role: p.role, co: p.co, color: this.col(p), mods: ['UX Lab', 'Survey'], traits: D.PR[p.id].attention, decision: D.PR[p.id].motivation, mem: [D.PR[p.id].final], hist: ['UX-014 · ' + p.outcome, 'SV-022 · responded'] })),
+      ...D.MEM.map((m, i) => ({ id: m.id.toUpperCase(), name: m.label, role: m.label.split(' · ')[0], co: m.sub, color: `oklch(0.68 0.13 ${50 + i * 40})`, mods: ['Sales'], traits: m.mot, decision: m.next, mem: m.sessions.map(s => s.date + ' — ' + s.items[0]), hist: m.sessions.map(s => 'Memory session · ' + s.title) }))];
+    const ls = lib.find(x => x.id === st.libSel) || lib[0];
+    return {
+      sview: { list: st.survView === 'list', create: st.survView === 'new', running: st.survView === 'running', results: st.survView === 'results' },
+      surveys: D.SURV.map(s => ({ ...s, sfg: s.status === 'Draft' ? '#6B6B6B' : '#15803D', go: () => this.set('survView', s.status === 'Draft' ? 'new' : 'results') })),
+      newSurvey: () => this.setState({ survView: 'new', survStep: 0 }), backList: () => this.set('survView', 'list'),
+      sSteps: SS.map((s, i) => ({ n: i + 1, s, fg: i === st.survStep ? '#E85D3A' : i < st.survStep ? '#1A1A1A' : '#9A9A9A', bd: i <= st.survStep ? '#E85D3A' : 'rgba(0,0,0,.15)' })),
+      ss: Object.fromEntries(SS.map((s, i) => ['s' + i, st.survStep === i])), sNext: () => st.survStep < 3 ? this.set('survStep', st.survStep + 1) : this.runSurvey(), sBack: () => this.set('survStep', Math.max(0, st.survStep - 1)),
+      sNextLbl: st.survStep < 3 ? 'Continue' : 'Run simulation', survProg: st.survProg + '%', survN: Math.round(st.survProg * 1.2),
+      libs: lib.map(x => ({ ...x, bd: x.id === ls.id ? x.color : 'rgba(0,0,0,.1)', go: () => this.set('libSel', x.id), modsTxt: x.mods.join(' · ') })), ls,
+      li: { off: st.li === 'off', connecting: st.li === 'connecting', on: st.li === 'on' }, openOauth: () => this.set('dialog', 'oauth'),
+      disconnectLi: () => { this.set('li', 'off'); this.toast('LinkedIn disconnected · imported data kept for 30 days'); }, importCsv: () => this.toast('Prototype: would open file picker for Connections.csv'), resync: () => this.toast('Prototype: re-matching 1,284 connections against ICP')
+    };
+  }
+  setSv(o) { this.setState(s => ({ sv: { ...s.sv, ...o } })); }
+  vShell(D) {
+    const st = this.state, sv = st.sv, scr = st.screen;
+    const cfgView = (scr === 'survey' && sv.step < 4) || (scr === 'ux' && st.uxView === 'config') || (scr === 'sales' && st.salesTab === 'clusters') || scr === 'integrations';
+    const cur = st.chatOpen ? 5 : scr === 'method' ? 2 : cfgView ? 3 : 4;
+    const mod = st.method || (scr === 'method' ? null : scr);
+    const goCfg = () => { if (!mod) return; if (mod === 'survey') this.setState({ screen: 'survey', sv: { ...sv, step: Math.min(sv.step, 3) } }); else if (mod === 'ux') this.setState({ screen: 'ux', uxView: 'config' }); else this.setState({ screen: 'sales', salesTab: 'clusters' }); };
+    const goRes = () => { if (!mod) return; if (mod === 'survey') this.setState({ screen: 'survey', sv: { ...sv, step: 4, prog: 100 } }); else if (mod === 'ux') this.setState({ screen: 'ux', uxView: 'report' }); else this.setState({ screen: 'sales', salesTab: 'prospects' }); };
+    const fns = [() => this.setState({ screen: 'method', chatOpen: false }), () => this.setState({ screen: 'method', chatOpen: false }), goCfg, goRes, () => this.set('chatOpen', true)];
+    const steps = ['Workspace', 'Method', 'Configure', 'Results', 'Ask Percura'].map((label, i) => { const n = i + 1, done = n < cur, on = n === cur; return { n, label, line: i > 0, lc: n <= cur ? '#E85D3A' : 'rgba(0,0,0,.08)', mark: done ? '✓' : String(n), cb: on || done ? '#E85D3A' : 'rgba(0,0,0,.12)', cbg: done ? '#E85D3A' : '#fff', cfg: done ? '#fff' : on ? '#E85D3A' : 'rgba(0,0,0,.3)', lfg: on || done ? '#E85D3A' : '#9A9A9A', go: fns[i] }; });
+    const M = [
+      { id: 'survey', icon: this.ic('survey', 20), title: 'Simulated Surveys', body: 'Test questions with enterprise decision-maker personas and uncover what HR leaders, L&D heads and founders think about sponsorship programmes.', foot: 'Existing Percura module', ffg: '#1A1A1A', path: '/user-testing/survey' },
+      { id: 'ux', icon: this.ic('ux', 20), title: 'UX Intelligence Lab', body: 'Send synthetic buyer personas through aurumcareers.tech, watch them browse live, and find exactly where the site loses them.', foot: 'New · Aurum', ffg: '#E85D3A', path: 'Guided configuration' },
+      { id: 'sales', icon: this.ic('sales', 20), title: 'Sales Intelligence', body: 'Map enterprise decision-maker clusters, keep persistent persona memory, and match your network against Aurum’s ideal customer profile.', foot: 'New · Aurum', ffg: '#E85D3A', path: 'LinkedIn-authorised' }
+    ].map(m => { const on = st.method === m.id; return { ...m, on, bd: on ? 'rgba(232,93,58,.5)' : 'rgba(0,0,0,.08)', sh: on ? '0 20px 60px -20px rgba(232,93,58,.25)' : 'none', rb: on ? '#E85D3A' : 'rgba(0,0,0,.18)', rbg: on ? '#E85D3A' : '#fff', go: () => this.set('method', m.id) }; });
+    const chosen = M.find(m => m.on);
+    return {
+      hSteps: steps, methods: M, isMethod: scr === 'method', showHead: scr !== 'method' && scr !== 'survey',
+      selTitle: chosen ? chosen.title + ' selected' : 'No method selected', selSub: chosen ? 'Continue to configure your simulation' : 'Choose one of the three research methods',
+      noMethod: !chosen, mainW: scr === 'ux' || scr === 'sales' ? '1440px' : '1180px',
+      contMethod: () => { const m = st.method; if (!m) return; if (m === 'survey') this.setState({ screen: 'survey' }); else if (m === 'ux') this.setState({ screen: 'ux', uxView: 'config' }); else this.setState({ screen: 'sales', salesTab: 'dashboard' }); },
+      backMethod: () => this.toast('Workspace: Aurum · aurumcareers.tech'), changeWs: () => this.toast('Prototype: single workspace (Aurum)')
+    };
+  }
+  vSurvey(D) {
+    const st = this.state, sv = st.sv, S = D.SV, qs = sv.qs || S.qs, set = o => this.setSv(o);
+    const QT = [['short_text', 'Short Text'], ['long_text', 'Long Text'], ['multiple_choice', 'Multiple Choice'], ['rating', 'Rating'], ['likert_5', 'Likert Scale'], ['ranking', 'Ranking'], ['yes_no', 'Yes / No'], ['opinion_scale', 'Opinion Scale']];
+    const upQ = (i, o) => set({ qs: qs.map((q, j) => j === i ? { ...q, ...o } : q) });
+    const GE = ['By seniority', 'By industry', 'By company size', 'By buying motivation', 'By function', 'By region'];
+    const people = S.people.filter(p => sv.sel.includes(p.seg));
+    const segName = id => (S.segs.find(s => s.id === id) || {}).name || 'On-demand';
+    const qr = qs.map((q, i) => {
+      const counts = (q.o || []).map(o => { const n = people.filter(p => p.r[i] === o).length; return { o, n, pct: people.length ? Math.round(n / people.length * 100) : 0 }; });
+      return { n: 'Q' + (i + 1), p: q.p, hasBars: (q.o || []).length > 0, bars: counts.map(c => ({ ...c, w: c.pct + '%', v: c.pct + '%' })), sum: S.sums[i] || 'Responses are summarised once the simulation completes.', rows: people.map((p, k) => ({ k: k + 1, n: p.n, type: p.m + ' · ' + segName(p.seg), a: p.r[i] || '—' })) };
+    });
+    const runSim = () => { set({ step: 4, prog: 0 }); clearInterval(this.svI); this.svI = setInterval(() => { const n = Math.min(100, this.state.sv.prog + 6); this.setSv({ prog: n }); if (n >= 100) clearInterval(this.svI); }, 160); };
+    const qShow = sv.q;
+    return {
+      sx: { a: sv.step === 1, seg: sv.step === 2, b: sv.step === 3, run: sv.step === 4 && sv.prog < 100, res: sv.step === 4 && sv.prog >= 100, sub1: sv.sub === 1, sub2: sv.sub === 2, loading: sv.loading, notLoading: !sv.loading },
+      svSteps: ['Audience', 'Segments', 'Build Survey', 'Results'].map((label, i) => { const n = i + 1, done = n < sv.step, on = n === sv.step; return { n, label, line: i > 0, lc: done ? '#E85D3A' : 'rgba(0,0,0,.06)', mark: done ? '✓' : String(n), cb: on || done ? '#E85D3A' : 'rgba(0,0,0,.1)', cbg: on || done ? '#E85D3A' : '#fff', cfg: on || done ? '#fff' : 'rgba(0,0,0,.3)', ring: on ? '0 0 0 4px rgba(232,93,58,.12)' : 'none', lfg: on ? '#E85D3A' : done ? '#1A1A1A' : 'rgba(0,0,0,.3)', go: () => n <= sv.step && set({ step: n }) }; }),
+      svd: sv, segIn: e => set({ seg: e.target.value }), groupIn: e => set({ group: e.target.value }),
+      seg1Dis: !sv.seg.trim(), seg2Dis: !sv.group.trim(), seg1Op: sv.seg.trim() ? 1 : .5, seg2Op: sv.group.trim() ? 1 : .5,
+      sub1Go: () => sv.seg.trim() && set({ sub: 2 }), sub2Back: () => set({ sub: 1 }),
+      sub2Go: () => { if (!sv.group.trim()) return; set({ loading: true }); setTimeout(() => this.setSv({ loading: false, step: 2 }), 1400); },
+      geChips: GE.map(g => ({ g, go: () => set({ group: sv.group.trim() ? sv.group.trim().replace(/,$/, '') + ', ' + g : g }) })),
+      segCards: S.segs.map((g, i) => { const on = sv.sel.includes(g.id), ps = S.people.filter(p => p.seg === g.id); return { ...g, idx: i + 1, on, w: g.fit + '%', bd: on ? 'rgba(232,93,58,.4)' : 'rgba(0,0,0,.08)', sh: on ? '0 10px 30px -10px rgba(232,93,58,.2)' : 'none', cbg: on ? '#E85D3A' : '#fff', cbd: on ? '#E85D3A' : 'rgba(0,0,0,.15)', open: sv.open === g.id, ps, pn: ps.length, vl: sv.open === g.id ? 'Hide personas' : 'View ' + ps.length + ' personas', toggle: () => set({ sel: on ? sv.sel.filter(x => x !== g.id) : [...sv.sel, g.id] }), expand: e => { e.stopPropagation(); set({ open: sv.open === g.id ? null : g.id }); } }; }),
+      selCount: sv.sel.length, selPeople: people.length, segBack: () => set({ step: 1, sub: 2 }), segGo: () => sv.sel.length && set({ step: 3 }),
+      od: { idle: sv.od === 'idle', run: sv.od === 'running', done: sv.od === 'done' }, odN: sv.odN, odW: sv.odN * 10 + '%',
+      odGo: e => { e.stopPropagation(); set({ od: 'running', odN: 0 }); clearInterval(this.odI); this.odI = setInterval(() => { const n = this.state.sv.odN + 1; this.setSv({ odN: n }); if (n >= 10) { clearInterval(this.odI); this.setSv({ od: 'done' }); } }, 260); },
+      odCancel: e => { e.stopPropagation(); clearInterval(this.odI); set({ od: 'idle', odN: 0 }); },
+      nameIn: e => set({ name: e.target.value }), goalIn: e => set({ goal: e.target.value }), ctxIn: e => set({ ctx: e.target.value }),
+      qCards: qs.map((q, i) => ({ n: i + 1, p: q.p, t: q.t, hasOpts: ['multiple_choice', 'ranking'].includes(q.t), opts: (q.o || []).map((o, k) => ({ o, k, ph: 'Option ' + (k + 1), ch: e => upQ(i, { o: q.o.map((x, j) => j === k ? e.target.value : x) }), rm: () => upQ(i, { o: q.o.filter((_, j) => j !== k) }) })), addOpt: () => upQ(i, { o: [...(q.o || []), ''] }), types: QT.map(([v, l]) => ({ v, l })), setT: e => upQ(i, { t: e.target.value, o: ['multiple_choice', 'ranking'].includes(e.target.value) ? (q.o && q.o.length ? q.o : ['', '']) : q.t === 'likert_5' ? [] : q.o }), setP: e => upQ(i, { p: e.target.value }), rm: () => set({ qs: qs.filter((_, j) => j !== i) }), dup: () => set({ qs: [...qs.slice(0, i + 1), { ...q }, ...qs.slice(i + 1)] }) })),
+      qCount: qs.length, noQs: !qs.length, addQ: () => set({ qs: [...qs, { t: 'short_text', p: '', o: [] }] }),
+      aiIn: e => set({ ai: e.target.value }), aiGen: () => { set({ qs: [...qs, { t: 'yes_no', p: 'Would you nominate a senior sponsor to make dated, named commitments for 90 days?', o: [] }, { t: 'rating', p: 'How important is a matched control group when evaluating a leadership programme? (1–10)', o: [] }], ai: '' }); this.toast('AI assistant added 2 questions'); },
+      tempIn: e => set({ temp: +e.target.value }), lens: ['Short', 'Medium', 'Long'].map(l => ({ l, ...this.chip(sv.len === l), go: () => set({ len: l }) })),
+      tgs: [['reasoning', 'Show Internal Reasoning', 'Include persona thought process'], ['conf', 'Confidence Scores', 'Per-response confidence'], ['quotes', 'Generate Quotes', 'Verbatim persona quotes'], ['insights', 'Generate Actionable Insights', 'Recommendations in the summary']].map(([k, l, d]) => { const on = sv.tg[k]; return { l, d, bg: on ? '#E85D3A' : 'rgba(0,0,0,.12)', x: on ? '18px' : '2px', go: () => set({ tg: { ...sv.tg, [k]: !on } }) }; }),
+      buildBack: () => set({ step: 2 }), runSim, runDis: !qs.length,
+      svProg: sv.prog + '%', svDone: Math.round(sv.prog / 100 * people.length * qs.length), svTotal: people.length * qs.length, svPeople: people.length,
+      svTabs: [['analysis', 'Simulation Analysis'], ['responses', 'Responses']].map(([id, l]) => ({ l, fg: sv.tab === id ? '#1A1A1A' : '#9A9A9A', bd: sv.tab === id ? '#E85D3A' : 'transparent', go: () => set({ tab: id }) })),
+      svt: { analysis: sv.tab === 'analysis', responses: sv.tab === 'responses' },
+      qr, qPills: qs.map((q, i) => ({ l: 'Q' + (i + 1), ...this.chip(qShow === i), go: () => set({ q: i }) })), qCur: qr[qShow] || qr[0],
+      respList: people.filter(p => !sv.search || (p.n + p.m).toLowerCase().includes(sv.search.toLowerCase())).map(p => ({ ...p, sn: segName(p.seg), init: p.n.split(' ').map(x => x[0]).join('') })), searchIn: e => set({ search: e.target.value }),
+      exec: S.exec, svRecs: S.recs.map((r, i) => ({ r, n: i + 1 })), margin: '±' + Math.round(98 / Math.sqrt(Math.max(1, people.length * 12))) + '%',
+      newSurvey: () => set({ step: 1, sub: 1, seg: '', group: '', prog: 0 }), dupSurvey: () => set({ step: 3, name: sv.name + ' (copy)', prog: 0 }), exportSv: () => this.toast('Prototype: export would generate a PDF/CSV')
+    };
+  }
+  vSimple(D) {
+    const st = this.state, s = st.sim, TC = { issue: '#DC2626', positive: '#15803D', neutral: '#9A9A9A', observer: '#E85D3A' };
+    const PC = { Critical: '#DC2626', High: '#E85D3A', Medium: '#6B6B6B', Low: '#9A9A9A' }, OC = { 'Requested pilot': '#15803D', Hesitant: '#E85D3A', Left: '#DC2626' };
+    const SP = [0.5, 1, 2, 4];
+    return {
+      cfgMore: st.cfgMore, toggleMore: () => this.set('cfgMore', !st.cfgMore), moreLbl: st.cfgMore ? '− Fewer options' : '+ More options (industry, company size, seniority, count)',
+      livePulse: s.running ? 'aurPulse 1.4s infinite' : 'none', speedLbl: s.speed + '×', cycleSpeed: () => this.setSim({ speed: SP[(SP.indexOf(s.speed) + 1) % SP.length] }),
+      feedShort: s.feed.slice(0, 10).map(f => { const p = D.P.find(x => x.id === f.pid); return { k: f.k, tfg: TC[f.type], short: (p ? p.role + ': ' : '') + f.text.replace(/^Persona 0\d\s*/, '').replace(/^\w/, c => c.toUpperCase()), go: () => p && this.setState(x => ({ selP: p.id, sim: { ...x.sim, follow: p.id } })) }; }),
+      rTabs: [['summary', 'Summary'], ['recs', 'Recommendations'], ['personas', 'Personas'], ['heat', 'Heatmap']].map(([id, l]) => { const on = st.reportTab === id; return { l, bg: on ? '#fff' : 'transparent', sh: on ? '0 1px 3px rgba(0,0,0,.08)' : 'none', fg: on ? '#1A1A1A' : '#6B6B6B', go: () => this.set('reportTab', id) }; }),
+      r2: { summary: !['recs', 'personas', 'heat'].includes(st.reportTab), recs: st.reportTab === 'recs', personas: st.reportTab === 'personas', heat: st.reportTab === 'heat' },
+      goRecs: () => this.set('reportTab', 'recs'),
+      worked: [{ t: 'The cost calculator made attrition cost concrete', who: 'HR Director, CEO' }, { t: 'Cited research built trust', who: 'Founder, Talent Head, DEI Lead' }, { t: 'The founder’s CFO background added credibility', who: 'CEO' }],
+      stopped: [{ t: 'No indicative price anywhere on the page', who: 'CHRO, HR Director' }, { t: 'The hero doesn’t say what Aurum is', who: 'Founder, Talent Head' }, { t: 'Sample figures read as real claims', who: 'CHRO, CEO' }],
+      recs2: D.RECS.map((r, i) => ({ ...r, pc: PC[r.pr], open: st.recOpen === i, chev: st.recOpen === i ? '−' : '+', go: () => this.set('recOpen', st.recOpen === i ? -1 : i) })),
+      ...(() => { const m = this.curMem(D), c = D.CL; const map = { 0: 1, 3: 1, 5: 1 }; const prev = m.sessions.length > 1 ? m.sessions[m.sessions.length - 2] : null; return {
+        clChips: c.map((x, i) => ({ label: x.name.split(' / ')[0].replace('Leadership Development Heads', 'Leadership Dev.').replace('Talent Acquisition Leaders', 'TA Leaders'), mem: !!map[i], ...this.chip(st.clOpen === i), go: () => this.setState({ clOpen: i, sessOpen: false }) })),
+        lastTime: prev ? 'Last time (' + prev.date + '): ' + prev.items[0].replace(/^\w/, ch => ch.toLowerCase()) + '. They remember this.' : 'First conversation — this persona will remember what you discuss.',
+        hasSess: m.sessions.length > 1, sessCount: m.sessions.length, sessOpen: st.sessOpen, sessChev: st.sessOpen ? '−' : '+', toggleSess: () => this.set('sessOpen', !st.sessOpen),
+        priTabs: ['All', 'High', 'Medium'].map(l => { const on = st.f.pri === l; return { l, bg: on ? '#fff' : 'transparent', sh: on ? '0 1px 3px rgba(0,0,0,.08)' : 'none', fg: on ? '#1A1A1A' : '#6B6B6B', go: () => this.setState({ f: { ...st.f, pri: l } }) }; })
+      }; })(),
+      pRows: D.P.map(p => { const r = D.PR[p.id], on = st.pOpen === p.id; return { num: p.id.slice(1), role: p.role, color: this.col(p), final: r.final, o: p.outcome, ofg: OC[p.outcome], pos: r.pos, neg: r.neg, open: on, chev: on ? '−' : '+', go: () => this.set('pOpen', on ? null : p.id) }; })
+    };
+  }
+  vChat(D) {
+    const st = this.state;
+    const SUG = ['Why did the CHRO personas leave the website?', 'Which section generated the most confusion?', 'What did the CEO personas think about our positioning?', 'What is the biggest conversion barrier?', 'Compare the behaviour of HR Directors and Founders.', 'What changes should we prioritise?'];
+    const dlg = st.dialog, p = D.PROS.find(x => x.id === st.pSel);
+    return {
+      chatOpen: st.chatOpen, closeChat: () => this.set('chatOpen', false), chatEmpty: !st.msgs.length,
+      msgs: st.msgs.map((m, i) => ({ k: i, t: m.t, u: m.r === 'u', a: m.r === 'a' })), chatIn: st.chatIn, busy: st.busy,
+      setChatIn: e => this.set('chatIn', e.target.value), sendChat: () => this.ask(), chatKey: e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.ask(); } },
+      sugs: SUG.map(q => ({ q, go: () => this.ask(q) })), chatRef: el => { if (el) el.scrollTop = el.scrollHeight; },
+      dlg: { cp: dlg === 'cp', oauth: dlg === 'oauth', approve: dlg === 'approve', cc: dlg === 'cc', any: !!dlg }, closeDlg: () => this.set('dialog', null),
+      cp: st.cp, cpRole: e => this.setState({ cp: { ...st.cp, role: e.target.value } }), cpInd: e => this.setState({ cp: { ...st.cp, ind: e.target.value } }), cpNote: e => this.setState({ cp: { ...st.cp, note: e.target.value } }),
+      saveCp: () => { const r = st.cp.role.trim(); if (!r) return; this.setState(x => ({ dialog: null, cfg: { ...x.cfg, custom: [...x.cfg.custom, r], roles: [...x.cfg.roles, r] } })); this.toast('Custom persona “' + r + '” added'); },
+      ccName: st.ccName, setCc: e => this.set('ccName', e.target.value), saveCc: () => { this.setState({ dialog: null, ccName: '' }); this.toast('Cluster saved — matching runs on next sync (prototype)'); },
+      connectLi: () => { this.setState({ dialog: null, li: 'connecting' }); setTimeout(() => this.setState({ li: 'on' }), 1600); },
+      approveMsg: p ? (st.drafts[p.id] ?? this.defMsg(p)) : '', approveName: p ? p.name : '', liOn: st.li === 'on',
+      doApprove: () => { const t = st.drafts[p.id] ?? this.defMsg(p); navigator.clipboard && navigator.clipboard.writeText(t).catch(() => {}); this.setState(x => ({ dialog: null, pst: { ...x.pst, [p.id]: { ...(x.pst[p.id] || {}), status: 'Contacted' } } })); this.toast(st.li === 'on' ? 'Approved — copied. Paste into LinkedIn to send.' : 'Approved and copied to clipboard'); },
+      toastMsg: st.toast, hasToast: !!st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-fcdf69e9-55a8-4c9f-8c09-0ec56f0e2a4a/styles.css">
+<script src="_ds/classical-fcdf69e9-55a8-4c9f-8c09-0ec56f0e2a4a/_ds_bundle.js"></script>
+<script src="aurum-data.js"></script>
+<style>
+body{margin:0;background:#100f0d;color:#ece8e1}
+a{color:#e1ad66}a:hover{color:#f0c78c}
+@keyframes aurPing{0%{transform:scale(.3);opacity:1}100%{transform:scale(1.7);opacity:0}}
+@keyframes aurPulse{0%,100%{opacity:1}50%{opacity:.35}}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:rgba(236,232,225,.14);border-radius:4px}
+</style>
+</helmet>
+<div style="--color-bg:#100f0d;--color-text:#ece8e1;--color-divider:rgba(236,232,225,.13);--color-surface:#1e1c19;--color-accent:#e1ad66;display:flex;min-height:100vh;background:#100f0d;color:#ece8e1;font-family:var(--font-body);font-size:14px">
+<aside style="width:{{ sideW }};flex:none;background:#0a0908;border-right:1px solid rgba(236,232,225,.08);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;padding:18px 12px;gap:4px;box-sizing:border-box">
+<div style="height:44px;overflow:hidden;display:flex;align-items:center;margin:0 4px 6px">
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><img src="uploads/percura-icon-full.webp" alt="Percura" style="width:150px;height:44px;object-fit:cover;object-position:center"></sc-if><sc-if value="{{ narrow }}"><span title="Percura" style="width:32px;height:32px;margin-left:4px;border:1px solid #ece8e1;border-radius:4px;display:grid;place-items:center;font-family:var(--font-heading);font-size:19px;color:#ece8e1">P</span></sc-if>
+</div>
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+<div style="margin:0 6px 14px;padding:8px 10px;border:1px solid rgba(236,232,225,.1);border-radius:4px;display:flex;align-items:center;gap:10px">
+<div style="width:26px;height:26px;border-radius:3px;border:1px solid #e1ad66;color:#e1ad66;display:grid;place-items:center;font-family:var(--font-heading);font-size:15px">A</div>
+<div style="display:flex;flex-direction:column;line-height:1.25"><span style="font-size:13px">Aurum</span><span style="font-size:11px;color:#8e887f">Workspace · Pilot plan</span></div>
+</div>
+</sc-if>
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="8">
+<sc-if value="{{ n.gap }}"><div style="height:1px;background:rgba(236,232,225,.08);margin:10px 6px"></div></sc-if>
+<button onClick="{{ n.go }}" title="{{ n.label }}" style="display:flex;align-items:center;gap:11px;padding:8px 10px;border:0;border-left:2px solid {{ n.bd }};background:{{ n.bg }};color:{{ n.fg }};font:inherit;font-size:13.5px;text-align:left;cursor:pointer;border-radius:0 3px 3px 0" style-hover="background:rgba(236,232,225,.05)">{{ n.icon }}<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><span style="flex:1">{{ n.label }}</span><sc-if value="{{ n.badge }}"><span style="font-size:10px;color:#e1ad66;letter-spacing:.06em">{{ n.badge }}</span></sc-if></sc-if></button>
+</sc-for>
+<div style="margin-top:auto;padding:10px;display:flex;align-items:center;gap:10px;border-top:1px solid rgba(236,232,225,.08)">
+<div style="width:30px;height:30px;border-radius:50%;background:#2a2622;display:grid;place-items:center;font-size:11px;flex:none">AB</div>
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><div style="display:flex;flex-direction:column;line-height:1.25"><span style="font-size:12.5px">Arundhati Babar</span><span style="font-size:11px;color:#8e887f">Founder · Admin</span></div></sc-if>
+</div>
+</aside>
+<main style="flex:1;min-width:0;display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:16px;padding:14px 28px;border-bottom:1px solid rgba(236,232,225,.08);position:sticky;top:0;background:rgba(16,15,13,.94);backdrop-filter:blur(6px);z-index:20;flex-wrap:wrap">
+<div style="display:flex;flex-direction:column;flex:1;min-width:200px">
+<span style="font-size:11px;color:#8e887f;letter-spacing:.08em;text-transform:uppercase">{{ crumb }}</span>
+<span style="font-family:var(--font-heading);font-size:24px;line-height:1.15">{{ title }}</span>
+</div>
+<span title="Data and AI behaviour in this prototype are illustrative unless marked Connected" style="font-size:11px;padding:4px 9px;border:1px dashed rgba(225,173,102,.5);color:#e1ad66;border-radius:3px">Prototype · illustrative data</span>
+<button class="btn btn-primary" onClick="{{ toggleChat }}">{{ ic.msg }}Ask Percura</button>
+</header>
+<div style="padding:26px 28px 60px;display:flex;flex-direction:column;gap:22px;min-width:0">
+<sc-if value="{{ scr.ux }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="UX Lab" style="display:flex;flex-direction:column;gap:20px">
+<nav style="display:flex;gap:26px;border-bottom:1px solid rgba(236,232,225,.09)">
+<sc-for list="{{ uxTabs }}" as="t" hint-placeholder-count="3"><button onClick="{{ t.go }}" style="background:none;border:0;border-bottom:2px solid {{ t.bd }};color:{{ t.fg }};font-family:var(--font-heading);font-size:17px;padding:4px 2px 10px;cursor:pointer;margin-bottom:-1px">{{ t.label }}</button></sc-for>
+<sc-if value="{{ liveDot }}"><span style="align-self:center;margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;color:#e1ad66"><span style="width:7px;height:7px;border-radius:50%;background:#e1ad66;animation:aurPulse 1.4s infinite"></span>Run UX-014 in progress</span></sc-if>
+</nav>
+
+<sc-if value="{{ uxv.config }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start">
+<div style="flex:2 1 520px;min-width:0;display:flex;flex-direction:column;gap:26px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8e887f">01 · Website URL</label>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><input class="input" value="{{ cfg.url }}" onChange="{{ setUrl }}" style="flex:1;min-width:240px;font-size:16px;min-height:46px;padding:10px 14px"><span style="align-self:center;font-size:12px;color:#8e887f">Public pages only · no login walls</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:baseline;gap:10px"><label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8e887f">02 · Which personas should test it</label><span style="font-size:12px;color:#e1ad66">{{ roleCount }} roles</span><button class="btn btn-ghost" onClick="{{ openCustom }}" style="margin-left:auto">{{ ic.plus }}Custom persona</button></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ roleChips }}" as="c" hint-placeholder-count="9"><button onClick="{{ c.go }}" style="padding:7px 13px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:3px;font:inherit;font-size:13px;cursor:pointer">{{ c.label }}</button></sc-for></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px">
+<div style="display:flex;flex-direction:column;gap:10px"><label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8e887f">03 · Industry</label><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ indChips }}" as="c" hint-placeholder-count="7"><button onClick="{{ c.go }}" style="padding:5px 10px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:3px;font:inherit;font-size:12.5px;cursor:pointer">{{ c.label }}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8e887f">04 · Company size</label><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ sizeChips }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.go }}" style="padding:5px 10px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:3px;font:inherit;font-size:12.5px;cursor:pointer">{{ c.label }}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8e887f">05 · Seniority</label><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ senChips }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.go }}" style="padding:5px 10px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:3px;font:inherit;font-size:12.5px;cursor:pointer">{{ c.label }}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8e887f">06 · Number of personas · <span style="color:#e1ad66">{{ cfg.count }}</span></label><input type="range" min="2" max="24" value="{{ cfg.count }}" onChange="{{ setCount }}" style="accent-color:#e1ad66"><span style="font-size:11.5px;color:#8e887f">Prototype runs 6 scripted personas regardless of this value.</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px"><label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8e887f">07 · Testing objectives · <span style="color:#e1ad66">{{ objCount }} selected</span></label><div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ objChips }}" as="c" hint-placeholder-count="8"><button onClick="{{ c.go }}" style="padding:7px 13px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:3px;font:inherit;font-size:13px;cursor:pointer">{{ c.label }}</button></sc-for></div></div>
+</div>
+<aside style="flex:1 1 300px;max-width:420px;position:sticky;top:96px;border:1px solid rgba(236,232,225,.12);border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:14px">
+<span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e1ad66">Run summary</span>
+<span style="font-family:var(--font-heading);font-size:24px;line-height:1.15;word-break:break-all">{{ cfg.url }}</span>
+<div style="display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13px"><span style="color:#8e887f">Personas</span><span>{{ cfg.count }} across {{ roleCount }} roles</span><span style="color:#8e887f">Industry</span><span>{{ cfg.industry }}</span><span style="color:#8e887f">Company size</span><span>{{ cfg.size }}</span><span style="color:#8e887f">Seniority</span><span>{{ cfg.seniority }}</span><span style="color:#8e887f">Objectives</span><span>{{ objCount }} selected</span><span style="color:#8e887f">Est. duration</span><span>~25s at 1× (prototype)</span></div>
+<div style="height:1px;background:rgba(236,232,225,.1)"></div>
+<button class="btn btn-primary" onClick="{{ launch }}" style="min-height:48px;font-size:17px;gap:10px">{{ ic.play }}Launch UX Simulation</button>
+<p style="margin:0;font-size:11.5px;color:#8e887f;line-height:1.5">Prototype: personas follow scripted journeys over a recreated page. A production run needs headless browser agents on the backend.</p>
+</aside>
+</div>
+</sc-if>
+
+<sc-if value="{{ uxv.live }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 14px;border:1px solid rgba(236,232,225,.1);border-radius:4px">
+<span style="display:flex;align-items:center;gap:8px;font-size:13px;min-width:130px"><span style="width:8px;height:8px;border-radius:50%;background:#e1ad66"></span>{{ statusLbl }}</span>
+<button class="btn btn-secondary" onClick="{{ onPlay }}" disabled="{{ control }}">{{ playIcon }}{{ playLbl }}</button>
+<button class="btn btn-secondary" onClick="{{ onRestart }}" disabled="{{ control }}">{{ ic.restart }}Restart</button>
+<div style="display:flex;align-items:center;gap:4px;margin-left:6px"><span style="font-size:12px;color:#8e887f;margin-right:4px">Speed</span><sc-for list="{{ speeds }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.go }}" style="padding:4px 9px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:3px;font:inherit;font-size:12px;cursor:pointer">{{ c.label }}</button></sc-for></div>
+<select class="input" value="{{ follow }}" onChange="{{ setFollow }}" style="width:auto;min-height:34px;font-size:13px;background:#171614"><sc-for list="{{ followOpts }}" as="o" hint-placeholder-count="7"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select>
+<span style="flex:1"></span>
+<sc-if value="{{ notControl }}" hint-placeholder-val="{{ true }}"><button class="btn btn-primary" onClick="{{ onControl }}" style="gap:8px">{{ ic.hand }}Take Control</button></sc-if>
+<sc-if value="{{ control }}"><button class="btn" onClick="{{ onControl }}" style="gap:8px;background:#e1ad66;color:#14110e;border-color:#e1ad66">{{ ic.hand }}Release Control</button></sc-if>
+</div>
+<sc-if value="{{ done }}"><div style="display:flex;align-items:center;gap:14px;padding:14px 18px;border:1px solid #e1ad66;border-radius:4px;flex-wrap:wrap"><span style="color:#e1ad66">{{ ic.check }}</span><span style="flex:1;min-width:200px">Simulation complete — 6 personas, 3 requested a pilot. The intelligence report is ready.</span><button class="btn btn-primary" onClick="{{ goReport }}">View report{{ ic.arrow }}</button></div></sc-if>
+<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:stretch">
+<div style="flex:1 1 250px;min-width:240px;max-width:100%;display:flex;flex-direction:column;gap:10px">
+<span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Persona activity</span>
+<sc-if value="{{ hasSel }}">
+<div style="border:1px solid {{ selPanel.color }};border-radius:4px;padding:14px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-family:var(--font-heading);font-size:18px;flex:1">{{ selPanel.id }} · {{ selPanel.role }}</span><button class="btn btn-icon" onClick="{{ selPanel.close }}" style="width:28px;height:28px" aria-label="Close">{{ ic.x }}</button></div>
+<span style="font-size:12px;color:#8e887f;margin-top:-6px">{{ selPanel.co }} · browser following</span>
+<div style="display:flex;flex-direction:column;gap:0;max-height:300px;overflow:auto">
+<sc-for list="{{ selPanel.journey }}" as="j" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:20px 1fr;gap:8px;padding:6px 0;border-top:1px solid rgba(236,232,225,.07)"><span style="font-size:11px;color:#8e887f;font-feature-settings:'tnum'">{{ j.n }}</span><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:12.5px">{{ j.a }}</span><span style="font-size:11px;color:#8e887f">{{ j.sec }}</span><span style="font-size:11.5px;color:{{ j.nfg }};line-height:1.4">{{ j.note }}</span></div></div></sc-for>
+</div>
+</div>
+</sc-if>
+<sc-for list="{{ persons }}" as="p" hint-placeholder-count="6">
+<button onClick="{{ p.go }}" style="display:grid;grid-template-columns:34px 1fr;gap:10px;text-align:left;padding:10px 12px;border:1px solid {{ p.bd }};background:{{ p.bg }};border-radius:4px;color:inherit;font:inherit;cursor:pointer" style-hover="border-color:rgba(236,232,225,.25)">
+<span style="width:34px;height:34px;border-radius:50%;border:1.5px solid {{ p.color }};background:{{ p.tint }};color:{{ p.color }};display:grid;place-items:center;font-size:12px;font-feature-settings:'tnum'">{{ p.num }}</span>
+<span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+<span style="display:flex;align-items:center;gap:6px"><span style="font-size:13.5px;flex:1">{{ p.id }} — {{ p.role }}</span><span style="font-size:10.5px;color:{{ p.sfg }};display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:{{ p.sfg }};animation:{{ p.pulse }}"></span>{{ p.status }}</span></span>
+<span style="font-size:11px;color:#8e887f">{{ p.co }}</span>
+<span style="font-size:12px;color:#cfc9bf;margin-top:2px">{{ p.activity }}</span>
+</span>
+</button>
+</sc-for>
+</div>
+
+<div style="flex:3 1 540px;min-width:0;display:flex;flex-direction:column;border:1px solid {{ viewOutline }};border-radius:6px;overflow:hidden;background:#1a1816">
+<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(236,232,225,.09);background:#141311">
+<span style="display:flex;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#3a3631"></span><span style="width:10px;height:10px;border-radius:50%;background:#3a3631"></span><span style="width:10px;height:10px;border-radius:50%;background:#3a3631"></span></span>
+<span style="color:#6f6a62;display:flex;gap:4px">{{ ic.chevL }}{{ ic.chevR }}</span>
+<div style="flex:1;display:flex;align-items:center;gap:8px;padding:5px 12px;background:#0f0e0c;border-radius:3px;font-size:12.5px;color:#cfc9bf;min-width:0"><span style="color:#8fb98a">{{ ic.lock }}</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ urlPath }}</span></div>
+<span style="font-size:11.5px;color:#8e887f;white-space:nowrap">{{ secName }}</span>
+</div>
+<sc-if value="{{ control }}"><div style="padding:8px 14px;background:rgba(225,173,102,.12);color:#e1ad66;font-size:12.5px;display:flex;align-items:center;gap:8px">{{ ic.hand }}You’re driving. Scroll, click and type in the page — personas are paused and your actions are logged.</div></sc-if>
+<div ref="{{ bRef }}" onClick="{{ onPageClick }}" style="position:relative;height:600px;overflow-y:{{ viewOverflow }};overflow-x:hidden;background:#f6f1e8;color:#1f1b16;font-family:var(--font-body)">
+<div style="position:relative;height:3300px;transform:{{ viewY }};transition:transform 1.2s cubic-bezier(.45,0,.2,1)">
+<div style="height:60px;display:flex;align-items:center;gap:22px;padding:0 6%;border-bottom:1px solid rgba(31,27,22,.12);font-size:13px;box-sizing:border-box">
+<span style="font-family:var(--font-heading);font-size:22px;margin-right:auto;letter-spacing:.02em">Aurum</span><a data-go="ninety" style="color:inherit;cursor:pointer">How it works</a><a data-go="research" style="color:inherit;cursor:pointer">Why it works</a><a data-go="tiers" style="color:inherit;cursor:pointer">For you</a><a data-go="cta" style="color:#8a5d1f;cursor:pointer">Talk to us</a>
+</div>
+<div style="height:480px;padding:22px 6% 0;box-sizing:border-box;overflow:hidden">
+<span style="display:inline-block;font-size:11px;letter-spacing:.06em;padding:3px 9px;border:1px solid #a7742c;color:#8a5d1f;border-radius:2px">Pre-launch · A few excellent pilot partners wanted</span>
+<h1 style="font-family:var(--font-heading);font-weight:400;font-size:46px;line-height:1.05;margin:38px 0 18px;max-width:640px;color:#1f1b16">Most companies say they develop women. Almost none can show you who.</h1>
+<p style="font-size:15px;max-width:520px;color:#4a433a;margin:0 0 34px">Aurum builds the record. Who was advanced, by whom, and what changed. Evidenced, dated, and impossible to invent.</p>
+<div style="display:flex;gap:14px;flex-wrap:wrap"><button data-go="record" style="padding:11px 18px;border:1px solid #1f1b16;background:#1f1b16;color:#f6f1e8;font:inherit;font-size:13.5px;cursor:pointer">See what the record looks like</button><button data-go="research" style="padding:11px 18px;border:1px solid rgba(31,27,22,.3);background:none;color:#1f1b16;font:inherit;font-size:13.5px;cursor:pointer">Or read the research</button></div>
+</div>
+<div style="height:380px;padding:40px 6%;box-sizing:border-box;background:#efe8db;overflow:hidden">
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0 0 20px;color:#1f1b16">What is it costing you?</h2>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:620px;font-size:12px;color:#4a433a">
+<label style="display:flex;flex-direction:column;gap:5px">Women in mid-career roles<input aria-label="Women in mid-career roles" value="{{ calc.women }}" onChange="{{ onWomen }}" style="padding:8px;border:1px solid rgba(31,27,22,.25);background:#fff;font:inherit;font-size:15px;color:#1f1b16"></label>
+<label style="display:flex;flex-direction:column;gap:5px">Avg salary (₹ lakh)<input aria-label="Average salary" value="{{ calc.salary }}" onChange="{{ onSalary }}" style="padding:8px;border:1px solid rgba(31,27,22,.25);background:#fff;font:inherit;font-size:15px;color:#1f1b16"></label>
+<label style="display:flex;flex-direction:column;gap:5px">Annual attrition, %<input aria-label="Attrition rate" value="{{ calc.attr }}" onChange="{{ onAttr }}" style="padding:8px;border:1px solid rgba(31,27,22,.25);background:#fff;font:inherit;font-size:15px;color:#1f1b16"></label>
+</div>
+<div style="margin-top:22px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap"><span style="font-family:var(--font-heading);font-size:40px;color:#8a5d1f;font-feature-settings:'tnum'">{{ costOut }}</span><span style="font-size:13px;color:#4a433a">a year, replacing ~{{ leaving }} women at 1.5× salary.</span></div>
+<button aria-label="Show the working" style="margin-top:14px;padding:0;border:0;background:none;font:inherit;font-size:12.5px;text-decoration:underline;color:#4a433a;cursor:pointer">Show the working</button>
+</div>
+<div style="height:360px;padding:44px 6%;box-sizing:border-box;overflow:hidden">
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0 0 6px">A record you could not fake if you wanted to.</h2>
+<span style="font-size:10px;color:#8b8274">Sample data</span>
+<div style="display:flex;flex-direction:column;margin-top:14px;font-size:14px;max-width:640px"><span style="padding:9px 0;border-top:1px solid rgba(31,27,22,.12)">Forty teams migrated, no downtime. Recorded March. Vouched for by the regional director.</span><span style="padding:9px 0;border-top:1px solid rgba(31,27,22,.12)">Put forward for the platform lead role. Sponsor committed 4 April. Followed through 19 April.</span><span style="padding:9px 0;border-top:1px solid rgba(31,27,22,.12)">Promoted, July. Nineteen months faster than the band average.</span><span style="padding:9px 0;border-top:1px solid rgba(31,27,22,.12);border-bottom:1px solid rgba(31,27,22,.12)">Sponsor follow-through across the cohort: <b style="font-weight:600">84 percent</b>.</span></div>
+</div>
+<div style="height:380px;padding:44px 6%;box-sizing:border-box;background:#efe8db;overflow:hidden">
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0 0 22px">Change the speaker. Not the woman.</h2>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;font-size:13px">
+<div style="border-top:1px solid #a7742c;padding-top:10px"><span style="font-size:11px;color:#8a5d1f">01 · The double bind</span><p style="margin:8px 0 0;color:#4a433a">Modesty reads as less competent; speaking up reads as less likeable. Both paths cost her.</p></div>
+<div style="border-top:1px solid #a7742c;padding-top:10px"><span style="font-size:11px;color:#8a5d1f">02 · The moving bar</span><p style="margin:8px 0 0;color:#4a433a">When a woman is assertive, the standard shifts to how she came across.</p></div>
+<div style="border-top:1px solid #a7742c;padding-top:10px"><span style="font-size:11px;color:#8a5d1f">03 · The speaker swap</span><p style="margin:8px 0 0;color:#4a433a">Identical words, a different speaker, no penalty.</p></div>
+</div>
+</div>
+<div style="height:360px;padding:44px 6%;box-sizing:border-box;overflow:hidden">
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0 0 6px">The Ninety.</h2>
+<p style="font-size:13.5px;color:#4a433a;margin:0 0 20px">Four stages. Ninety days. Named commitments. One number at the end.</p>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;font-size:12.5px"><div><b style="font-weight:600;font-family:var(--font-heading);font-size:18px">01 · Seen</b><p style="margin:6px 0 0;color:#4a433a">Her work is documented as it happens.</p></div><div><b style="font-weight:600;font-family:var(--font-heading);font-size:18px">02 · Said</b><p style="margin:6px 0 0;color:#4a433a">A sentence another person can repeat.</p></div><div><b style="font-weight:600;font-family:var(--font-heading);font-size:18px">03 · Carried</b><p style="margin:6px 0 0;color:#4a433a">A sponsor takes dated commitments.</p></div><div><b style="font-weight:600;font-family:var(--font-heading);font-size:18px">04 · Counted</b><p style="margin:6px 0 0;color:#4a433a">Measured against a matched control.</p></div></div>
+</div>
+<div style="height:300px;padding:44px 6%;box-sizing:border-box;background:#1f1b16;color:#f6f1e8;overflow:hidden">
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:30px;margin:0 0 12px;color:#f6f1e8">The Only Brunches and Lunches Club.</h2>
+<p style="font-size:13.5px;color:#cbbfae;max-width:560px;margin:0 0 18px">The software tracks the promise. The club creates the relationship worth making one for.</p>
+<div style="display:flex;gap:22px;flex-wrap:wrap;font-size:13px;color:#e8d6b8"><span>Pottery and ceramics</span><span>Painting, loosely supervised</span><span>Herbal oil blending</span><span>The long lunch</span></div>
+</div>
+<div style="height:420px;padding:44px 6%;box-sizing:border-box;overflow:hidden">
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0 0 20px">Promises are easy. Show the follow-through.</h2>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;font-size:12.5px">
+<div style="border:1px solid rgba(31,27,22,.18);padding:14px"><b style="font-weight:600;font-family:var(--font-heading);font-size:19px">Signal</b><p style="margin:6px 0 0;color:#4a433a">Retention delta vs matched control. Promotion velocity. Cost avoided.</p></div>
+<div style="border:1px solid rgba(31,27,22,.18);padding:14px"><b style="font-weight:600;font-family:var(--font-heading);font-size:19px">Diagnostic</b><p style="margin:6px 0 0;color:#4a433a">Where women stall, by function and band. Which managers advance people.</p></div>
+<div style="border:1px solid rgba(31,27,22,.18);padding:14px"><b style="font-weight:600;font-family:var(--font-heading);font-size:19px">Benchmark</b><p style="margin:6px 0 0;color:#4a433a">Peer comparison. Not ready yet — we’ll tell you when it is.</p></div>
+</div>
+<p style="font-size:12.5px;color:#4a433a;margin:20px 0 0;max-width:560px">Aurum is an annual licence, priced against the cost of losing one mid-career manager, not per seat.</p>
+</div>
+<div style="height:300px;padding:44px 6%;box-sizing:border-box;background:#efe8db;overflow:hidden">
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:30px;margin:0 0 14px">I watched the work. Then I watched who got chosen.</h2>
+<p style="font-size:13.5px;color:#4a433a;max-width:600px;margin:0 0 14px">I worked in economic advisory and then ran a company’s numbers as a CFO — close enough to notice who did the work, who described it, and which version travelled.</p>
+<span style="font-size:12.5px;color:#8a5d1f">Arundhati Babar, Founder</span>
+</div>
+<div style="height:260px;padding:52px 6%;box-sizing:border-box;text-align:center;overflow:hidden">
+<h2 style="font-family:var(--font-heading);font-weight:400;font-size:32px;margin:0 0 10px">Be the employer with something to show.</h2>
+<p style="font-size:13.5px;color:#4a433a;margin:0 0 22px">Pre-launch. A small number of pilot partners.</p>
+<button style="padding:12px 22px;border:1px solid #1f1b16;background:#1f1b16;color:#f6f1e8;font:inherit;font-size:14px;cursor:pointer">Let’s talk about a pilot →</button>
+</div>
+{{ cursors }}
+</div>
+</div>
+<div style="padding:8px 14px;font-size:11px;color:#8e887f;border-top:1px solid rgba(236,232,225,.08);display:flex;gap:6px;align-items:center">{{ ic.eye }}Prototype: scripted persona journeys over a recreated page. Live agent browsing requires a backend.</div>
+</div>
+
+<div style="flex:1 1 280px;min-width:260px;display:flex;flex-direction:column;gap:12px">
+<span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Live intelligence</span>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:rgba(236,232,225,.09);border:1px solid rgba(236,232,225,.09);border-radius:4px;overflow:hidden">
+<div style="background:#100f0d;padding:10px 12px;display:flex;flex-direction:column"><span style="font-family:var(--font-heading);font-size:26px;font-feature-settings:'tnum'">{{ m.active }}</span><span style="font-size:11px;color:#8e887f">Personas active</span></div>
+<div style="background:#100f0d;padding:10px 12px;display:flex;flex-direction:column"><span style="font-family:var(--font-heading);font-size:26px;font-feature-settings:'tnum'">{{ m.pages }}<span style="font-size:15px;color:#8e887f"> / 10</span></span><span style="font-size:11px;color:#8e887f">Sections explored</span></div>
+<div style="background:#100f0d;padding:10px 12px;display:flex;flex-direction:column"><span style="font-family:var(--font-heading);font-size:26px;font-feature-settings:'tnum'">{{ m.inter }}</span><span style="font-size:11px;color:#8e887f">Interactions</span></div>
+<div style="background:#100f0d;padding:10px 12px;display:flex;flex-direction:column"><span style="font-family:var(--font-heading);font-size:26px;color:#e8957a;font-feature-settings:'tnum'">{{ m.issues }}</span><span style="font-size:11px;color:#8e887f">Issues detected</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:11.5px;color:#8e887f"><span>Progress · sim time {{ m.time }}</span><span style="font-feature-settings:'tnum'">{{ m.prog }}</span></div><div style="height:3px;background:rgba(236,232,225,.1);border-radius:2px"><div style="height:3px;width:{{ m.prog }};background:#e1ad66;border-radius:2px;transition:width .6s"></div></div></div>
+<div style="display:flex;flex-direction:column;max-height:470px;overflow:auto;border-top:1px solid rgba(236,232,225,.09)">
+<sc-if value="{{ feedEmpty }}" hint-placeholder-val="{{ true }}"><p style="font-size:12.5px;color:#8e887f;padding:16px 0">Observations appear here as personas browse. Press Start.</p></sc-if>
+<sc-for list="{{ feed }}" as="f" hint-placeholder-count="0">
+<button onClick="{{ f.go }}" style="display:flex;flex-direction:column;gap:4px;text-align:left;padding:11px 2px;border:0;border-bottom:1px solid rgba(236,232,225,.07);background:none;color:inherit;font:inherit;cursor:pointer" style-hover="background:rgba(236,232,225,.03)">
+<span style="display:flex;align-items:center;gap:8px;font-size:11px"><span style="width:7px;height:7px;border-radius:50%;background:{{ f.color }}"></span><span style="color:#cfc9bf">{{ f.who }}</span><span style="color:{{ f.tfg }}">{{ f.tl }}</span><span style="margin-left:auto;color:#6f6a62;font-feature-settings:'tnum'">{{ f.t }}</span></span>
+<span style="font-size:13px;line-height:1.45;color:#e4dfd7">{{ f.text }}</span>
+</button>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ uxv.report }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px">
+<div style="flex:1;min-width:260px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e1ad66">UX intelligence report · Run UX-014</span><h2 style="font-family:var(--font-heading);font-weight:400;font-size:34px;margin:4px 0 0;line-height:1.1">aurumcareers.tech — overall evaluation</h2><span style="font-size:12.5px;color:#8e887f">6 synthetic personas · senior HR & leadership buyers · scripted prototype data</span></div>
+<button class="btn btn-secondary" onClick="{{ toggleChat }}">{{ ic.msg }}Ask about this run</button>
+<button class="btn btn-primary" onClick="{{ exportReport }}">{{ ic.download }}Export PDF</button>
+</div>
+<nav style="display:flex;gap:20px;border-bottom:1px solid rgba(236,232,225,.09);overflow-x:auto">
+<sc-for list="{{ reportTabs }}" as="t" hint-placeholder-count="9"><button onClick="{{ t.go }}" style="background:none;border:0;border-bottom:2px solid {{ t.bd }};color:{{ t.fg }};font:inherit;font-size:13px;padding:4px 0 10px;cursor:pointer;white-space:nowrap;margin-bottom:-1px">{{ t.label }}</button></sc-for>
+</nav>
+
+<sc-if value="{{ rt.summary }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid rgba(236,232,225,.12);border-bottom:1px solid rgba(236,232,225,.12)">
+<div style="padding:18px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid rgba(236,232,225,.09)"><span style="font-family:var(--font-heading);font-size:40px;line-height:1;font-feature-settings:'tnum'">3 / 6</span><span style="font-size:12px;color:#8e887f">requested a pilot</span></div>
+<div style="padding:18px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid rgba(236,232,225,.09)"><span style="font-family:var(--font-heading);font-size:40px;line-height:1;color:#e8957a;font-feature-settings:'tnum'">2</span><span style="font-size:12px;color:#8e887f">critical barriers</span></div>
+<div style="padding:18px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid rgba(236,232,225,.09)"><span style="font-family:var(--font-heading);font-size:40px;line-height:1;font-feature-settings:'tnum'">1,600px</span><span style="font-size:12px;color:#8e887f">until the mechanism is explained</span></div>
+<div style="padding:18px 16px;display:flex;flex-direction:column;gap:2px"><span style="font-family:var(--font-heading);font-size:40px;line-height:1;font-feature-settings:'tnum'">63s</span><span style="font-size:12px;color:#8e887f">avg in cost calculator — top engagement</span></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px">
+<div style="flex:3 1 420px;min-width:0;display:flex;flex-direction:column;gap:12px">
+<h3 style="font-family:var(--font-heading);font-weight:400;font-size:26px;margin:0">The argument lands. The offer arrives too late.</h3>
+<p style="margin:0;text-align:justify;hyphens:auto;line-height:1.65;color:#d8d2c9;max-width:680px">Every persona understood <i>why</i> sponsorship matters — the research section and the cost calculator did their job. What they couldn’t find quickly was <i>what Aurum is</i> and <i>what it costs</i>. The hero reads as a cause, not a product; the mechanism (The Ninety) sits 1,600px below the fold; and the pricing section, where HR buyers spent the most time, contains no number.</p>
+<p style="margin:0;text-align:justify;hyphens:auto;line-height:1.65;color:#d8d2c9;max-width:680px">Founders and DEI leaders converted on conviction. HR Directors and Talent Heads — the people who own a budget line or a schedule — left with practical questions unanswered.</p>
+</div>
+<div style="flex:2 1 300px;display:flex;flex-direction:column">
+<span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f;margin-bottom:8px">Outcomes</span>
+<sc-for list="{{ outcomes }}" as="o" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid rgba(236,232,225,.08)"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.color }}"></span><span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px">{{ o.id }} · {{ o.role }}</span><span style="font-size:12px;color:#a39d94;font-style:italic">{{ o.final }}</span></span><span style="font-size:11.5px;color:{{ o.ofg }};white-space:nowrap">{{ o.o }}</span></div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ rt.first }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+<div style="border-top:1px solid #9fc79a;padding-top:12px;display:flex;flex-direction:column;gap:8px"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9fc79a">Understood in first 10s · 4 of 6</span><p style="margin:0;line-height:1.6">This is about women being overlooked for advancement, and it’s aimed at employers. The tone is serious and evidence-led.</p></div>
+<div style="border-top:1px solid #e8957a;padding-top:12px;display:flex;flex-direction:column;gap:8px"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#e8957a">Not understood · 2 of 6</span><p style="margin:0;line-height:1.6">What is being sold. P03 and P04 classified Aurum as a women’s network or community; P05 read “Pre-launch” before the headline.</p></div>
+<div style="border-top:1px solid #e1ad66;padding-top:12px;display:flex;flex-direction:column;gap:8px"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#e1ad66">First action</span><p style="margin:0;line-height:1.6">P01 clicked the primary CTA at 9s. P02 scrolled straight to the calculator. P03 opened “How it works”. No one used “Or read the research” — P04 hovered it only.</p></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ rt.nav }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+<div style="flex:none;display:flex;flex-direction:column;gap:8px">
+<span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Attention heatmap · clicks</span>
+<div style="position:relative;width:240px;background:#f6f1e8;border-radius:3px;overflow:hidden">
+<sc-for list="{{ heat }}" as="h" hint-placeholder-count="10"><div style="position:relative;height:{{ h.h }};border-bottom:1px solid rgba(31,27,22,.1)"><div style="position:absolute;inset:0;background:#d9622b;opacity:{{ h.a }}"></div><span style="position:absolute;left:6px;top:3px;font-size:9.5px;color:#1f1b16">{{ h.name }} · {{ h.pct }}</span></div></sc-for>
+<sc-for list="{{ clicks }}" as="c" hint-placeholder-count="0"><span style="position:absolute;left:{{ c.x }};top:{{ c.y }};width:9px;height:9px;margin:-4px;border-radius:50%;border:2px solid #fff;background:{{ c.c }}"></span></sc-for>
+</div>
+</div>
+<div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Browsing journeys</span>
+<sc-for list="{{ journeys }}" as="j" hint-placeholder-count="6"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 0;border-top:1px solid rgba(236,232,225,.08)"><span style="width:118px;font-size:12.5px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:{{ j.color }}"></span>{{ j.id }} · {{ j.role }}</span><sc-for list="{{ j.seq }}" as="s" hint-placeholder-count="5"><sc-if value="{{ s.sep }}"><span style="color:#6f6a62;font-size:11px">→</span></sc-if><span style="font-size:11.5px;padding:2px 7px;border:1px solid rgba(236,232,225,.14);border-radius:2px">{{ s.n }}</span></sc-for></div></sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Average time per section</span>
+<sc-for list="{{ timeBars }}" as="b" hint-placeholder-count="9"><div style="display:grid;grid-template-columns:120px 1fr 40px;gap:10px;align-items:center;font-size:12.5px"><span style="color:#cfc9bf">{{ b.name }}</span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="height:6px;width:{{ b.w }};background:#e1ad66"></div></div><span style="text-align:right;font-feature-settings:'tnum';color:#a39d94">{{ b.s }}</span></div></sc-for>
+</div>
+<p style="margin:0;font-size:13px;line-height:1.6;color:#cfc9bf;max-width:620px"><b style="font-weight:600;color:#ece8e1">Where they got confused:</b> three personas scrolled <i>back up</i> — P02 from tiers to the Club, P03 from research to the record, P05 from tiers to the calculator. Each reversal was a search for something the current section implied but didn’t say.</p>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ rt.msg }}" hint-placeholder-val="{{ false }}">
+<table class="table" style="font-size:13.5px">
+<thead><tr><th>Message</th><th>Understood by</th><th>Misread by</th><th>Verdict</th></tr></thead>
+<tbody>
+<tr><td style="max-width:360px">“Most companies say they develop women. Almost none can show you who.”</td><td>P01, P02, P05, P06</td><td>P03, P04 — read as a network</td><td style="color:#e1ad66">Add product sub-line</td></tr>
+<tr><td>“Evidenced, dated, and impossible to invent.”</td><td>All 6</td><td>—</td><td style="color:#9fc79a">Keep</td></tr>
+<tr><td>“Change the speaker. Not the woman.”</td><td>P03, P04, P06</td><td>—</td><td style="color:#9fc79a">Strongest line · consider for hero</td></tr>
+<tr><td>“Sponsor follow-through: 84 percent”</td><td>—</td><td>P01, P05 — took it as a result</td><td style="color:#e8957a">Label inline as illustrative</td></tr>
+<tr><td>“Priced against the cost of losing one mid-career manager”</td><td>P05</td><td>P01, P02 — read as evasive</td><td style="color:#e8957a">Pair with a range</td></tr>
+<tr><td>“Benchmark … we will tell you when it is ready”</td><td>P06</td><td>P02 — maturity risk</td><td style="color:#cfc9bf">Keep, move below tiers</td></tr>
+</tbody></table>
+</sc-if>
+
+<sc-if value="{{ rt.trust }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px">
+<div style="display:flex;flex-direction:column"><h3 style="font-family:var(--font-heading);font-weight:400;font-size:24px;margin:0 0 10px;color:#9fc79a">Builds credibility</h3>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09)"><span>Cited peer-reviewed research</span><br><span style="font-size:12px;color:#8e887f">P03, P04, P06 · longest reads after the calculator</span></div>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09)"><span>Founder’s CFO background</span><br><span style="font-size:12px;color:#8e887f">P05, P03 · shifted P05 from sceptical to hesitant</span></div>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09)"><span>Matched control group, “nothing to renew if the number disappoints”</span><br><span style="font-size:12px;color:#8e887f">P01, P03</span></div>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09)"><span>“Show the working” sources on the calculator</span><br><span style="font-size:12px;color:#8e887f">P02</span></div>
+</div>
+<div style="display:flex;flex-direction:column"><h3 style="font-family:var(--font-heading);font-weight:400;font-size:24px;margin:0 0 10px;color:#e8957a">Creates hesitation</h3>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09)"><span>“Pre-launch” with no names, pilots or advisors</span><br><span style="font-size:12px;color:#8e887f">P05 · the first thing read</span></div>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09)"><span>Sample figures that look like claims</span><br><span style="font-size:12px;color:#8e887f">P01, P05</span></div>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09)"><span>No data-handling statement for records about named women</span><br><span style="font-size:12px;color:#8e887f">P06</span></div>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09)"><span>No price signal</span><br><span style="font-size:12px;color:#8e887f">P01, P02</span></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ rt.barriers }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;max-width:860px">
+<div style="display:grid;grid-template-columns:28px 1fr 180px 50px;gap:14px;align-items:center;padding:14px 0;border-top:1px solid rgba(236,232,225,.1)"><span style="font-family:var(--font-heading);font-size:22px;color:#e8957a">1</span><span><span style="font-size:15px">No indicative price</span><br><span style="font-size:12.5px;color:#8e887f">Exit reason for P02; open condition for P01 and P05.</span></span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="width:50%;height:6px;background:#e8957a"></div></div><span style="font-size:12.5px;font-feature-settings:'tnum'">3 / 6</span></div>
+<div style="display:grid;grid-template-columns:28px 1fr 180px 50px;gap:14px;align-items:center;padding:14px 0;border-top:1px solid rgba(236,232,225,.1)"><span style="font-family:var(--font-heading);font-size:22px;color:#e8957a">2</span><span><span style="font-size:15px">Product not named above the fold</span><br><span style="font-size:12.5px;color:#8e887f">P03, P04 misclassified Aurum; P03 recovered only at The Ninety.</span></span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="width:33%;height:6px;background:#e8957a"></div></div><span style="font-size:12.5px;font-feature-settings:'tnum'">2 / 6</span></div>
+<div style="display:grid;grid-template-columns:28px 1fr 180px 50px;gap:14px;align-items:center;padding:14px 0;border-top:1px solid rgba(236,232,225,.1)"><span style="font-family:var(--font-heading);font-size:22px;color:#e1ad66">3</span><span><span style="font-size:15px">No proof points for a pre-launch product</span><br><span style="font-size:12.5px;color:#8e887f">P05 hesitated on the CTA; P01 asked for “one case”.</span></span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="width:33%;height:6px;background:#e1ad66"></div></div><span style="font-size:12.5px;font-feature-settings:'tnum'">2 / 6</span></div>
+<div style="display:grid;grid-template-columns:28px 1fr 180px 50px;gap:14px;align-items:center;padding:14px 0;border-top:1px solid rgba(236,232,225,.1)"><span style="font-family:var(--font-heading);font-size:22px;color:#cfc9bf">4</span><span><span style="font-size:15px">Programme logistics missing</span><br><span style="font-size:12.5px;color:#8e887f">P04 couldn’t find hours, format or locations.</span></span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="width:17%;height:6px;background:#cfc9bf"></div></div><span style="font-size:12.5px;font-feature-settings:'tnum'">1 / 6</span></div>
+<div style="display:grid;grid-template-columns:28px 1fr 180px 50px;gap:14px;align-items:center;padding:14px 0;border-top:1px solid rgba(236,232,225,.1);border-bottom:1px solid rgba(236,232,225,.1)"><span style="font-family:var(--font-heading);font-size:22px;color:#cfc9bf">5</span><span><span style="font-size:15px">No data-handling statement</span><br><span style="font-size:12.5px;color:#8e887f">P06 converted conditionally on this.</span></span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="width:17%;height:6px;background:#cfc9bf"></div></div><span style="font-size:12.5px;font-feature-settings:'tnum'">1 / 6</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ rt.sections }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+<sc-for list="{{ secCards }}" as="s" hint-placeholder-count="9">
+<div style="border:1px solid rgba(236,232,225,.1);border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-heading);font-size:20px;flex:1">{{ s.name }}</span><span style="font-size:11.5px;color:#8e887f">{{ s.t }}</span></div>
+<div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:4px;background:rgba(236,232,225,.07)"><div style="height:4px;width:{{ s.w }};background:#e1ad66"></div></div><span style="font-size:11.5px;color:#a39d94;font-feature-settings:'tnum'">{{ s.pct }} attention</span></div>
+<sc-for list="{{ s.notes }}" as="n" hint-placeholder-count="1"><p style="margin:0;font-size:12.5px;line-height:1.5;color:{{ n.fg }}">{{ n.t }}</p></sc-for>
+<sc-if value="{{ s.none }}"><p style="margin:0;font-size:12.5px;color:#8e887f">Passed through without notable reactions.</p></sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ rt.personas }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+<div style="flex:0 1 220px;display:flex;flex-direction:column;gap:6px">
+<sc-for list="{{ repList }}" as="r" hint-placeholder-count="6"><button onClick="{{ r.go }}" style="display:flex;flex-direction:column;gap:2px;text-align:left;padding:10px 12px;border:1px solid {{ r.bd }};border-radius:4px;background:none;color:inherit;font:inherit;cursor:pointer"><span style="display:flex;align-items:center;gap:8px;font-size:13.5px"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.color }}"></span>{{ r.id }} · {{ r.role }}</span><span style="font-size:11.5px;color:{{ r.ofg }}">{{ r.o }}</span></button></sc-for>
+</div>
+<div style="flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="font-family:var(--font-heading);font-weight:400;font-size:30px;margin:0">{{ rep.id }} · {{ rep.role }}</h3><span style="font-size:12.5px;color:#8e887f">{{ rep.co }}</span><span style="margin-left:auto;font-size:12.5px;color:{{ rep.ofg }}">{{ rep.o }}</span></div>
+<p style="margin:0;font-family:var(--font-heading);font-size:21px;font-style:italic;line-height:1.35;color:#e4dfd7;max-width:700px">{{ rep.final }}</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Initial impression</span><p style="margin:6px 0 0;font-size:13px;line-height:1.55">{{ rep.impression }}</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Conversion motivation</span><p style="margin:6px 0 0;font-size:13px;line-height:1.55">{{ rep.motivation }}</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Attention points</span><sc-for list="{{ rep.attention }}" as="a" hint-placeholder-count="3"><p style="margin:6px 0 0;font-size:13px">{{ a }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Click history</span><sc-for list="{{ rep.clicksList }}" as="c" hint-placeholder-count="2"><p style="margin:6px 0 0;font-size:13px">{{ c.a }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e8957a">Confusion points</span><sc-for list="{{ rep.confusion }}" as="a" hint-placeholder-count="2"><p style="margin:6px 0 0;font-size:13px">{{ a }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9fc79a">Positive reactions</span><sc-for list="{{ rep.pos }}" as="a" hint-placeholder-count="2"><p style="margin:6px 0 0;font-size:13px">{{ a }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e8957a">Negative reactions</span><sc-for list="{{ rep.neg }}" as="a" hint-placeholder-count="2"><p style="margin:6px 0 0;font-size:13px">{{ a }}</p></sc-for></div>
+</div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Browsing journey</span>
+<div style="display:flex;flex-direction:column;margin-top:6px"><sc-for list="{{ rep.journey }}" as="j" hint-placeholder-count="8"><div style="display:grid;grid-template-columns:24px 1fr 130px 70px;gap:10px;padding:7px 0;border-top:1px solid rgba(236,232,225,.07);font-size:12.5px"><span style="color:#6f6a62;font-feature-settings:'tnum'">{{ j.n }}</span><span>{{ j.a }}</span><span style="color:#a39d94">{{ j.sec }}</span><span style="color:#8e887f">{{ j.k }}</span></div></sc-for></div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ rt.recs }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ recFilters }}" as="c" hint-placeholder-count="5"><button onClick="{{ c.go }}" style="padding:5px 12px;border:1px solid {{ c.bd }};color:{{ c.fg }};background:{{ c.bg }};border-radius:3px;font:inherit;font-size:12.5px;cursor:pointer">{{ c.label }}</button></sc-for></div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ recs }}" as="r" hint-placeholder-count="7">
+<div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;padding:20px 0;border-top:1px solid rgba(236,232,225,.1)">
+<span style="font-family:var(--font-heading);font-size:28px;color:{{ r.pc }};font-feature-settings:'tnum';line-height:1">{{ r.n }}</span>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap"><span style="font-size:11px;padding:2px 8px;border:1px solid {{ r.pc }};color:{{ r.pc }};border-radius:2px">{{ r.pr }}</span><span style="font-size:12px;color:#8e887f">{{ r.sec }}</span></div>
+<span style="font-family:var(--font-heading);font-size:21px;line-height:1.25">{{ r.problem }}</span>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;font-size:13px;line-height:1.5">
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Persona evidence</span><p style="margin:4px 0 0">{{ r.ev }}</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Why it matters</span><p style="margin:4px 0 0">{{ r.why }}</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e1ad66">Recommended change</span><p style="margin:4px 0 0">{{ r.fix }}</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Expected impact</span><p style="margin:4px 0 0">{{ r.impact }}</p></div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</sc-if>
+</section>
+</sc-if>
+<sc-if value="{{ scr.sales }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Sales Intelligence" style="display:flex;flex-direction:column;gap:20px">
+<nav style="display:flex;gap:26px;border-bottom:1px solid rgba(236,232,225,.09);overflow-x:auto">
+<sc-for list="{{ salesTabs }}" as="t" hint-placeholder-count="4"><button onClick="{{ t.go }}" style="background:none;border:0;border-bottom:2px solid {{ t.bd }};color:{{ t.fg }};font-family:var(--font-heading);font-size:17px;padding:4px 2px 10px;cursor:pointer;margin-bottom:-1px;white-space:nowrap">{{ t.label }}</button></sc-for>
+</nav>
+<sc-if value="{{ liOff }}"><div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px dashed rgba(236,232,225,.2);border-radius:4px;flex-wrap:wrap"><span style="color:#6aa6d8">{{ ic.li }}</span><span style="flex:1;min-width:220px;font-size:13px;color:#cfc9bf">Showing illustrative prospects. Connect LinkedIn and import your connections export to match against Aurum’s ICP.</span><button class="btn btn-primary" onClick="{{ goLi }}">Connect LinkedIn</button></div></sc-if>
+
+<sc-if value="{{ sv.dashboard }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border-top:1px solid rgba(236,232,225,.12);border-left:1px solid rgba(236,232,225,.09)">
+<sc-for list="{{ kpis }}" as="k" hint-placeholder-count="7"><div style="padding:16px;border-right:1px solid rgba(236,232,225,.09);border-bottom:1px solid rgba(236,232,225,.09);display:flex;flex-direction:column;gap:4px"><span style="font-family:var(--font-heading);font-size:36px;line-height:1;font-feature-settings:'tnum'">{{ k.v }}</span><span style="font-size:12.5px;color:#cfc9bf">{{ k.l }}</span><span style="font-size:10.5px;color:{{ k.tfg }};letter-spacing:.04em">{{ k.tag }}</span></div></sc-for>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:28px">
+<div style="flex:2 1 420px;min-width:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:baseline;margin-bottom:8px"><h3 style="font-family:var(--font-heading);font-weight:400;font-size:24px;margin:0;flex:1">Recommended outreach this week</h3><button class="btn btn-ghost" onClick="{{ goProspects }}">All prospects{{ ic.arrow }}</button></div>
+<sc-for list="{{ topPros }}" as="p" hint-placeholder-count="4"><button onClick="{{ p.go }}" style="display:grid;grid-template-columns:1fr auto;gap:4px 16px;text-align:left;padding:12px 0;border:0;border-top:1px solid rgba(236,232,225,.09);background:none;color:inherit;font:inherit;cursor:pointer"><span style="font-size:14px">{{ p.name }} <span style="color:#8e887f">· {{ p.title }}, {{ p.co }}</span></span><span style="font-family:var(--font-heading);font-size:20px;color:#e1ad66;font-feature-settings:'tnum'">{{ p.score }}</span><span style="font-size:12.5px;color:#a39d94">{{ p.problem }}</span><span style="font-size:11px;color:#8e887f">{{ p.conn }}</span></button></sc-for>
+</div>
+<div style="flex:1 1 280px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-family:var(--font-heading);font-weight:400;font-size:24px;margin:0">Cluster interest</h3>
+<sc-for list="{{ clusters }}" as="c" hint-placeholder-count="7"><div style="display:grid;grid-template-columns:1fr 34px;gap:4px 10px;font-size:12.5px"><span style="color:#cfc9bf">{{ c.name }}</span><span style="text-align:right;font-feature-settings:'tnum'">{{ c.interest }}</span><div style="grid-column:1/-1;height:4px;background:rgba(236,232,225,.07)"><div style="height:4px;width:{{ c.iw }};background:#e1ad66"></div></div></div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sv.clusters }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onClick="{{ newCluster }}">{{ ic.plus }}Custom cluster</button></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;align-items:start">
+<sc-for list="{{ clusters }}" as="c" hint-placeholder-count="7">
+<div onClick="{{ c.go }}" style="border:1px solid {{ c.bd }};border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:12px;cursor:pointer">
+<div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:var(--font-heading);font-size:21px;flex:1;line-height:1.2">{{ c.name }}</span><span style="font-family:var(--font-heading);font-size:26px;font-feature-settings:'tnum'">{{ c.n }}</span></div>
+<div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:#8e887f"><span>Interest in Aurum</span><div style="flex:1;height:4px;background:rgba(236,232,225,.07)"><div style="height:4px;width:{{ c.iw }};background:#e1ad66"></div></div><span style="color:#ece8e1;font-feature-settings:'tnum'">{{ c.interest }}</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:11.5px">
+<div style="display:flex;flex-direction:column;gap:4px"><span style="color:#8e887f;letter-spacing:.08em;text-transform:uppercase;font-size:10px">Industry</span><sc-for list="{{ c.indBars }}" as="b" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:62px 1fr 30px;gap:6px;align-items:center"><span>{{ b.n }}</span><div style="height:3px;background:rgba(236,232,225,.07)"><div style="height:3px;width:{{ b.w }};background:#a39d94"></div></div><span style="color:#8e887f;text-align:right">{{ b.v }}</span></div></sc-for></div>
+<div style="display:flex;flex-direction:column;gap:4px"><span style="color:#8e887f;letter-spacing:.08em;text-transform:uppercase;font-size:10px">Company size</span><sc-for list="{{ c.sizeBars }}" as="b" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:50px 1fr 30px;gap:6px;align-items:center"><span>{{ b.n }}</span><div style="height:3px;background:rgba(236,232,225,.07)"><div style="height:3px;width:{{ b.w }};background:#a39d94"></div></div><span style="color:#8e887f;text-align:right">{{ b.v }}</span></div></sc-for></div>
+</div>
+<sc-if value="{{ c.open }}">
+<div style="display:flex;flex-direction:column;gap:10px;padding-top:10px;border-top:1px solid rgba(236,232,225,.09);font-size:12.5px">
+<div><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#9fc79a">Buying motivations</span><sc-for list="{{ c.mot }}" as="x" hint-placeholder-count="2"><p style="margin:4px 0 0">{{ x }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#cfc9bf">Common challenges</span><sc-for list="{{ c.ch }}" as="x" hint-placeholder-count="2"><p style="margin:4px 0 0">{{ x }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#e8957a">Buying objections</span><sc-for list="{{ c.obj }}" as="x" hint-placeholder-count="2"><p style="margin:4px 0 0">{{ x }}</p></sc-for></div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ sv.memory }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+<div style="flex:0 1 230px;display:flex;flex-direction:column;gap:8px">
+<span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Synthetic decision-makers</span>
+<sc-for list="{{ memList }}" as="x" hint-placeholder-count="3"><button onClick="{{ x.go }}" style="display:flex;flex-direction:column;gap:2px;text-align:left;padding:12px;border:1px solid {{ x.bd }};border-radius:4px;background:none;color:inherit;font:inherit;cursor:pointer"><span style="font-size:14px">{{ x.label }}</span><span style="font-size:11.5px;color:#8e887f">{{ x.sub }} · interest {{ x.last }}</span></button></sc-for>
+</div>
+<div style="flex:2 1 400px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="font-family:var(--font-heading);font-weight:400;font-size:28px;margin:0">{{ mem.label }}</h3><span style="font-size:12.5px;color:#9fc79a">Interest {{ mem.delta }} across sessions</span></div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ mem.sessions }}" as="s" hint-placeholder-count="3">
+<div style="display:grid;grid-template-columns:70px 18px 1fr 50px;gap:12px">
+<span style="font-size:12px;color:#8e887f;padding-top:2px">{{ s.date }}</span>
+<div style="display:flex;flex-direction:column;align-items:center"><span style="width:10px;height:10px;border-radius:50%;border:2px solid {{ s.dot }};margin-top:4px"></span><span style="flex:1;width:1px;background:rgba(236,232,225,.14)"></span></div>
+<div style="padding-bottom:20px;display:flex;flex-direction:column;gap:4px"><span style="font-family:var(--font-heading);font-size:18px">{{ s.title }}</span><sc-for list="{{ s.items }}" as="it" hint-placeholder-count="2"><span style="font-size:13px;color:#cfc9bf">{{ it }}</span></sc-for></div>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;padding-bottom:20px"><div style="width:14px;height:{{ s.h }};background:{{ s.dot }}"></div><span style="font-size:10.5px;color:#8e887f;font-feature-settings:'tnum'">{{ s.score }}</span></div>
+</div>
+</sc-for>
+</div>
+<div style="border:1px solid rgba(236,232,225,.12);border-radius:4px;display:flex;flex-direction:column">
+<div style="padding:10px 14px;border-bottom:1px solid rgba(236,232,225,.09);font-size:12px;color:#8e887f">Continue the conversation · persona remembers previous sessions</div>
+<div style="padding:14px;display:flex;flex-direction:column;gap:10px;max-height:260px;overflow:auto">
+<sc-for list="{{ memMsgs }}" as="x" hint-placeholder-count="0"><sc-if value="{{ x.u }}"><div style="align-self:flex-end;max-width:80%;padding:8px 12px;border:1px solid rgba(225,173,102,.4);border-radius:4px;font-size:13px">{{ x.t }}</div></sc-if><sc-if value="{{ x.a }}"><div style="align-self:flex-start;max-width:88%;padding-left:12px;border-left:1px solid #a39d94;font-size:13.5px;line-height:1.55;font-style:italic;color:#e4dfd7">{{ x.t }}</div></sc-if></sc-for>
+<sc-if value="{{ memBusy }}"><span style="font-size:12px;color:#8e887f;animation:aurPulse 1.2s infinite">Persona is responding…</span></sc-if>
+</div>
+<div style="display:flex;gap:8px;padding:10px 14px;border-top:1px solid rgba(236,232,225,.09)"><input class="input" value="{{ memIn }}" onChange="{{ setMemIn }}" onKeyDown="{{ memKey }}" placeholder="e.g. A one-region pilot is ₹18L for 90 days…"><button class="btn btn-primary" onClick="{{ sendMem }}">{{ ic.send }}</button></div>
+</div>
+</div>
+<div style="flex:1 1 260px;display:flex;flex-direction:column;gap:16px;font-size:13px">
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9fc79a">Buying motivations</span><sc-for list="{{ mem.mot }}" as="x" hint-placeholder-count="2"><p style="margin:6px 0 0">{{ x }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e8957a">Objections</span><sc-for list="{{ mem.obj }}" as="x" hint-placeholder-count="2"><p style="margin:6px 0 0">{{ x }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e1ad66">Unresolved questions</span><sc-for list="{{ mem.open }}" as="x" hint-placeholder-count="3"><p style="margin:6px 0 0">{{ x }}</p></sc-for></div>
+<div style="padding:14px;border:1px solid #e1ad66;border-radius:4px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e1ad66">Suggested next conversation</span><p style="margin:6px 0 0;line-height:1.55">{{ mem.next }}</p></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sv.prospects }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+<div style="position:relative;flex:1 1 220px"><span style="position:absolute;left:10px;top:10px;color:#8e887f">{{ ic.search }}</span><input class="input" value="{{ f.q }}" onChange="{{ fq }}" placeholder="Search name, designation, company" style="padding-left:34px"></div>
+<select class="input" value="{{ f.ind }}" onChange="{{ find }}" style="width:auto;background:#171614"><sc-for list="{{ indOpts }}" as="o" hint-placeholder-count="6"><option value="{{ o }}">Industry: {{ o }}</option></sc-for></select>
+<select class="input" value="{{ f.conn }}" onChange="{{ fconn }}" style="width:auto;background:#171614"><option value="All">Connection: All</option><option value="1st">1st</option><option value="2nd">2nd</option><option value="3rd">3rd</option></select>
+<select class="input" value="{{ f.pri }}" onChange="{{ fpri }}" style="width:auto;background:#171614"><option value="All">Priority: All</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>
+<select class="input" value="{{ f.min }}" onChange="{{ fmin }}" style="width:auto;background:#171614"><option value="0">Relevance: any</option><option value="60">60+</option><option value="75">75+</option><option value="85">85+</option></select>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+<div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column">
+<span style="font-size:11.5px;color:#8e887f;margin-bottom:6px">{{ rowCount }} prospects · illustrative</span>
+<sc-if value="{{ noRows }}"><p style="font-size:13px;color:#8e887f;padding:20px 0">No prospects match these filters.</p></sc-if>
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
+<button onClick="{{ r.go }}" style="display:grid;grid-template-columns:1fr 70px;gap:4px 14px;text-align:left;padding:12px 12px 12px 14px;border:0;border-left:2px solid {{ r.bl }};border-top:1px solid rgba(236,232,225,.08);background:{{ r.bg }};color:inherit;font:inherit;cursor:pointer" style-hover="background:rgba(236,232,225,.03)">
+<span style="font-size:14px">{{ r.name }} <span style="color:#8e887f;font-size:12.5px">· {{ r.conn }}</span></span>
+<span style="font-family:var(--font-heading);font-size:22px;text-align:right;font-feature-settings:'tnum';line-height:1">{{ r.score }}</span>
+<span style="font-size:12.5px;color:#a39d94">{{ r.title }} · {{ r.co }} · {{ r.ind }} · {{ r.size }}</span>
+<span style="font-size:11px;color:{{ r.pc }};text-align:right">{{ r.pri }}</span>
+<span style="font-size:12px;color:#cfc9bf">{{ r.problem }}</span>
+<span style="font-size:11px;color:#9fc79a;text-align:right">{{ r.status }}</span>
+</button>
+</sc-for>
+</div>
+<div style="flex:1.3 1 420px;min-width:0;border:1px solid rgba(236,232,225,.12);border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:18px;position:sticky;top:96px">
+<div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap">
+<div style="flex:1;min-width:200px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e1ad66">Prospect intelligence</span><h3 style="font-family:var(--font-heading);font-weight:400;font-size:28px;margin:2px 0 0">{{ pr.name }}</h3><span style="font-size:13px;color:#a39d94">{{ pr.title }}, {{ pr.co }} · {{ pr.conn }} connection · <a href="#">LinkedIn profile</a></span></div>
+<div style="text-align:right"><span style="font-family:var(--font-heading);font-size:40px;line-height:1;color:#e1ad66;font-feature-settings:'tnum'">{{ pr.score }}</span><br><span style="font-size:11px;color:#8e887f">Aurum relevance</span></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;font-size:13px;line-height:1.5">
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Company</span><p style="margin:4px 0 0">{{ pr.coo }}</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Professional context</span><p style="margin:4px 0 0">{{ pr.ctx }}</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Potential challenges</span><sc-for list="{{ pr.ch }}" as="x" hint-placeholder-count="2"><p style="margin:4px 0 0">{{ x }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e1ad66">Suggested Aurum use case</span><p style="margin:4px 0 0">{{ pr.use }}</p><p style="margin:6px 0 0;color:#a39d94">Approach: {{ pr.intro }}</p></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f;flex:1">Personalised LinkedIn message · draft</span><button class="btn btn-ghost" onClick="{{ genMsg }}" disabled="{{ gen }}">{{ ic.spark }}Regenerate</button><button class="btn btn-ghost" onClick="{{ copyMsg }}">{{ ic.copy }}Copy</button></div>
+<textarea class="input" value="{{ draft }}" onChange="{{ setDraft }}" style="min-height:170px;font-size:13.5px;line-height:1.6;background:#141311"></textarea>
+<sc-if value="{{ gen }}"><span style="font-size:12px;color:#8e887f;animation:aurPulse 1.2s infinite">Drafting from prospect context…</span></sc-if>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;font-size:13px">
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Follow-up suggestion</span><p style="margin:4px 0 0">If no reply in 6 days, share the replacement-cost receipt for a {{ pr.size }} company.</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Conversation history</span><sc-for list="{{ pr.hist }}" as="h" hint-placeholder-count="1"><p style="margin:4px 0 0">{{ h }}</p></sc-for><sc-if value="{{ pr.noHist }}"><p style="margin:4px 0 0;color:#8e887f">No previous conversations.</p></sc-if></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:14px;border-top:1px solid rgba(236,232,225,.09)">
+<button class="btn btn-primary" onClick="{{ approve }}">{{ ic.check }}Review & approve</button>
+<button class="btn btn-secondary" onClick="{{ saveP }}">{{ ic.bookmark }}{{ savedLbl }}</button>
+<button class="btn btn-secondary" onClick="{{ markC }}">Mark contacted</button>
+<label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#a39d94">{{ ic.cal }}Follow up<input type="date" class="input" value="{{ pr.follow }}" onChange="{{ setFollowUp }}" style="width:auto;min-height:32px;color-scheme:dark"></label>
+<span style="margin-left:auto;font-size:12px;color:#9fc79a">{{ pr.status }}</span>
+</div>
+</div>
+</div>
+</sc-if>
+</section>
+</sc-if>
+<sc-if value="{{ scr.overview }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="Overview" style="display:flex;flex-direction:column;gap:28px">
+<p style="margin:0;max-width:640px;font-size:15px;line-height:1.6;color:#cfc9bf">One persona layer across surveys, website simulations and buyer conversations. Today: a live simulation of aurumcareers.tech and four prospects worth a note this week.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border-top:1px solid rgba(236,232,225,.12);border-bottom:1px solid rgba(236,232,225,.12)">
+<div style="padding:22px 22px 22px 0;display:flex;flex-direction:column;gap:10px;border-right:1px solid rgba(236,232,225,.09)">
+<span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">01 · Survey Intelligence</span>
+<span style="font-family:var(--font-heading);font-size:22px;line-height:1.25">72% of HR leaders would pilot a sponsorship programme with measured outcomes</span>
+<span style="font-size:12px;color:#8e887f">SV-022 · 120 personas · 28 Oct</span>
+<button class="btn btn-ghost" onClick="{{ goSurvey }}" style="align-self:flex-start">Open results{{ ic.arrow }}</button>
+</div>
+<div style="padding:22px;display:flex;flex-direction:column;gap:10px;border-right:1px solid rgba(236,232,225,.09)">
+<span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e1ad66">02 · UX Intelligence Lab</span>
+<span style="font-family:var(--font-heading);font-size:22px;line-height:1.25">3 of 6 personas requested a pilot. Pricing and the hero are the critical barriers.</span>
+<span style="font-size:12px;color:#8e887f">UX-014 · aurumcareers.tech</span>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn btn-primary" onClick="{{ goUxConfig }}">{{ ic.play }}New simulation</button><button class="btn btn-ghost" onClick="{{ goUxReport }}">Report{{ ic.arrow }}</button></div>
+</div>
+<div style="padding:22px 0 22px 22px;display:flex;flex-direction:column;gap:10px">
+<span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">03 · Sales Intelligence</span>
+<span style="font-family:var(--font-heading);font-size:22px;line-height:1.25">17 high-priority prospects. Meera Kulkarni (CHRO, 92) is the strongest fit.</span>
+<span style="font-size:12px;color:#8e887f">Illustrative until LinkedIn export is imported</span>
+<button class="btn btn-ghost" onClick="{{ goSales }}" style="align-self:flex-start">Prospects{{ ic.arrow }}</button>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px">
+<div style="flex:2 1 460px;min-width:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:baseline;margin-bottom:6px"><h3 style="font-family:var(--font-heading);font-weight:400;font-size:24px;margin:0;flex:1">Recent runs</h3><button class="btn btn-ghost" onClick="{{ goRuns }}">All history{{ ic.arrow }}</button></div>
+<sc-for list="{{ runs }}" as="r" hint-placeholder-count="5"><button onClick="{{ r.go }}" style="display:grid;grid-template-columns:70px 80px 1fr auto;gap:12px;align-items:baseline;text-align:left;padding:11px 0;border:0;border-top:1px solid rgba(236,232,225,.09);background:none;color:inherit;font:inherit;cursor:pointer;font-size:13px" style-hover="background:rgba(236,232,225,.03)"><span style="color:#8e887f;font-feature-settings:'tnum'">{{ r.id }}</span><span style="color:#a39d94">{{ r.type }}</span><span>{{ r.name }}</span><span style="color:{{ r.sfg }};font-size:12px">{{ r.status }} · {{ r.date }}</span></button></sc-for>
+</div>
+<div style="flex:1 1 260px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-family:var(--font-heading);font-weight:400;font-size:24px;margin:0">Persona layer</h3>
+<p style="margin:0;font-size:13px;line-height:1.6;color:#cfc9bf">9 personas carry memory across modules. P01 (CHRO) answered SV-022, browsed the site in UX-014, and shares a profile with the CHRO buyer in Sales.</p>
+<button class="btn btn-secondary" onClick="{{ goLib }}" style="align-self:flex-start">{{ ic.users }}Open library</button>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{ scr.survey }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Survey Intelligence" style="display:flex;flex-direction:column;gap:20px">
+<div style="padding:10px 14px;border:1px dashed rgba(236,232,225,.2);border-radius:4px;font-size:12.5px;color:#a39d94">Existing Percura survey flow, embedded in the new shell. Replace with the production survey components when connected.</div>
+<sc-if value="{{ sview.list }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onClick="{{ newSurvey }}">{{ ic.plus }}Create survey</button></div>
+<table class="table"><thead><tr><th>Survey</th><th>Personas</th><th>Status</th><th>Date</th></tr></thead><tbody>
+<sc-for list="{{ surveys }}" as="s" hint-placeholder-count="3"><tr onClick="{{ s.go }}" style="cursor:pointer"><td>{{ s.name }}</td><td style="font-feature-settings:'tnum'">{{ s.n }}</td><td style="color:{{ s.sfg }}">{{ s.status }}</td><td style="color:#8e887f">{{ s.date }}</td></tr></sc-for>
+</tbody></table>
+</sc-if>
+<sc-if value="{{ sview.create }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:0;flex-wrap:wrap"><sc-for list="{{ sSteps }}" as="s" hint-placeholder-count="4"><div style="flex:1;min-width:120px;padding:10px 0;border-top:2px solid {{ s.bd }};color:{{ s.fg }};font-size:13px;margin-right:6px">{{ s.n }} · {{ s.s }}</div></sc-for></div>
+<div style="max-width:720px;display:flex;flex-direction:column;gap:16px">
+<sc-if value="{{ ss.s0 }}"><div class="field"><label>Survey title</label><input class="input" defaultValue="Club format preference"></div><div class="field"><label>Question 1</label><input class="input" defaultValue="Which in-person format would your senior women most likely attend?"></div><div class="field"><label>Question 2</label><input class="input" defaultValue="How often could sponsors realistically attend?"></div></sc-if>
+<sc-if value="{{ ss.s1 }}"><p style="margin:0;font-size:13.5px;color:#cfc9bf">Select synthetic personas from the shared library.</p><div style="display:flex;flex-wrap:wrap;gap:8px"><span style="padding:7px 13px;border:1px solid #e1ad66;color:#e1ad66;border-radius:3px;font-size:13px">CHROs</span><span style="padding:7px 13px;border:1px solid #e1ad66;color:#e1ad66;border-radius:3px;font-size:13px">L&amp;D Heads</span><span style="padding:7px 13px;border:1px solid #e1ad66;color:#e1ad66;border-radius:3px;font-size:13px">Mid-career women</span><span style="padding:7px 13px;border:1px solid rgba(236,232,225,.14);border-radius:3px;font-size:13px">Founders</span></div></sc-if>
+<sc-if value="{{ ss.s2 }}"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px"><div class="field"><label>Audience size</label><input class="input" defaultValue="120"></div><div class="field"><label>Region</label><input class="input" defaultValue="India · metro"></div><div class="field"><label>Company size</label><input class="input" defaultValue="1,000+"></div></div></sc-if>
+<sc-if value="{{ ss.s3 }}"><p style="margin:0;font-size:14px;line-height:1.6">Ready to run “Club format preference” with 120 personas across 3 segments. Estimated time: under a minute.</p></sc-if>
+<div style="display:flex;gap:8px"><button class="btn btn-secondary" onClick="{{ sBack }}">Back</button><button class="btn btn-primary" onClick="{{ sNext }}">{{ sNextLbl }}</button><button class="btn btn-ghost" onClick="{{ backList }}" style="margin-left:auto">Cancel</button></div>
+</div>
+</sc-if>
+<sc-if value="{{ sview.running }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:520px;display:flex;flex-direction:column;gap:10px;padding:40px 0"><span style="font-family:var(--font-heading);font-size:24px">Collecting responses… {{ survN }} / 120</span><div style="height:3px;background:rgba(236,232,225,.1)"><div style="height:3px;width:{{ survProg }};background:#e1ad66"></div></div></div>
+</sc-if>
+<sc-if value="{{ sview.results }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2 style="font-family:var(--font-heading);font-weight:400;font-size:30px;margin:0;flex:1">Sponsorship appetite — HR leaders</h2><button class="btn btn-ghost" onClick="{{ backList }}">All surveys</button><button class="btn btn-primary">{{ ic.download }}Export</button></div>
+<div style="display:flex;flex-wrap:wrap;gap:32px">
+<div style="flex:2 1 420px;display:flex;flex-direction:column;gap:22px">
+<div><span style="font-size:13.5px">Would you pilot a sponsorship programme with measured retention outcomes?</span>
+<div style="display:grid;grid-template-columns:120px 1fr 44px;gap:8px 12px;align-items:center;margin-top:10px;font-size:12.5px"><span>Yes, this year</span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="height:6px;width:46%;background:#e1ad66"></div></div><span>46%</span><span>Yes, next year</span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="height:6px;width:26%;background:#e1ad66"></div></div><span>26%</span><span>Unsure</span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="height:6px;width:18%;background:#a39d94"></div></div><span>18%</span><span>No</span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="height:6px;width:10%;background:#6f6a62"></div></div><span>10%</span></div></div>
+<div><span style="font-size:13.5px">Biggest blocker to sponsorship programmes today</span>
+<div style="display:grid;grid-template-columns:120px 1fr 44px;gap:8px 12px;align-items:center;margin-top:10px;font-size:12.5px"><span>No measurement</span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="height:6px;width:41%;background:#e1ad66"></div></div><span>41%</span><span>Sponsor time</span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="height:6px;width:33%;background:#e1ad66"></div></div><span>33%</span><span>Budget</span><div style="height:6px;background:rgba(236,232,225,.07)"><div style="height:6px;width:26%;background:#a39d94"></div></div><span>26%</span></div></div>
+</div>
+<div style="flex:1 1 260px;display:flex;flex-direction:column;gap:10px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Segments</span>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09);font-size:13px">CHROs · 40 <span style="color:#9fc79a;float:right">81% yes</span></div>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09);font-size:13px">HR Directors · 50 <span style="color:#e1ad66;float:right">68% yes</span></div>
+<div style="padding:10px 0;border-top:1px solid rgba(236,232,225,.09);border-bottom:1px solid rgba(236,232,225,.09);font-size:13px">L&amp;D Heads · 30 <span style="color:#e1ad66;float:right">63% yes</span></div>
+<p style="margin:6px 0 0;font-size:13px;line-height:1.55;color:#cfc9bf">Insight: measurement, not budget, is the main blocker — consistent with UX-014, where the Diagnostic tier drew CHRO attention.</p>
+</div>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ scr.personas }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Persona Library" style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+<div style="flex:1 1 360px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+<sc-for list="{{ libs }}" as="x" hint-placeholder-count="9"><button onClick="{{ x.go }}" style="display:flex;flex-direction:column;gap:4px;text-align:left;padding:14px;border:1px solid {{ x.bd }};border-radius:4px;background:none;color:inherit;font:inherit;cursor:pointer"><span style="display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:{{ x.color }}"></span><span style="font-size:14px">{{ x.name }}</span></span><span style="font-size:12px;color:#8e887f">{{ x.co }}</span><span style="font-size:11px;color:#e1ad66">{{ x.modsTxt }}</span></button></sc-for>
+</div>
+<div style="flex:1 1 380px;min-width:0;border:1px solid rgba(236,232,225,.12);border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:16px;font-size:13px">
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e1ad66">Identity profile</span><h3 style="font-family:var(--font-heading);font-weight:400;font-size:28px;margin:4px 0 0">{{ ls.name }}</h3><span style="color:#a39d94">{{ ls.co }}</span></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Behavioural characteristics</span><sc-for list="{{ ls.traits }}" as="t" hint-placeholder-count="3"><p style="margin:4px 0 0">{{ t }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Decision-making pattern</span><p style="margin:4px 0 0;line-height:1.55">{{ ls.decision }}</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Persistent memory</span><sc-for list="{{ ls.mem }}" as="t" hint-placeholder-count="2"><p style="margin:4px 0 0;font-style:italic;color:#e4dfd7">{{ t }}</p></sc-for></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e887f">Interaction history · separate contexts</span><sc-for list="{{ ls.hist }}" as="t" hint-placeholder-count="2"><p style="margin:4px 0 0">{{ t }}</p></sc-for></div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{ scr.reports }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Reports" style="display:flex;flex-direction:column;gap:14px">
+<table class="table"><thead><tr><th>Run</th><th>Module</th><th>Name</th><th>Personas</th><th>Date</th><th>Status</th></tr></thead><tbody>
+<sc-for list="{{ runs }}" as="r" hint-placeholder-count="5"><tr onClick="{{ r.go }}" style="cursor:pointer"><td style="font-feature-settings:'tnum';color:#a39d94">{{ r.id }}</td><td>{{ r.type }}</td><td>{{ r.name }}</td><td style="font-feature-settings:'tnum'">{{ r.n }}</td><td style="color:#8e887f">{{ r.date }}</td><td style="color:{{ r.sfg }}">{{ r.status }}</td></tr></sc-for>
+</tbody></table>
+</section>
+</sc-if>
+
+<sc-if value="{{ scr.integrations }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Integrations" style="display:flex;flex-direction:column;gap:20px;max-width:900px">
+<div style="border:1px solid rgba(236,232,225,.14);border-radius:4px;padding:26px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><span style="width:44px;height:44px;border:1px solid rgba(106,166,216,.5);border-radius:4px;display:grid;place-items:center;color:#6aa6d8">{{ ic.li }}</span><div style="flex:1;min-width:200px"><span style="font-family:var(--font-heading);font-size:24px">LinkedIn</span><br><span style="font-size:12.5px;color:#a39d94">Sign in with LinkedIn + your connections data export</span></div>
+<sc-if value="{{ li.off }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#8e887f">Not connected</span><button class="btn btn-primary" onClick="{{ openOauth }}">Connect LinkedIn</button></sc-if>
+<sc-if value="{{ li.connecting }}"><span style="font-size:12.5px;color:#e1ad66;animation:aurPulse 1.2s infinite">Waiting for LinkedIn authorisation…</span></sc-if>
+<sc-if value="{{ li.on }}"><span style="font-size:12px;color:#9fc79a">● Connected as Arundhati Babar</span><button class="btn btn-secondary" onClick="{{ disconnectLi }}">Disconnect</button></sc-if>
+</div>
+<sc-if value="{{ li.on }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));border-top:1px solid rgba(236,232,225,.1);border-bottom:1px solid rgba(236,232,225,.1)">
+<div style="padding:14px 0"><span style="font-family:var(--font-heading);font-size:30px">1,284</span><br><span style="font-size:12px;color:#8e887f">Connections imported</span></div>
+<div style="padding:14px 0"><span style="font-family:var(--font-heading);font-size:30px">412</span><br><span style="font-size:12px;color:#8e887f">Match a decision-maker cluster</span></div>
+<div style="padding:14px 0"><span style="font-family:var(--font-heading);font-size:30px">Today</span><br><span style="font-size:12px;color:#8e887f">Last import</span></div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-secondary" onClick="{{ importCsv }}">{{ ic.upload }}Import new export</button><button class="btn btn-secondary" onClick="{{ resync }}">{{ ic.refresh }}Re-match against ICP</button></div>
+</sc-if>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;font-size:13px;line-height:1.55">
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9fc79a">Percura can</span><p style="margin:6px 0 0">Read your basic profile and email via official sign-in. Analyse the Connections.csv you export and upload.</p></div>
+<div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e8957a">Percura never</span><p style="margin:6px 0 0">Scrapes profiles, sends messages, automates invitations or posts on your behalf. Every outbound message is approved and sent by you.</p></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid rgba(236,232,225,.09)"><span style="flex:1"><span style="font-size:14px">CSV import</span><br><span style="font-size:12px;color:#8e887f">Prospect lists from any CRM</span></span><button class="btn btn-secondary" onClick="{{ importCsv }}">Upload</button></div>
+<div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid rgba(236,232,225,.09);border-bottom:1px solid rgba(236,232,225,.09)"><span style="flex:1"><span style="font-size:14px">Website access for UX Lab</span><br><span style="font-size:12px;color:#8e887f">Public pages work out of the box; staging sites need a basic-auth credential</span></span><span style="font-size:12px;color:#9fc79a">Ready</span></div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{ scr.settings }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Settings" style="display:flex;flex-direction:column;gap:20px;max-width:720px">
+<div class="field"><label>Workspace name</label><input class="input" defaultValue="Aurum"></div>
+<div class="field"><label>Website under test</label><input class="input" defaultValue="https://aurumcareers.tech"></div>
+<div style="display:flex;flex-direction:column"><span style="font-size:12px;color:#a39d94;margin-bottom:6px">Members</span>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid rgba(236,232,225,.09);font-size:13.5px"><span>Arundhati Babar</span><span style="color:#8e887f">Admin</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid rgba(236,232,225,.09);border-bottom:1px solid rgba(236,232,225,.09);font-size:13.5px"><span>Invite a teammate…</span><span style="color:#e1ad66">Invite</span></div>
+</div>
+<div style="display:flex;align-items:center;gap:12px;padding:14px;border:1px solid rgba(236,232,225,.12);border-radius:4px"><span style="color:#e1ad66">{{ ic.lock }}</span><span style="flex:1;font-size:13.5px">Require approval for every outbound message</span><span style="font-size:12px;color:#8e887f">Always on</span></div>
+</section>
+</sc-if>
+</div>
+</main>
+<sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
+<aside style="position:fixed;top:0;right:0;bottom:0;width:min(400px,100vw);background:#141311;border-left:1px solid rgba(236,232,225,.12);box-shadow:-20px 0 40px rgba(0,0,0,.4);z-index:60;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid rgba(236,232,225,.09)">
+<span style="color:#e1ad66">{{ ic.spark }}</span><div style="flex:1;display:flex;flex-direction:column"><span style="font-family:var(--font-heading);font-size:20px">Ask Percura</span><span style="font-size:11px;color:#8e887f">Grounded in run UX-014 + Sales workspace data</span></div>
+<button class="btn btn-icon" onClick="{{ closeChat }}" aria-label="Close">{{ ic.x }}</button>
+</div>
+<div ref="{{ chatRef }}" style="flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:12px">
+<sc-if value="{{ chatEmpty }}" hint-placeholder-val="{{ true }}">
+<p style="margin:0;font-size:13px;color:#a39d94;line-height:1.55">Ask about persona behaviour, sections or priorities. Answers cite persona IDs and page sections.</p>
+<div style="display:flex;flex-direction:column;gap:6px"><sc-for list="{{ sugs }}" as="s" hint-placeholder-count="6"><button onClick="{{ s.go }}" style="text-align:left;padding:9px 12px;border:1px solid rgba(236,232,225,.12);border-radius:3px;background:none;color:#e4dfd7;font:inherit;font-size:13px;cursor:pointer" style-hover="border-color:#e1ad66">{{ s.q }}</button></sc-for></div>
+</sc-if>
+<sc-for list="{{ msgs }}" as="m" hint-placeholder-count="0">
+<sc-if value="{{ m.u }}"><div style="align-self:flex-end;max-width:85%;padding:9px 12px;border:1px solid rgba(225,173,102,.4);border-radius:4px;font-size:13px;line-height:1.5">{{ m.t }}</div></sc-if>
+<sc-if value="{{ m.a }}"><div style="align-self:flex-start;max-width:92%;font-size:13.5px;line-height:1.6;color:#e4dfd7;padding-left:12px;border-left:1px solid #e1ad66">{{ m.t }}</div></sc-if>
+</sc-for>
+<sc-if value="{{ busy }}"><span style="font-size:12px;color:#8e887f;animation:aurPulse 1.2s infinite">Reading simulation data…</span></sc-if>
+</div>
+<div style="padding:14px 18px;border-top:1px solid rgba(236,232,225,.09);display:flex;gap:8px">
+<textarea class="input" rows="2" value="{{ chatIn }}" onChange="{{ setChatIn }}" onKeyDown="{{ chatKey }}" placeholder="Ask about this simulation…" style="min-height:44px;resize:none;background:#100f0d"></textarea>
+<button class="btn btn-primary btn-icon" onClick="{{ sendChat }}" aria-label="Send" style="height:44px;width:44px">{{ ic.send }}</button>
+</div>
+</aside>
+</sc-if>
+
+<sc-if value="{{ dlg.any }}" hint-placeholder-val="{{ false }}">
+<div class="dialog-backdrop" style="z-index:80;background:rgba(0,0,0,.6)">
+<sc-if value="{{ dlg.cp }}"><div class="dialog" style="background:#1a1917">
+<span class="dialog-title">Custom persona</span>
+<div class="field"><label>Role / designation</label><input class="input" value="{{ cp.role }}" onChange="{{ cpRole }}" placeholder="e.g. Chief Diversity Officer"></div>
+<div class="field"><label>Industry & company context</label><input class="input" value="{{ cp.ind }}" onChange="{{ cpInd }}" placeholder="e.g. Global bank, India GCC"></div>
+<div class="field"><label>Behavioural notes</label><textarea class="input" value="{{ cp.note }}" onChange="{{ cpNote }}" placeholder="Sceptical of DEI vendors; reads pricing first"></textarea></div>
+<div class="dialog-actions"><button class="btn btn-secondary" onClick="{{ closeDlg }}">Cancel</button><button class="btn btn-primary" onClick="{{ saveCp }}">Add persona</button></div>
+</div></sc-if>
+<sc-if value="{{ dlg.cc }}"><div class="dialog" style="background:#1a1917">
+<span class="dialog-title">New decision-maker cluster</span>
+<div class="field"><label>Cluster name</label><input class="input" value="{{ ccName }}" onChange="{{ setCc }}" placeholder="e.g. GCC Site Heads"></div>
+<p style="margin:0;font-size:12.5px;color:#a39d94">Percura will match imported connections by title, industry and company size once saved.</p>
+<div class="dialog-actions"><button class="btn btn-secondary" onClick="{{ closeDlg }}">Cancel</button><button class="btn btn-primary" onClick="{{ saveCc }}">Create cluster</button></div>
+</div></sc-if>
+<sc-if value="{{ dlg.oauth }}"><div class="dialog" style="background:#1a1917;width:min(480px,100%)">
+<div style="display:flex;align-items:center;gap:10px"><span style="color:#6aa6d8">{{ ic.li }}</span><span class="dialog-title">Connect LinkedIn</span></div>
+<p style="margin:0;font-size:13px;line-height:1.55;color:#cfc9bf">Percura uses LinkedIn’s official sign-in. You’ll be redirected to LinkedIn to approve:</p>
+<div style="display:flex;flex-direction:column;font-size:13px"><span style="padding:8px 0;border-top:1px solid rgba(236,232,225,.09)">✓ Basic profile — name, headline, photo</span><span style="padding:8px 0;border-top:1px solid rgba(236,232,225,.09)">✓ Email address</span><span style="padding:8px 0;border-top:1px solid rgba(236,232,225,.09);border-bottom:1px solid rgba(236,232,225,.09);color:#a39d94">✕ No messaging, posting or connection access</span></div>
+<p style="margin:0;font-size:12px;line-height:1.55;color:#a39d94">Connections are imported from the data export you download from LinkedIn (Settings → Data privacy → Get a copy of your data). Percura never scrapes or automates LinkedIn.</p>
+<div class="dialog-actions"><button class="btn btn-secondary" onClick="{{ closeDlg }}">Cancel</button><button class="btn btn-primary" onClick="{{ connectLi }}">Continue to LinkedIn</button></div>
+</div></sc-if>
+<sc-if value="{{ dlg.approve }}"><div class="dialog" style="background:#1a1917;width:min(520px,100%)">
+<span class="dialog-title">Approve message to {{ approveName }}</span>
+<div style="white-space:pre-wrap;font-size:13px;line-height:1.6;padding:14px;border:1px solid rgba(236,232,225,.12);border-radius:3px;max-height:260px;overflow:auto">{{ approveMsg }}</div>
+<p style="margin:0;font-size:12px;color:#a39d94;line-height:1.5">Percura never sends on your behalf. Approving copies the message and marks the prospect contacted — you send it from LinkedIn yourself.</p>
+<div class="dialog-actions"><button class="btn btn-secondary" onClick="{{ closeDlg }}">Keep editing</button><button class="btn btn-primary" onClick="{{ doApprove }}">{{ ic.check }}Approve & copy</button></div>
+</div></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ hasToast }}"><div style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 16px;background:#ece8e1;color:#14110e;border-radius:3px;font-size:13px;z-index:90;box-shadow:0 8px 24px rgba(0,0,0,.4)">{{ toastMsg }}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 'overview', uxView: 'config', w: window.innerWidth,
+    cfg: { url: 'https://aurumcareers.tech', roles: ['CHRO', 'HR Director', 'Founder', 'Talent Head', 'CEO', 'DEI Lead'], industry: 'Mixed enterprise', size: '1,000–10,000', seniority: 'Senior leadership', count: 6, objs: ['First impressions', 'Trust and credibility', 'Conversion optimisation'], custom: [] },
+    sim: { running: false, tick: 0, idx: [-1, -1, -1, -1, -1, -1], feed: [], control: false, speed: 1, follow: 'all', done: false, lastPid: null, started: false },
+    selP: null, calc: { women: 120, salary: 24, attr: 14 },
+    reportTab: 'summary', repP: 'P01', recF: 'All',
+    chatOpen: false, msgs: [], chatIn: '', busy: false,
+    salesTab: 'dashboard', li: 'off', clOpen: 0, mem: 'm1', memMsgs: {}, memIn: '', memBusy: false,
+    pSel: 'p1', f: { q: '', ind: 'All', conn: 'All', pri: 'All', min: 0 }, drafts: {}, pst: {}, gen: false,
+    dialog: null, toast: null, cp: { role: '', ind: '', note: '' }, ccName: '',
+    survView: 'list', survStep: 0, survProg: 0, libSel: 'P01'
+  };
+  static IC = {
+    dash: 'M3 3h7v9H3z M14 3h7v5h-7z M14 12h7v9h-7z M3 16h7v5H3z', survey: 'M9 2h6v4H9z M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2 M12 11h4 M12 16h4 M8 11h.01 M8 16h.01',
+    ux: 'M2 3h20v14H2z M8 21h8 M12 17v4 M10 7.5v5l4-2.5z', sales: 'M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16 M2 6h20v14H2z',
+    users: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8 M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75',
+    file: 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z M14 2v5h5 M16 13H8 M16 17H8 M10 9H8', plug: 'M12 22v-5 M9 8V2 M15 8V2 M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z',
+    set: 'M4 21v-7 M4 10V3 M12 21v-9 M12 8V3 M20 21v-5 M20 12V3 M1 14h6 M9 8h6 M17 16h6', play: 'M6 3l14 9-14 9z', pause: 'M6 4h4v16H6z M14 4h4v16h-4z', restart: 'M3 12a9 9 0 1 0 3-6.7L3 8 M3 3v5h5',
+    hand: 'M18 11V6a2 2 0 0 0-4 0v5 M14 10V4a2 2 0 0 0-4 0v6 M10 10.5V6a2 2 0 0 0-4 0v8 M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15',
+    msg: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', send: 'M22 2L11 13 M22 2l-7 20-4-9-9-4z', copy: 'M8 8h14v14H8z M4 16H2V2h14v2', check: 'M20 6L9 17l-5-5', x: 'M18 6L6 18 M6 6l12 12',
+    search: 'M11 3a8 8 0 1 0 0 16a8 8 0 1 0 0-16 M21 21l-4.3-4.3', li: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 2a2 2 0 1 0 0 4a2 2 0 1 0 0-4',
+    arrow: 'M5 12h14 M12 5l7 7-7 7', chevL: 'M15 18l-6-6 6-6', chevR: 'M9 18l6-6-6-6', refresh: 'M21 12a9 9 0 0 1-15 6.7L3 16 M3 12a9 9 0 0 1 15-6.7L21 8 M21 3v5h-5 M3 21v-5h5', plus: 'M12 5v14 M5 12h14',
+    lock: 'M5 11h14v10H5z M7 11V7a5 5 0 0 1 10 0v4', eye: 'M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6', download: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3',
+    bookmark: 'M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z', cal: 'M3 4h18v18H3z M16 2v4 M8 2v4 M3 10h18', upload: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M17 8l-5-5-5 5 M12 3v12', spark: 'M12 3v4 M12 17v4 M3 12h4 M17 12h4 M6 6l2.5 2.5 M15.5 15.5L18 18 M6 18l2.5-2.5 M15.5 8.5L18 6'
+  };
+  ic(n, s) { s = s || 16; return React.createElement('svg', { width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block', flex: 'none' } }, React.createElement('path', { d: Component.IC[n] })); }
+  D() { return window.AURUM; }
+  col(p, a) { return a ? `oklch(0.68 0.13 ${p.hue} / ${a})` : `oklch(0.68 0.13 ${p.hue})`; }
+  fmt(s) { const m = Math.floor(s / 60), r = s % 60; return String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0'); }
+  set(k, v) { this.setState({ [k]: v }); }
+  setSim(o) { this.setState(s => ({ sim: { ...s.sim, ...o } })); }
+  toast(t) { this.setState({ toast: t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 2400); }
+  componentDidMount() {
+    this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener('resize', this.onR);
+    this.iv = setInterval(() => { const s = this.state.sim; if (!s.running || s.control) return; this.acc = (this.acc || 0) + 250 * s.speed; if (this.acc >= 2000) { this.acc = 0; this.step(); } }, 250);
+    this.wait = setInterval(() => { if (window.AURUM) { clearInterval(this.wait); this.forceUpdate(); } }, 100);
+  }
+  componentWillUnmount() { clearInterval(this.iv); clearInterval(this.wait); clearInterval(this.sv); window.removeEventListener('resize', this.onR); }
+  componentDidUpdate() {}
+  bRefFn = el => { if (el !== this.bref) { this.bref = el; this.lastTop = null; } };
+  follow() { return;
+    const el = this.bref, s = this.state.sim, D = this.D(); if (!el || !D || s.control) return;
+    const pid = s.follow !== 'all' ? s.follow : s.lastPid; const i = D.P.findIndex(p => p.id === pid); if (i < 0 || s.idx[i] < 0) return;
+    const top = Math.max(0, D.P[i].steps[s.idx[i]][1] - 230);
+    if (this.lastTop !== top) { this.lastTop = top; el.scrollTo({ top, behavior: 'smooth' }); }
+  }
+  step() {
+    const D = this.D();
+    this.setState(st => {
+      const sim = { ...st.sim }, idx = [...sim.idx], feed = [...sim.feed], moved = [];
+      D.P.forEach((p, i) => { if (sim.tick >= p.delay && idx[i] < p.steps.length - 1) { idx[i]++; moved.push(p.id); const s = p.steps[idx[i]]; if (s[4]) feed.unshift({ k: 'f' + sim.tick + p.id, pid: p.id, text: s[4], type: s[5], t: this.fmt(sim.tick * 7 + i * 2) }); } });
+      if (moved.length) sim.lastPid = moved[Math.floor(sim.tick / 2) % moved.length];
+      sim.tick++; sim.idx = idx; sim.feed = feed; sim.started = true;
+      if (D.P.every((p, i) => idx[i] === p.steps.length - 1)) { sim.running = false; sim.done = true; }
+      return { sim };
+    }, () => this.follow());
+  }
+  restart() { this.acc = 0; this.lastTop = null; this.setSim({ running: true, tick: 0, idx: [-1, -1, -1, -1, -1, -1], feed: [], done: false, control: false, lastPid: null, started: true }); }
+  launch() { this.setState({ uxView: 'live' }); this.restart(); setTimeout(() => this.step(), 300); }
+  takeControl() { if (this.bref) this.bref.scrollTop = 0; this.wasRunning = this.state.sim.running; this.setSim({ control: true, running: false }); this.pushFeed({ pid: 'YOU', text: 'You took control of the browser. Personas paused.', type: 'observer' }); }
+  release() { this.lastTop = null; this.setSim({ control: false, running: !this.state.sim.done && this.wasRunning !== false }); setTimeout(() => this.follow(), 0); this.pushFeed({ pid: 'YOU', text: 'Control released. Personas resumed.', type: 'observer' }); }
+  pushFeed(f) { this.setState(s => ({ sim: { ...s.sim, feed: [{ k: 'u' + Date.now(), t: this.fmt(s.sim.tick * 7), ...f }, ...s.sim.feed] } })); }
+  onPageClick(e) {
+    if (!this.state.sim.control) return; const t = e.target.closest('button,a,input,h1,h2,h3,p'); if (!t) return;
+    const label = (t.getAttribute('aria-label') || t.innerText || t.value || '').trim().slice(0, 60);
+    const go = t.getAttribute('data-go'); if (go && this.bref) { const sec = this.D().SEC.find(x => x.id === go); if (sec) this.bref.scrollTop = sec.y; }
+    if (label) this.pushFeed({ pid: 'YOU', text: 'You clicked “' + label + '”', type: 'observer' });
+  }
+  cursors() {
+    const s = this.state.sim, D = this.D(); if (s.control || !D) return null; const E = React.createElement;
+    return E('div', { style: { position: 'absolute', left: 0, top: 0, width: '100%', height: 3300, pointerEvents: 'none', zIndex: 5 } }, D.P.map((p, i) => {
+      if (s.idx[i] < 0) return null; const st = p.steps[s.idx[i]], c = this.col(p), dim = s.follow !== 'all' && s.follow !== p.id, done = st[2] === 'done';
+      return E('div', { key: p.id, style: { position: 'absolute', left: st[0] + '%', top: st[1], transition: 'left 1.7s cubic-bezier(.45,0,.2,1), top 1.7s cubic-bezier(.45,0,.2,1), opacity .4s', opacity: dim ? 0.25 : done ? 0.5 : 1 } }, [
+        st[2] === 'click' ? E('span', { key: 'r' + s.idx[i], style: { position: 'absolute', left: -13, top: -13, width: 26, height: 26, borderRadius: '50%', border: '2px solid ' + c, animation: 'aurPing .9s ease-out 1.6s both' } }) : null,
+        st[2] === 'read' || st[2] === 'evaluate' ? E('span', { key: 'b' + s.idx[i], style: { position: 'absolute', left: -60, top: 22, width: 150, height: 2, background: c, opacity: .55, borderRadius: 2 } }) : null,
+        E('svg', { key: 's', width: 18, height: 18, viewBox: '0 0 24 24', style: { display: 'block', filter: 'drop-shadow(0 1px 2px rgba(0,0,0,.5))' } }, E('path', { d: 'M4 2l16 9-7 2-3 7z', fill: c, stroke: '#fff', strokeWidth: 1.4, strokeLinejoin: 'round' })),
+        E('span', { key: 'l', style: { position: 'absolute', left: 15, top: 13, whiteSpace: 'nowrap', background: c, color: '#14110e', font: '600 10.5px/1 Lora, serif', padding: '4px 7px', borderRadius: 3 } }, p.id + ' · ' + p.role + (st[2] === 'click' ? ' · click' : st[2] === 'evaluate' ? ' · evaluating' : ''))
+      ]);
+    }));
+  }
+  ctx() {
+    const D = this.D(); if (!D) return '';
+    return 'You are Percura, an analyst assistant inside Aurum\'s workspace. Use ONLY this data from UX simulation run UX-014 on aurumcareers.tech (6 synthetic personas, scripted prototype data):\n' +
+      D.P.map(p => `${p.id} ${p.role} (${p.co}) outcome: ${p.outcome}. Notes: ${p.steps.filter(s => s[4]).map(s => s[4]).join(' ')} Final: ${D.PR[p.id].final}`).join('\n') +
+      '\nRecommendations: ' + D.RECS.map(r => `[${r.pr}] ${r.sec}: ${r.problem} Fix: ${r.fix}`).join(' ') +
+      '\nSales prospects (illustrative): ' + D.PROS.map(p => `${p.name}, ${p.title} at ${p.co}, score ${p.score}`).join('; ');
+  }
+  canned(q) {
+    q = q.toLowerCase();
+    if (q.includes('chro')) return 'P01 (CHRO) didn’t leave — they requested a pilot — but only after hitting three unresolved questions: whether the 84% follow-through in The record is real, what outcomes The Ninety produces, and price. All three sit below 900px.';
+    if (q.includes('confus')) return 'Pricing tiers generated the most confusion: P01 and P02 both searched it for 40s+ for a number, and P02 couldn’t tell whether the OBL Club is included. The hero is second — P03 and P04 read it as a women’s network.';
+    if (q.includes('ceo')) return 'P05 (CEO) liked the ₹60L replacement receipt and the founder’s CFO background, but the “Pre-launch” badge with no proof points left them hesitant at the pilot CTA.';
+    if (q.includes('barrier')) return 'The biggest barrier is the missing price signal (Critical, Pricing tiers): it was the exit reason for P02 and a condition for P01. Close second: the hero not naming the product category.';
+    if (q.includes('compare') || q.includes('founder')) return 'HR Director (P02) engaged with numbers — 48s in the calculator — then left over pricing. Founder (P03) engaged with mechanism — research and The Ninety — and converted after the founder note. HR needs a budget line; founders need the “how”.';
+    if (q.includes('priorit')) return 'In order: 1) Hero sub-line naming the product, 2) an indicative pilot price, 3) inline “Illustrative” labels on the record, 4) proof points near the CTA. The first two are Critical and affect 4 of 6 personas.';
+    return 'Across 6 personas, 3 requested a pilot, 1 was hesitant and 2 left. Pricing tiers and the hero are the two critical friction points; the cost calculator and research section built the most trust.';
+  }
+  async ask(q) {
+    q = (q || this.state.chatIn).trim(); if (!q || this.state.busy) return;
+    this.setState(s => ({ msgs: [...s.msgs, { r: 'u', t: q }], chatIn: '', busy: true, chatOpen: true }));
+    let a; try { if (!window.claude || !window.claude.complete) throw 0; a = await window.claude.complete(this.ctx() + '\n\nQuestion: ' + q + '\nAnswer in 2–4 sentences, cite persona IDs and page sections. No markdown.'); } catch (e) { a = this.canned(q); }
+    this.setState(s => ({ msgs: [...s.msgs, { r: 'a', t: a }], busy: false }));
+  }
+  async askMem() {
+    const q = this.state.memIn.trim(); if (!q || this.state.memBusy) return; const D = this.D(), m = D.MEM.find(x => x.id === this.state.mem);
+    const add = (o) => this.setState(s => ({ memMsgs: { ...s.memMsgs, [m.id]: [...(s.memMsgs[m.id] || []), o] } }));
+    add({ r: 'u', t: q }); this.setState({ memIn: '', memBusy: true });
+    let a; try { if (!window.claude || !window.claude.complete) throw 0; a = await window.claude.complete(`Role-play a synthetic buyer persona: ${m.label} (${m.sub}). Memory of past sessions: ${m.sessions.map(s => s.date + ': ' + s.items.join('; ')).join(' | ')}. Open questions: ${m.open.join('; ')}. Objections: ${m.obj.join('; ')}. Aurum is a 90-day sponsorship programme and evidence ledger for employers. Reply in character in 2–3 sentences, referencing earlier sessions where relevant. The seller says: "${q}"`); } catch (e) { a = 'Last time I said adoption by senior sponsors was my worry, and I still haven’t seen a number. If you can show me the sponsor time per week and a pilot price for one region, I can take it to our CEO.'; }
+    add({ r: 'a', t: a }); this.setState({ memBusy: false });
+  }
+  defMsg(p) { return `Hi ${p.name.split(' ')[0]} — ${p.ctx.split(';')[0].replace(/\.$/, '')} caught my attention. At Aurum we help employers build an evidenced record of who they advance: named sponsors, dated commitments, and retention measured against a matched control. Given ${p.co}'s focus on ${p.problem.toLowerCase().replace(/\.$/, '')}, I think ${p.use.toLowerCase()} could be relevant. Open to a 20-minute conversation in the next couple of weeks?\n\nArundhati`; }
+  async genMsg(p) {
+    this.setState({ gen: true }); let a;
+    try { if (!window.claude || !window.claude.complete) throw 0; a = await window.claude.complete(`Write a LinkedIn message (max 90 words, warm, specific, no hype, no emojis) from Arundhati Babar, founder of Aurum (90-day sponsorship programme + evidence ledger for employers, retention measured vs matched control) to ${p.name}, ${p.title} at ${p.co}. Context: ${p.ctx} Problem: ${p.problem} Suggested use: ${p.use}. Sign off "Arundhati". Output only the message.`); } catch (e) { a = this.defMsg(p).replace('caught my attention', 'stood out to me'); }
+    this.setState(s => ({ gen: false, drafts: { ...s.drafts, [p.id]: a } }));
+  }
+  runSurvey() { this.setState({ survView: 'running', survProg: 0 }); clearInterval(this.sv); this.sv = setInterval(() => { const n = this.state.survProg + 7; if (n >= 100) { clearInterval(this.sv); this.setState({ survProg: 100, survView: 'results' }); } else this.setState({ survProg: n }); }, 180); }
+  tabs(list, cur, fn) { return list.map(([id, label, extra]) => ({ id, label, extra, go: () => fn(id), fg: id === cur ? '#ece8e1' : '#8e887f', bd: id === cur ? '#e1ad66' : 'transparent' })); }
+  chip(on) { return { bd: on ? '#e1ad66' : 'rgba(236,232,225,.14)', fg: on ? '#e1ad66' : '#cfc9bf', bg: on ? 'rgba(225,173,102,.08)' : 'transparent' }; }
+  renderVals() {
+    const D = this.D(), st = this.state, s = st.sim, I = {}; Object.keys(Component.IC).forEach(k => I[k] = this.ic(k));
+    const wide = st.w >= 1100;
+    const base = { ic: I, wide, narrow: !wide, sideW: wide ? '236px' : '64px', logoW: wide ? '150px' : '30px', logoPos: wide ? 'center' : '11% center', toggleChat: () => this.set('chatOpen', !st.chatOpen) };
+    const NAV = [['overview', 'Overview', 'dash'], ['survey', 'Survey Intelligence', 'survey'], ['ux', 'UX Intelligence Lab', 'ux', s.running ? 'LIVE' : ''], ['sales', 'Sales Intelligence', 'sales'], ['personas', 'Persona Library', 'users', '', true], ['reports', 'Reports & History', 'file'], ['integrations', 'Integrations', 'plug', '', true], ['settings', 'Settings', 'set']];
+    base.nav = NAV.map(([id, label, icn, badge, gap]) => { const on = st.screen === id; return { id, label, badge, gap, icon: this.ic(icn, 17), go: () => this.setState({ screen: id }), bg: on ? 'rgba(225,173,102,.07)' : 'transparent', fg: on ? '#ece8e1' : '#a39d94', bd: on ? '#e1ad66' : 'transparent' }; });
+    const T = { overview: ['Workspace', 'Good afternoon, Arundhati'], survey: ['Module 01', 'Survey Intelligence'], ux: ['Module 02 · Flagship', 'UX Intelligence Lab'], sales: ['Module 03', 'Sales Intelligence'], personas: ['Unified persona layer', 'Persona Library'], reports: ['Workspace', 'Reports & History'], integrations: ['Workspace', 'Integrations'], settings: ['Workspace', 'Settings'] }[st.screen];
+    base.crumb = T[0]; base.title = T[1];
+    const scr = {}; NAV.forEach(n => scr[n[0]] = st.screen === n[0]); base.scr = scr;
+    if (!D) return base;
+    return { ...base, ...this.vOverview(D), ...this.vUx(D), ...this.vReport(D), ...this.vSales(D), ...this.vMisc(D), ...this.vChat(D) };
+  }
+  vOverview(D) {
+    const go = (screen, o) => () => this.setState({ screen, ...(o || {}) });
+    return {
+      goUxConfig: go('ux', { uxView: 'config' }), goUxReport: go('ux', { uxView: 'report' }), goSurvey: go('survey', { survView: 'results' }), goSales: go('sales', { salesTab: 'prospects' }), goLib: go('personas'), goRuns: go('reports'),
+      runs: D.RUNS.map(r => ({ ...r, sfg: r.status === 'Live' ? '#e1ad66' : '#8e887f', go: r.type === 'UX Lab' ? go('ux', { uxView: r.status === 'Live' ? 'live' : 'report' }) : r.type === 'Survey' ? go('survey', { survView: 'results' }) : go('sales', { salesTab: 'memory' }) }))
+    };
+  }
+  vUx(D) {
+    const st = this.state, s = st.sim, c = st.cfg, setC = (o) => this.setState(x => ({ cfg: { ...x.cfg, ...o } }));
+    const tog = (arr, v) => arr.includes(v) ? arr.filter(a => a !== v) : [...arr, v];
+    const ROLES = ['CHRO', 'HR Director', 'Founder', 'Talent Head', 'CEO', 'DEI Lead', 'L&D Head', 'Chief People Officer', 'TA Leader', ...c.custom];
+    const OBJ = ['First impressions', 'Website navigation', 'Messaging clarity', 'Trust and credibility', 'Conversion optimisation', 'User experience', 'Pricing and product positioning', 'Overall website evaluation'];
+    const single = (list, cur, key) => list.map(v => ({ label: v, ...this.chip(cur === v), go: () => setC({ [key]: v }) }));
+    const secAt = y => D.SEC.slice().reverse().find(x => y >= x.y) || D.SEC[0];
+    const STAT = { read: 'Reading', hover: 'Exploring', click: 'Clicking', evaluate: 'Evaluating', done: 'Completed' };
+    const visited = new Set(); let inter = 0, stepsDone = 0, total = 0, active = 0;
+    const persons = D.P.map((p, i) => {
+      const k = s.idx[i], stp = k >= 0 ? p.steps[k] : null; total += p.steps.length; stepsDone += k + 1;
+      p.steps.slice(0, k + 1).forEach(x => { visited.add(secAt(x[1]).id); if (x[2] === 'click' || x[2] === 'hover') inter++; });
+      const status = stp ? STAT[stp[2]] : (s.started ? 'Queued' : 'Ready'); if (stp && stp[2] !== 'done') active++;
+      const sel = st.selP === p.id;
+      return { id: p.id, num: p.id.slice(1), role: p.role, co: p.co, color: this.col(p), tint: this.col(p, .14), activity: stp ? stp[3] : (s.started ? 'Waiting to start' : 'Ready to launch'), where: stp ? secAt(stp[1]).name : '—', status,
+        sfg: status === 'Completed' ? '#8fb98a' : status === 'Evaluating' ? '#e1ad66' : '#cfc9bf', pulse: stp && stp[2] !== 'done' ? 'aurPulse 1.6s infinite' : 'none',
+        bd: sel ? this.col(p) : 'rgba(236,232,225,.09)', bg: sel ? 'rgba(236,232,225,.04)' : 'transparent',
+        go: () => this.setState(x => ({ selP: x.selP === p.id ? null : p.id, sim: { ...x.sim, follow: x.selP === p.id ? 'all' : p.id } }), () => { this.lastTop = null; this.follow(); }) };
+    });
+    let selPanel = null; const si = D.P.findIndex(p => p.id === st.selP);
+    if (si >= 0) { const p = D.P[si]; selPanel = { id: p.id, role: p.role, co: p.co, color: this.col(p), journey: p.steps.slice(0, s.idx[si] + 1).filter(x => x[2] !== 'done').map((x, j) => ({ n: j + 1, a: x[3], sec: secAt(x[1]).name, note: x[4] || '', nfg: x[5] === 'issue' ? '#e8957a' : '#9fc79a' })), empty: s.idx[si] < 0, close: () => this.setState(x => ({ selP: null, sim: { ...x.sim, follow: 'all' } })) }; }
+    const issues = s.feed.filter(f => f.type === 'issue').length, prog = total ? Math.round(stepsDone / total * 100) : 0;
+    const TY = { issue: ['Issue', '#e8957a'], positive: ['Positive', '#9fc79a'], neutral: ['Observation', '#cfc9bf'], observer: ['You', '#e1ad66'] };
+    const feed = s.feed.map(f => { const p = D.P.find(x => x.id === f.pid); return { k: f.k, t: f.t, text: f.text, who: p ? p.id + ' · ' + p.role : 'Observer', color: p ? this.col(p) : '#e1ad66', tl: TY[f.type][0], tfg: TY[f.type][1], go: () => p && this.setState(x => ({ selP: p.id, sim: { ...x.sim, follow: p.id } }), () => { this.lastTop = null; this.follow(); }) }; });
+    const fp = D.P.find(p => p.id === (s.follow !== 'all' ? s.follow : s.lastPid)), fi = fp ? D.P.indexOf(fp) : -1;
+    const viewTop = s.control || fi < 0 || s.idx[fi] < 0 ? 0 : Math.min(2700, Math.max(0, fp.steps[s.idx[fi]][1] - 230));
+    const curSec = fi >= 0 && s.idx[fi] >= 0 ? secAt(fp.steps[s.idx[fi]][1]) : null;
+    const cl = st.calc, cost = cl.women * cl.attr / 100 * cl.salary * 1.5; const setCalc = k => e => { const v = parseFloat(e.target.value) || 0; this.setState(x => ({ calc: { ...x.calc, [k]: v } })); };
+    return {
+      uxTabs: this.tabs([['config', 'Configure'], ['live', 'Live simulation'], ['report', 'Report']], st.uxView, id => this.set('uxView', id)),
+      uxv: { config: st.uxView === 'config', live: st.uxView === 'live', report: st.uxView === 'report' }, liveDot: s.running,
+      cfg: c, setUrl: e => setC({ url: e.target.value }),
+      roleChips: ROLES.map(r => ({ label: r, ...this.chip(c.roles.includes(r)), go: () => setC({ roles: tog(c.roles, r) }) })),
+      objChips: OBJ.map(r => ({ label: r, ...this.chip(c.objs.includes(r)), go: () => setC({ objs: tog(c.objs, r) }) })),
+      indChips: single(['Mixed enterprise', 'IT services', 'BFSI', 'Pharma', 'Manufacturing', 'SaaS', 'Consulting'], c.industry, 'industry'),
+      sizeChips: single(['< 200', '200–1,000', '1,000–10,000', '10,000+'], c.size, 'size'),
+      senChips: single(['Manager', 'Director', 'Senior leadership', 'C-suite'], c.seniority, 'seniority'),
+      setCount: e => setC({ count: +e.target.value }), roleCount: c.roles.length, objCount: c.objs.length,
+      launch: () => this.launch(), openCustom: () => this.setState({ dialog: 'cp', cp: { role: '', ind: '', note: '' } }),
+      persons, selPanel, hasSel: !!selPanel, noSel: !selPanel, feed, feedEmpty: !feed.length,
+      m: { active: s.started ? active : 0, pages: visited.size, inter, issues, prog: prog + '%', time: this.fmt(s.tick * 7) },
+      running: s.running, notRunning: !s.running, done: s.done, control: s.control, notControl: !s.control,
+      statusLbl: s.control ? 'You have control' : s.done ? 'Completed' : s.running ? 'Running' : s.started ? 'Paused' : 'Ready',
+      playLbl: s.running ? 'Pause' : (s.done ? 'Run again' : s.started ? 'Resume' : 'Start'), playIcon: s.running ? this.ic('pause', 14) : this.ic('play', 14),
+      onPlay: () => { if (s.control) return; if (s.done || !s.started) this.restart(); else this.setSim({ running: !s.running }); },
+      onRestart: () => this.restart(), onControl: () => s.control ? this.release() : this.takeControl(),
+      speeds: [0.5, 1, 2, 4].map(v => ({ label: v + '×', ...this.chip(s.speed === v), go: () => this.setSim({ speed: v }) })),
+      followOpts: [{ v: 'all', l: 'All personas (overlay)' }, ...D.P.map(p => ({ v: p.id, l: 'Follow ' + p.id + ' · ' + p.role }))], follow: s.follow,
+      setFollow: e => { const v = e.target.value; this.lastTop = null; this.setState(x => ({ selP: v === 'all' ? null : v, sim: { ...x.sim, follow: v } }), () => this.follow()); },
+      bRef: this.bRefFn, cursors: this.cursors(), onPageClick: e => this.onPageClick(e),
+      urlPath: 'aurumcareers.tech/' + (curSec && curSec.id !== 'hero' && curSec.id !== 'nav' ? '#' + curSec.id : ''), secName: curSec ? curSec.name : 'Hero',
+      viewOverflow: s.control ? 'auto' : 'hidden', viewY: 'translateY(-' + viewTop + 'px)', viewOutline: s.control ? '#e1ad66' : 'rgba(236,232,225,.12)',
+      calc: cl, onWomen: setCalc('women'), onSalary: setCalc('salary'), onAttr: setCalc('attr'), costOut: '₹' + (cost / 100).toFixed(2) + ' Cr', leaving: Math.round(cl.women * cl.attr / 100),
+      goReport: () => this.setState({ uxView: 'report', reportTab: 'summary' })
+    };
+  }
+  vReport(D) {
+    const st = this.state, secAt = y => D.SEC.slice().reverse().find(x => y >= x.y) || D.SEC[0];
+    const PC = { Critical: '#e8957a', High: '#e1ad66', Medium: '#cfc9bf', Low: '#8e887f' };
+    const OC = { 'Requested pilot': '#9fc79a', Hesitant: '#e1ad66', Left: '#e8957a' };
+    const time = { hero: 41, cost: 63, record: 38, research: 34, ninety: 52, club: 21, tiers: 71, founder: 29, cta: 18 }, mx = 71;
+    const clicks = []; D.P.forEach(p => p.steps.forEach(s => { if (s[2] === 'click') clicks.push({ x: s[0] + '%', y: Math.round(s[1] * 0.16) + 'px', c: this.col(p) }); }));
+    const rp = D.P.find(p => p.id === st.repP), rr = D.PR[st.repP];
+    return {
+      reportTabs: this.tabs([['summary', 'A · Summary'], ['first', 'B · First impression'], ['nav', 'C · Navigation'], ['msg', 'D · Messaging'], ['trust', 'E · Trust'], ['barriers', 'F · Barriers'], ['sections', 'G · Sections'], ['personas', 'H · Personas'], ['recs', 'I · Recommendations']], st.reportTab, id => this.set('reportTab', id)),
+      rt: Object.fromEntries(['summary', 'first', 'nav', 'msg', 'trust', 'barriers', 'sections', 'personas', 'recs'].map(k => [k, st.reportTab === k])),
+      outcomes: D.P.map(p => ({ id: p.id, role: p.role, color: this.col(p), o: p.outcome, ofg: OC[p.outcome], final: D.PR[p.id].final })),
+      heat: D.SEC.map(s => ({ name: s.name, h: Math.round(s.h * 0.16) + 'px', a: (s.att * 0.85).toFixed(2), pct: Math.round(s.att * 100) })), clicks,
+      journeys: D.P.map(p => { const seq = []; p.steps.forEach(s => { const n = secAt(s[1]).name; if (s[2] !== 'done' && seq[seq.length - 1] !== n) seq.push(n); }); return { id: p.id, role: p.role, color: this.col(p), seq: seq.map((n, i) => ({ n, sep: i > 0 })) }; }),
+      timeBars: D.SEC.filter(s => time[s.id]).map(s => ({ name: s.name, s: time[s.id] + 's', w: Math.round(time[s.id] / mx * 100) + '%' })),
+      secCards: D.SEC.filter(s => s.id !== 'nav').map(s => { const notes = []; D.P.forEach(p => p.steps.forEach(x => { if (x[4] && secAt(x[1]).id === s.id) notes.push({ t: x[4], fg: x[5] === 'issue' ? '#e8957a' : x[5] === 'positive' ? '#9fc79a' : '#cfc9bf' }); })); return { name: s.name, pct: Math.round(s.att * 100) + '%', w: Math.round(s.att * 100) + '%', notes, none: !notes.length, t: (time[s.id] || 8) + 's avg' }; }),
+      repList: D.P.map(p => ({ id: p.id, role: p.role, color: this.col(p), o: p.outcome, ofg: OC[p.outcome], bd: p.id === st.repP ? this.col(p) : 'rgba(236,232,225,.1)', go: () => this.set('repP', p.id) })),
+      rep: { id: rp.id, role: rp.role, co: rp.co, color: this.col(rp), o: rp.outcome, ofg: OC[rp.outcome], ...rr, journey: rp.steps.filter(s => s[2] !== 'done').map((s, i) => ({ n: i + 1, a: s[3], sec: secAt(s[1]).name, k: s[2] })), clicksList: rp.steps.filter(s => s[2] === 'click').map(s => ({ a: s[3].replace('Clicked ', '').replace('Editing ', '').replace('Entering ', '') })) },
+      recFilters: ['All', 'Critical', 'High', 'Medium', 'Low'].map(f => ({ label: f, ...this.chip(st.recF === f), go: () => this.set('recF', f) })),
+      recs: D.RECS.filter(r => st.recF === 'All' || r.pr === st.recF).map((r, i) => ({ ...r, n: String(i + 1).padStart(2, '0'), pc: PC[r.pr] })),
+      exportReport: () => this.toast('Prototype: PDF export would generate here'), askAbout: q => () => this.ask(q)
+    };
+  }
+  vSales(D) {
+    const st = this.state, f = st.f, li = st.li === 'on', setF = k => e => this.setState({ f: { ...f, [k]: e.target.value } });
+    const PRI = { High: '#e1ad66', Medium: '#cfc9bf', Low: '#8e887f' };
+    const rows = D.PROS.filter(p => (!f.q || (p.name + p.title + p.co).toLowerCase().includes(f.q.toLowerCase())) && (f.ind === 'All' || p.ind === f.ind) && (f.conn === 'All' || p.conn === f.conn) && (f.pri === 'All' || p.pri === f.pri) && p.score >= +f.min)
+      .map(p => ({ ...p, pc: PRI[p.pri], sel: p.id === st.pSel, bg: p.id === st.pSel ? 'rgba(225,173,102,.07)' : 'transparent', bl: p.id === st.pSel ? '#e1ad66' : 'transparent', status: (st.pst[p.id] || {}).status || '', saved: (st.pst[p.id] || {}).saved, go: () => this.set('pSel', p.id), w: p.score + '%' }));
+    const p = D.PROS.find(x => x.id === st.pSel), ps = st.pst[p.id] || {}, setPs = o => this.setState(x => ({ pst: { ...x.pst, [p.id]: { ...(x.pst[p.id] || {}), ...o } } }));
+    const m = D.MEM.find(x => x.id === st.mem), mx = Math.max(...m.interest);
+    return {
+      salesTabs: this.tabs([['dashboard', 'Dashboard'], ['clusters', 'Persona clusters'], ['memory', 'Persona memory'], ['prospects', 'Prospect discovery']], st.salesTab, id => this.set('salesTab', id)),
+      sv: Object.fromEntries(['dashboard', 'clusters', 'memory', 'prospects'].map(k => [k, st.salesTab === k])),
+      kpis: [['148', 'Identified prospects', 0], ['63', 'Relevant decision-makers', 0], ['17', 'High-priority opportunities', 0], [li ? '412' : '—', 'Connected LinkedIn relationships', 1], ['9', 'Recommended outreach', 0], ['4', 'Active conversations', 0], ['38', 'Potential enterprise accounts', 0]].map(([v, l, c]) => ({ v, l, tag: c ? (li ? 'Connected · export' : 'Not connected') : 'Illustrative', tfg: c && li ? '#9fc79a' : '#8e887f' })),
+      liOff: !li, goLi: () => this.setState({ screen: 'integrations' }), goProspects: () => this.set('salesTab', 'prospects'),
+      topPros: D.PROS.slice(0, 4).map(x => ({ ...x, go: () => this.setState({ salesTab: 'prospects', pSel: x.id }) })),
+      clusters: D.CL.map((c, i) => ({ ...c, i, open: st.clOpen === i, bd: st.clOpen === i ? '#e1ad66' : 'rgba(236,232,225,.1)', iw: c.interest + '%', indBars: c.ind.map(([n, v]) => ({ n, w: v + '%', v: v + '%' })), sizeBars: c.size.map(([n, v]) => ({ n, w: v + '%', v: v + '%' })), go: () => this.set('clOpen', i) })),
+      newCluster: () => this.setState({ dialog: 'cc' }),
+      memList: D.MEM.map(x => ({ ...x, bd: x.id === st.mem ? '#e1ad66' : 'rgba(236,232,225,.1)', go: () => this.set('mem', x.id), last: x.interest[x.interest.length - 1] })),
+      mem: { ...m, sessions: m.sessions.map((s, i) => ({ ...s, cur: i === m.sessions.length - 1, dot: i === m.sessions.length - 1 ? '#e1ad66' : '#6f6a62', score: m.interest[i], h: Math.round(m.interest[i] / mx * 48) + 'px' })), delta: '+' + (m.interest[m.interest.length - 1] - m.interest[0]) },
+      memMsgs: (st.memMsgs[m.id] || []).map((x, i) => ({ k: i, t: x.t, u: x.r === 'u', a: x.r === 'a' })), memIn: st.memIn, memBusy: st.memBusy, setMemIn: e => this.set('memIn', e.target.value), sendMem: () => this.askMem(), memKey: e => { if (e.key === 'Enter') { e.preventDefault(); this.askMem(); } },
+      f, fq: setF('q'), find: setF('ind'), fconn: setF('conn'), fpri: setF('pri'), fmin: setF('min'),
+      indOpts: ['All', ...new Set(D.PROS.map(x => x.ind))], rows, rowCount: rows.length, noRows: !rows.length,
+      pr: { ...p, pc: PRI[p.pri], status: ps.status || 'Not contacted', saved: !!ps.saved, follow: ps.follow || '', hasHist: p.hist.length > 0, noHist: !p.hist.length },
+      draft: st.drafts[p.id] ?? this.defMsg(p), gen: st.gen,
+      setDraft: e => { const v = e.target.value; this.setState(x => ({ drafts: { ...x.drafts, [p.id]: v } })); },
+      genMsg: () => this.genMsg(p), copyMsg: () => { navigator.clipboard && navigator.clipboard.writeText(st.drafts[p.id] ?? this.defMsg(p)).catch(() => {}); this.toast('Message copied'); },
+      saveP: () => { setPs({ saved: !ps.saved }); this.toast(ps.saved ? 'Removed from saved' : 'Prospect saved'); },
+      markC: () => { setPs({ status: 'Contacted' }); this.toast('Marked as contacted'); }, setFollowUp: e => setPs({ follow: e.target.value }),
+      approve: () => this.set('dialog', 'approve'), savedLbl: ps.saved ? 'Saved' : 'Save prospect'
+    };
+  }
+  vMisc(D) {
+    const st = this.state, SS = ['Questions', 'Personas', 'Audience', 'Run'];
+    const lib = [...D.P.map(p => ({ id: p.id, name: p.id + ' · ' + p.role, role: p.role, co: p.co, color: this.col(p), mods: ['UX Lab', 'Survey'], traits: D.PR[p.id].attention, decision: D.PR[p.id].motivation, mem: [D.PR[p.id].final], hist: ['UX-014 · ' + p.outcome, 'SV-022 · responded'] })),
+      ...D.MEM.map((m, i) => ({ id: m.id.toUpperCase(), name: m.label, role: m.label.split(' · ')[0], co: m.sub, color: `oklch(0.68 0.13 ${50 + i * 40})`, mods: ['Sales'], traits: m.mot, decision: m.next, mem: m.sessions.map(s => s.date + ' — ' + s.items[0]), hist: m.sessions.map(s => 'Memory session · ' + s.title) }))];
+    const ls = lib.find(x => x.id === st.libSel) || lib[0];
+    return {
+      sview: { list: st.survView === 'list', create: st.survView === 'new', running: st.survView === 'running', results: st.survView === 'results' },
+      surveys: D.SURV.map(s => ({ ...s, sfg: s.status === 'Draft' ? '#8e887f' : '#9fc79a', go: () => this.set('survView', s.status === 'Draft' ? 'new' : 'results') })),
+      newSurvey: () => this.setState({ survView: 'new', survStep: 0 }), backList: () => this.set('survView', 'list'),
+      sSteps: SS.map((s, i) => ({ n: i + 1, s, fg: i === st.survStep ? '#e1ad66' : i < st.survStep ? '#ece8e1' : '#6f6a62', bd: i <= st.survStep ? '#e1ad66' : 'rgba(236,232,225,.15)' })),
+      ss: Object.fromEntries(SS.map((s, i) => ['s' + i, st.survStep === i])), sNext: () => st.survStep < 3 ? this.set('survStep', st.survStep + 1) : this.runSurvey(), sBack: () => this.set('survStep', Math.max(0, st.survStep - 1)),
+      sNextLbl: st.survStep < 3 ? 'Continue' : 'Run simulation', survProg: st.survProg + '%', survN: Math.round(st.survProg * 1.2),
+      libs: lib.map(x => ({ ...x, bd: x.id === ls.id ? x.color : 'rgba(236,232,225,.1)', go: () => this.set('libSel', x.id), modsTxt: x.mods.join(' · ') })), ls,
+      li: { off: st.li === 'off', connecting: st.li === 'connecting', on: st.li === 'on' }, openOauth: () => this.set('dialog', 'oauth'),
+      disconnectLi: () => { this.set('li', 'off'); this.toast('LinkedIn disconnected · imported data kept for 30 days'); }, importCsv: () => this.toast('Prototype: would open file picker for Connections.csv'), resync: () => this.toast('Prototype: re-matching 1,284 connections against ICP')
+    };
+  }
+  vChat(D) {
+    const st = this.state;
+    const SUG = ['Why did the CHRO personas leave the website?', 'Which section generated the most confusion?', 'What did the CEO personas think about our positioning?', 'What is the biggest conversion barrier?', 'Compare the behaviour of HR Directors and Founders.', 'What changes should we prioritise?'];
+    const dlg = st.dialog, p = D.PROS.find(x => x.id === st.pSel);
+    return {
+      chatOpen: st.chatOpen, closeChat: () => this.set('chatOpen', false), chatEmpty: !st.msgs.length,
+      msgs: st.msgs.map((m, i) => ({ k: i, t: m.t, u: m.r === 'u', a: m.r === 'a' })), chatIn: st.chatIn, busy: st.busy,
+      setChatIn: e => this.set('chatIn', e.target.value), sendChat: () => this.ask(), chatKey: e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.ask(); } },
+      sugs: SUG.map(q => ({ q, go: () => this.ask(q) })), chatRef: el => { if (el) el.scrollTop = el.scrollHeight; },
+      dlg: { cp: dlg === 'cp', oauth: dlg === 'oauth', approve: dlg === 'approve', cc: dlg === 'cc', any: !!dlg }, closeDlg: () => this.set('dialog', null),
+      cp: st.cp, cpRole: e => this.setState({ cp: { ...st.cp, role: e.target.value } }), cpInd: e => this.setState({ cp: { ...st.cp, ind: e.target.value } }), cpNote: e => this.setState({ cp: { ...st.cp, note: e.target.value } }),
+      saveCp: () => { const r = st.cp.role.trim(); if (!r) return; this.setState(x => ({ dialog: null, cfg: { ...x.cfg, custom: [...x.cfg.custom, r], roles: [...x.cfg.roles, r] } })); this.toast('Custom persona “' + r + '” added'); },
+      ccName: st.ccName, setCc: e => this.set('ccName', e.target.value), saveCc: () => { this.setState({ dialog: null, ccName: '' }); this.toast('Cluster saved — matching runs on next sync (prototype)'); },
+      connectLi: () => { this.setState({ dialog: null, li: 'connecting' }); setTimeout(() => this.setState({ li: 'on' }), 1600); },
+      approveMsg: p ? (st.drafts[p.id] ?? this.defMsg(p)) : '', approveName: p ? p.name : '', liOn: st.li === 'on',
+      doApprove: () => { const t = st.drafts[p.id] ?? this.defMsg(p); navigator.clipboard && navigator.clipboard.writeText(t).catch(() => {}); this.setState(x => ({ dialog: null, pst: { ...x.pst, [p.id]: { ...(x.pst[p.id] || {}), status: 'Contacted' } } })); this.toast(st.li === 'on' ? 'Approved — copied. Paste into LinkedIn to send.' : 'Approved and copied to clipboard'); },
+      toastMsg: st.toast, hasToast: !!st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
